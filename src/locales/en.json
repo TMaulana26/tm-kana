@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "home": "Home",
+    "chart": "Kana Chart",
+    "practice": "Practice",
+    "progress": "Progress"
+  },
+  "common": {
+    "language": "Language",
+    "welcome": "Welcome to TM-KANA",
+    "appName": "TM-KANA",
+    "nickname": "Nickname",
+    "save": "Save"
+  },
+  "home": {
+    "homeDesc": "Learn to read, pronounce, and write Hiragana and Katakana interactively. 100% Client-Side, free, secure, and ad-free.",
+    "profileTitle": "Learning Profile",
+    "profileDesc": "Set your learning nickname",
+    "nicknameLabel": "Nickname",
+    "nicknamePlaceholder": "Enter nickname...",
+    "nicknameHelp": "Nickname is used to validate the ownership of progress backup files.",
+    "backupTitle": "Progress Data Backup",
+    "backupDesc": "Save or restore your Hiragana & Katakana learning progress locally via text files.",
+    "exportTitle": "Export Progress",
+    "exportDesc": "Export your active study data to a .txt file",
+    "exportBtn": "Export Progress (.txt)",
+    "importTitle": "Import Progress",
+    "importDesc": "Only support excripted .txt file",
+    "importBtn": "Choose File (.txt)",
+    "importDragDrop": "Drag & drop backup .txt file here, or click to upload",
+    "resourcesTitle": "External Study Resources",
+    "resourcesDesc": "Utilize free visual guides from Tofugu to learn basic Japanese pronunciation and stroke orders.",
+    "tofuguHiraganaTitle": "Tofugu's Hiragana Guide",
+    "tofuguHiraganaDesc": "Learn how to read, write, and memorize Hiragana from scratch.",
+    "tofuguKatakanaTitle": "Tofugu's Katakana Guide",
+    "tofuguKatakanaDesc": "An interactive workbook to master reading and writing Katakana.",
+    "learnMore": "Learn More"
+  },
+  "toast": {
+    "exportSuccess": "Progress data successfully exported!",
+    "importSuccess": "Welcome back, {name}! Progress data successfully imported.",
+    "importErrorMismatch": "Import failed: Backup nickname ({fileNickname}) does not match current active nickname ({currentNickname}).",
+    "importErrorInvalid": "Import failed: Damaged file or invalid TM-KANA progress backup format."
+  },
+  "chart": {
+    "title": "Interactive Kana Chart",
+    "desc": "Browse Hiragana and Katakana characters, check your learning progress, and practice writing stroke orders.",
+    "hiragana": "Hiragana",
+    "katakana": "Katakana",
+    "gojuon": "Gojuon (Main)",
+    "dakuon": "Dakuon (Modified)",
+    "yoon": "Yoon (Combination)",
+    "strokeOrder": "Stroke Order",
+    "practicePad": "Writing Practice Pad",
+    "clearPad": "Clear Pad",
+    "markLearned": "Mark as Learned",
+    "removeLearned": "Remove from Learned",
+    "learned": "Learned",
+    "notLearned": "Not Learned",
+    "back": "Back"
+  }
+}

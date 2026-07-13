@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "chart": "Tabel Kana",
+    "practice": "Latihan",
+    "progress": "Progres"
+  },
+  "common": {
+    "language": "Bahasa",
+    "welcome": "Selamat Datang di TM-KANA",
+    "appName": "TM-KANA",
+    "nickname": "Nama Panggilan",
+    "save": "Simpan"
+  },
+  "home": {
+    "homeDesc": "Belajar membaca, melafalkan, dan menulis Hiragana serta Katakana secara interaktif. 100% Client-Side, bebas biaya, aman, dan tanpa iklan.",
+    "profileTitle": "Profil Belajar",
+    "profileDesc": "Atur nama panggilan belajar Anda",
+    "nicknameLabel": "Nama Panggilan (Nickname)",
+    "nicknamePlaceholder": "Masukkan nama panggilan...",
+    "nicknameHelp": "Nama panggilan digunakan untuk mencocokkan kepemilikan file cadangan progres belajar Anda.",
+    "backupTitle": "Pencadangan Data Progres",
+    "backupDesc": "Simpan atau pulihkan kemajuan belajar Hiragana & Katakana Anda secara lokal melalui file teks.",
+    "exportTitle": "Unduh Cadangan",
+    "exportDesc": "Ekspor data belajar aktif ke berkas .txt",
+    "exportBtn": "Ekspor Progres (.txt)",
+    "importTitle": "Unggah Cadangan",
+    "importDesc": "Hanya mendukung file .txt terenkripsi.",
+    "importBtn": "Pilih File (.txt)",
+    "importDragDrop": "Seret & letakkan file .txt cadangan di sini, atau klik untuk mengunggah",
+    "resourcesTitle": "Referensi Belajar Eksternal",
+    "resourcesDesc": "Gunakan panduan gratis dari Tofugu untuk mempelajari dasar-dasar pelafalan dan goresan huruf Jepang.",
+    "tofuguHiraganaTitle": "Panduan Hiragana Tofugu",
+    "tofuguHiraganaDesc": "Belajar membaca, menulis, dan menghafal Hiragana dari awal.",
+    "tofuguKatakanaTitle": "Panduan Katakana Tofugu",
+    "tofuguKatakanaDesc": "Panduan interaktif untuk menguasai pembacaan dan penulisan Katakana.",
+    "learnMore": "Pelajari Selengkapnya"
+  },
+  "toast": {
+    "exportSuccess": "Data progres berhasil diekspor!",
+    "importSuccess": "Selamat datang kembali, {name}! Data progres berhasil diimpor.",
+    "importErrorMismatch": "Gagal impor: Nama panggilan file ({fileNickname}) tidak cocok dengan nama panggilan aktif ({currentNickname}).",
+    "importErrorInvalid": "Gagal impor: File rusak atau bukan file cadangan progres TM-KANA."
+  },
+  "chart": {
+    "title": "Tabel Kana Interaktif",
+    "desc": "Telusuri huruf Hiragana dan Katakana, pantau perkembangan hafalan, dan latih urutan goresan menulis.",
+    "hiragana": "Hiragana",
+    "katakana": "Katakana",
+    "gojuon": "Gojuon (Karakter Utama)",
+    "dakuon": "Dakuon (Karakter Modifikasi)",
+    "yoon": "Yoon (Karakter Kombinasi)",
+    "strokeOrder": "Urutan Goresan",
+    "practicePad": "Papan Latihan Menulis",
+    "clearPad": "Hapus Coretan",
+    "markLearned": "Tandai Sudah Hafal",
+    "removeLearned": "Hapus dari Daftar Hafal",
+    "learned": "Hafal",
+    "notLearned": "Belum Hafal",
+    "back": "Kembali"
+  }
+}
