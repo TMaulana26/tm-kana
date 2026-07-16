@@ -112,7 +112,7 @@ function closeMobileMenu() {
             v-if="!isMobileMenuOpen"
             class="w-5 h-5 text-slate-950 dark:text-white"
           />
-          <X class="w-5 h-5 text-slate-950 dark:text-white" />
+          <X v-else class="w-5 h-5 text-slate-950 dark:text-white" />
         </button>
         <span
           class="text-xl font-black uppercase tracking-wider text-slate-950 dark:text-white"

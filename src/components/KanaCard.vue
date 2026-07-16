@@ -35,12 +35,12 @@ const hasLearned = computed(() => {
       title="Learned"
     ></span>
 
-    <span class="font-black uppercase tracking-tight block leading-none text-5xl md:text-6xl">
+    <span class="font-black uppercase tracking-tight block leading-none text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
       {{ character.character }}
     </span>
     <span
       :class="[
-        'text-xs md:text-sm font-black uppercase tracking-wide mt-1',
+        'text-[10px] sm:text-xs md:text-sm font-black uppercase tracking-wide mt-0.5 sm:mt-1',
         hasLearned
           ? 'text-slate-800'
           : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200',
