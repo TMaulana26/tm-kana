@@ -42,7 +42,7 @@ function closeMobileMenu() {
   >
     <!-- Desktop Sidebar -->
     <aside
-      class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-white shrink-0"
+      class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-white shrink-0 sticky top-0 h-screen"
     >
       <!-- Logo Section -->
       <div
@@ -189,7 +189,7 @@ function closeMobileMenu() {
             </div>
             <div>
               <p class="text-[9px] uppercase font-black text-slate-700">
-                Nickname
+                {{ $t('common.nickname') }}
               </p>
               <p class="font-extrabold text-sm">{{ nickname }}</p>
             </div>

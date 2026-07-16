@@ -10,7 +10,12 @@
     "welcome": "Welcome to TM-KANA",
     "appName": "TM-KANA",
     "nickname": "Nickname",
-    "save": "Save"
+    "save": "Save",
+    "toggleLanguage": "Toggle language",
+    "langId": "Bahasa Indonesia",
+    "langEn": "English",
+    "langJa": "Japanese",
+    "romaji": "Romaji"
   },
   "home": {
     "homeDesc": "Learn to read, pronounce, and write Hiragana and Katakana interactively. 100% Client-Side, free, secure, and ad-free.",
@@ -57,6 +62,41 @@
     "removeLearned": "Remove from Learned",
     "learned": "Learned",
     "notLearned": "Not Learned",
-    "back": "Back"
+    "back": "Back",
+    "detailTitle": "Character Detail",
+    "detailDesc": "Stroke order guide and writing practice pad.",
+    "strokeOrderAlt": "Stroke Order Guide",
+    "offlineStrokeOrder": "Stroke order guide image failed to load. You can practice directly using the guidance lines below!"
+  },
+  "rows": {
+    "vowels": "Basic Vowels",
+    "k": "K-Group",
+    "s": "S-Group",
+    "t": "T-Group",
+    "n": "N-Group",
+    "h": "H-Group",
+    "m": "M-Group",
+    "y": "Y-Group",
+    "r": "R-Group",
+    "w_single": "W-Group & Single",
+    "n_consonant": "Single Consonant",
+    "g": "G-Row",
+    "z": "Z-Row",
+    "d": "D-Row",
+    "b": "B-Row",
+    "p": "P-Row",
+    "k_to_g": "K → G",
+    "s_to_z": "S → Z",
+    "t_to_d": "T → D",
+    "h_to_b": "H → B (Dakuten)",
+    "h_to_p": "H → P (Handakuten)",
+    "kg_classic": "K / G Classic",
+    "sz_classic": "S / Z Classic",
+    "td_classic": "T / D Classic",
+    "nmr_classic": "N / M / R Classic",
+    "hbp_classic": "H / B / P Classic",
+    "vw_modern": "V / W Group (Modern)",
+    "fts_modern": "F / TS Group (Modern)",
+    "ei_vowel_modern": "E-Vowel & I-Vowel Group (Modern)"
   }
 }

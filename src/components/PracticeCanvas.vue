@@ -131,7 +131,8 @@ watch(() => props.char, () => {
       
       <!-- Faint Character Outline Template -->
       <div
-        class="absolute inset-0 flex items-center justify-center text-[10rem] font-black text-slate-350/45 dark:text-slate-800/40 select-none pointer-events-none font-sans"
+        class="absolute inset-0 flex items-center justify-center font-black text-slate-350/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap"
+        :class="char.length > 1 ? 'text-[5.5rem]' : 'text-[10rem]'"
       >
         {{ char }}
       </div>

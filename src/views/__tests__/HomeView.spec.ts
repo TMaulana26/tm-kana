@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { createI18n } from 'vue-i18n'
 import HomeView from '../HomeView.vue'
 import { useProgressStore } from '@/stores/progress'
 import * as crypto from '@/utils/progressCrypto'
@@ -15,51 +14,6 @@ vi.mock('vue-sonner', () => ({
 }))
 
 import { toast } from 'vue-sonner'
-
-// Setup Vue i18n instance for testing
-const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  messages: {
-    en: {
-      common: {
-        welcome: 'Welcome to TM-KANA',
-        save: 'Save',
-        nickname: 'Nickname'
-      },
-      home: {
-        homeDesc: 'Learn to read, pronounce, and write Hiragana and Katakana interactively.',
-        profileTitle: 'Learning Profile',
-        profileDesc: 'Set your learning nickname',
-        nicknameLabel: 'Nickname',
-        nicknamePlaceholder: 'Enter nickname...',
-        nicknameHelp: 'Help text',
-        backupTitle: 'Backup',
-        backupDesc: 'Backup desc',
-        exportTitle: 'Export Progress',
-        exportDesc: 'Export desc',
-        exportBtn: 'Export Progress (.txt)',
-        importTitle: 'Import Progress',
-        importDesc: 'Import desc',
-        importBtn: 'Choose File (.txt)',
-        importDragDrop: 'Drag and drop',
-        resourcesTitle: 'Resources',
-        resourcesDesc: 'Resources desc',
-        tofuguHiraganaTitle: 'Tofugu Hiragana',
-        tofuguHiraganaDesc: 'Tofugu Hiragana desc',
-        tofuguKatakanaTitle: 'Tofugu Katakana',
-        tofuguKatakanaDesc: 'Tofugu Katakana desc',
-        learnMore: 'Learn More'
-      },
-      toast: {
-        exportSuccess: 'Progress data successfully exported!',
-        importSuccess: 'Welcome back, {name}!',
-        importErrorMismatch: 'toast.importErrorMismatch',
-        importErrorInvalid: 'toast.importErrorInvalid'
-      }
-    }
-  }
-})
 
 describe('HomeView.vue integration tests', () => {
   let pinia: any
@@ -112,7 +66,7 @@ describe('HomeView.vue integration tests', () => {
   const mountHomeView = () => {
     return mount(HomeView, {
       global: {
-        plugins: [pinia, i18n],
+        plugins: [pinia],
       }
     })
   }
@@ -161,7 +115,7 @@ describe('HomeView.vue integration tests', () => {
     const mockBackupPayload = {
       nickname: 'ユーザー',
       progress: {
-        'あ': { hasLearned: true, quizSuccessCount: 5, quizFailCount: 0, drawSuccessCount: 3, drawFailCount: 0 }
+        'h-a': { hasLearned: true, quizSuccessCount: 5, quizFailCount: 0, drawSuccessCount: 3, drawFailCount: 0 }
       }
     }
     const mockFileContent = crypto.exportProgress(mockBackupPayload.nickname, mockBackupPayload.progress)
@@ -183,9 +137,9 @@ describe('HomeView.vue integration tests', () => {
     // Manually trigger file processing
     await (wrapper.vm as any).processFile(file)
     
-    expect(store.progress['あ'].hasLearned).toBe(true)
-    expect(store.progress['あ'].quizSuccessCount).toBe(5)
-    expect(toast.success).toHaveBeenCalledWith('Welcome back, ユーザー!')
+    expect(store.progress['h-a'].hasLearned).toBe(true)
+    expect(store.progress['h-a'].quizSuccessCount).toBe(5)
+    expect(toast.success).toHaveBeenCalledWith('Welcome back, ユーザー! Progress data successfully imported.')
   })
 
   it('shows error toast when backup file nickname does not match current active nickname', async () => {
@@ -215,6 +169,6 @@ describe('HomeView.vue integration tests', () => {
     
     // Nickname remains 'ユーザー'
     expect(store.nickname).toBe('ユーザー')
-    expect(toast.error).toHaveBeenCalledWith('toast.importErrorMismatch')
+    expect(toast.error).toHaveBeenCalledWith('Import failed: Backup nickname (Budi) does not match current active nickname (ユーザー).')
   })
 })

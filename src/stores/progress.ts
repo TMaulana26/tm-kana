@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ALL_KANA_DATA } from '@/constants/kanaData'
+import { kanaData } from '@/constants/kanaData'
 
 export interface ProgressItem {
   hasLearned: boolean;
@@ -14,10 +14,24 @@ export interface ProgressState {
   progress: Record<string, ProgressItem>;
 }
 
+function getAllKanaItems() {
+  const items: any[] = []
+  const types = ['hiragana', 'katakana'] as const
+  const groups = ['gojuon', 'dakuten', 'yoon'] as const
+  for (const type of types) {
+    for (const group of groups) {
+      if (kanaData[type] && kanaData[type][group]) {
+        items.push(...kanaData[type][group])
+      }
+    }
+  }
+  return items
+}
+
 function createEmptyProgress(): Record<string, ProgressItem> {
   const progress: Record<string, ProgressItem> = {};
-  for (const item of ALL_KANA_DATA) {
-    progress[item.char] = {
+  for (const item of getAllKanaItems()) {
+    progress[item.id] = {
       hasLearned: false,
       quizSuccessCount: 0,
       quizFailCount: 0,
@@ -66,30 +80,30 @@ export const useProgressStore = defineStore('progress', {
       this.nickname = name.trim() || 'ユーザー';
       this.saveToLocalStorage();
     },
-    toggleLearned(character: string, status?: boolean) {
-      if (this.progress[character]) {
-        this.progress[character].hasLearned = status !== undefined ? status : !this.progress[character].hasLearned;
+    toggleLearned(characterId: string, status?: boolean) {
+      if (this.progress[characterId]) {
+        this.progress[characterId].hasLearned = status !== undefined ? status : !this.progress[characterId].hasLearned;
         this.saveToLocalStorage();
       }
     },
-    recordQuizResult(character: string, success: boolean) {
-      if (this.progress[character]) {
+    recordQuizResult(characterId: string, success: boolean) {
+      if (this.progress[characterId]) {
         if (success) {
-          this.progress[character].quizSuccessCount++;
-          this.progress[character].hasLearned = true;
+          this.progress[characterId].quizSuccessCount++;
+          this.progress[characterId].hasLearned = true;
         } else {
-          this.progress[character].quizFailCount++;
+          this.progress[characterId].quizFailCount++;
         }
         this.saveToLocalStorage();
       }
     },
-    recordDrawResult(character: string, success: boolean) {
-      if (this.progress[character]) {
+    recordDrawResult(characterId: string, success: boolean) {
+      if (this.progress[characterId]) {
         if (success) {
-          this.progress[character].drawSuccessCount++;
-          this.progress[character].hasLearned = true;
+          this.progress[characterId].drawSuccessCount++;
+          this.progress[characterId].hasLearned = true;
         } else {
-          this.progress[character].drawFailCount++;
+          this.progress[characterId].drawFailCount++;
         }
         this.saveToLocalStorage();
       }
@@ -99,11 +113,11 @@ export const useProgressStore = defineStore('progress', {
         this.nickname = loadedData.nickname;
       }
       if (loadedData.progress) {
-        for (const char in loadedData.progress) {
-          if (this.progress[char]) {
-            this.progress[char] = {
-              ...this.progress[char],
-              ...loadedData.progress[char]
+        for (const charId in loadedData.progress) {
+          if (this.progress[charId]) {
+            this.progress[charId] = {
+              ...this.progress[charId],
+              ...loadedData.progress[charId]
             };
           }
         }

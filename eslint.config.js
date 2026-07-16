@@ -36,7 +36,30 @@ export default ts.config(
       'vue/html-indent': 'off',
       'vue/html-closing-bracket-newline': 'off',
       'vue/first-attribute-linebreak': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }]
+      '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
+      'vue/no-bare-strings-in-template': ['error', {
+        'allowlist': [
+          '（', '）', '：', '；', '，', '。', '、', '—', '～', '・',
+          '(', ')', ':', ';', ',', '.', '&', '+', '-', '=', '*', '/', '\\', '|',
+          '?', '!', '@', '#', '$', '%', '^', '_', '<', '>', '~', '`', '\'', '"',
+          ' ', '\n', '\t', '\r',
+          '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'px', 'em', 'rem',
+          'A', 'I', 'U', 'E', 'O', '-row', '→', '&rarr;'
+        ],
+        'attributes': {
+          'input': ['placeholder'],
+          'textarea': ['placeholder'],
+          'img': ['alt'],
+          'a': ['title'],
+          'button': ['title']
+        }
+      }]
+    }
+  },
+  {
+    files: ['src/components/ui/**/*.vue'],
+    rules: {
+      'vue/no-bare-strings-in-template': 'off'
     }
   }
 )

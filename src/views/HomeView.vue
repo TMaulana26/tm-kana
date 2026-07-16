@@ -133,7 +133,7 @@ function processFile(file: File) {
       <div
         class="absolute right-0 bottom-0 translate-x-1/6 translate-y-1/6 text-[10rem] font-black text-slate-950/10 select-none pointer-events-none font-sans"
       >
-        あア
+        {{ 'あア' }}
       </div>
     </div>
 

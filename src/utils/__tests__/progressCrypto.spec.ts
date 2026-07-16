@@ -3,8 +3,8 @@ import { exportProgress, importProgress } from '../progressCrypto'
 
 describe('progressCrypto.ts unit tests', () => {
   const mockProgress = {
-    'あ': { hasLearned: true, quizSuccessCount: 3, quizFailCount: 1, drawSuccessCount: 2, drawFailCount: 0 },
-    'い': { hasLearned: false, quizSuccessCount: 0, quizFailCount: 0, drawSuccessCount: 0, drawFailCount: 0 }
+    'h-a': { hasLearned: true, quizSuccessCount: 3, quizFailCount: 1, drawSuccessCount: 2, drawFailCount: 0 },
+    'h-i': { hasLearned: false, quizSuccessCount: 0, quizFailCount: 0, drawSuccessCount: 0, drawFailCount: 0 }
   }
 
   describe('exportProgress', () => {

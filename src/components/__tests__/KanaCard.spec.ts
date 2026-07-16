@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import KanaCard from '../KanaCard.vue'
 import { useProgressStore } from '@/stores/progress'
-import type { KanaCharacter } from '@/constants/kanaData'
+import type { KanaItem } from '@/constants/kanaData'
 
 // Mock LocalStorage
 let localStorageStore: Record<string, string> = {}
@@ -21,12 +21,11 @@ const localStorageMock = {
 }
 vi.stubGlobal('localStorage', localStorageMock)
 
-const testChar: KanaCharacter = {
-  char: 'あ',
-  romaji: 'a',
-  type: 'hiragana',
-  group: 'gojuon',
-  row: 'a'
+const testChar: KanaItem = {
+  id: 'h-a',
+  character: 'あ',
+  romaji: 'A',
+  rowGroup: 'Vokal Dasar'
 }
 
 describe('KanaCard.vue Component', () => {
@@ -42,7 +41,7 @@ describe('KanaCard.vue Component', () => {
     })
 
     expect(wrapper.text()).toContain('あ')
-    expect(wrapper.text()).toContain('a')
+    expect(wrapper.text()).toContain('A')
   })
 
   it('displays default style when character is not learned', () => {
@@ -58,7 +57,7 @@ describe('KanaCard.vue Component', () => {
 
   it('displays active highlight style and checkmark when character is learned', () => {
     const store = useProgressStore()
-    store.progress['あ'].hasLearned = true
+    store.progress['h-a'].hasLearned = true
 
     const wrapper = mount(KanaCard, {
       props: {

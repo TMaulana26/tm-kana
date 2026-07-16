@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { createI18n } from 'vue-i18n'
 import KanaChartView from '../KanaChartView.vue'
 import KanaCard from '@/components/KanaCard.vue'
 import { useProgressStore } from '@/stores/progress'
@@ -33,33 +32,6 @@ HTMLCanvasElement.prototype.getContext = vi.fn().mockReturnValue({
   drawImage: vi.fn()
 })
 
-// Setup Vue i18n instance for testing
-const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  messages: {
-    en: {
-      chart: {
-        title: 'Interactive Kana Chart',
-        desc: 'Browse characters',
-        hiragana: 'Hiragana',
-        katakana: 'Katakana',
-        gojuon: 'Gojuon (Main)',
-        dakuon: 'Dakuon (Modified)',
-        yoon: 'Yoon (Combination)',
-        strokeOrder: 'Stroke Order',
-        practicePad: 'Practice Pad',
-        clearPad: 'Clear Pad',
-        markLearned: 'Mark as Learned',
-        removeLearned: 'Remove from Learned',
-        learned: 'Learned',
-        notLearned: 'Not Learned',
-        back: 'Back'
-      }
-    }
-  }
-})
-
 describe('KanaChartView.vue Integration Tests', () => {
   let store: any
 
@@ -71,7 +43,6 @@ describe('KanaChartView.vue Integration Tests', () => {
   function mountView() {
     return mount(KanaChartView, {
       global: {
-        plugins: [i18n],
         stubs: {
           // Stub DialogPortal to prevent teleporting content outside the wrapper
           DialogPortal: {
@@ -115,7 +86,7 @@ describe('KanaChartView.vue Integration Tests', () => {
     // Dialog should open
     const vm = wrapper.vm as any
     expect(vm.isDialogOpen).toBe(true)
-    expect(vm.selectedCharacter?.char).toBe('あ')
+    expect(vm.selectedCharacter?.character).toBe('あ')
   })
 
   it('allows toggling learned state inside the dialog', async () => {
@@ -126,7 +97,7 @@ describe('KanaChartView.vue Integration Tests', () => {
     const charCard = cards.find(c => c.text().includes('あ'))
     await charCard?.vm.$emit('click', charCard.props('character'))
     
-    expect(store.progress['あ'].hasLearned).toBe(false)
+    expect(store.progress['h-a'].hasLearned).toBe(false)
     
     // Find "Mark as Learned" button in the dialog (which is rendered inline since portal is stubbed)
     const markButton = wrapper.findAll('button').find(b => b.text().includes('Mark as Learned'))
@@ -135,7 +106,7 @@ describe('KanaChartView.vue Integration Tests', () => {
     await markButton?.trigger('click')
     
     // Store progress state updated!
-    expect(store.progress['あ'].hasLearned).toBe(true)
+    expect(store.progress['h-a'].hasLearned).toBe(true)
     
     // Find "Remove from Learned" button in the dialog
     const removeButton = wrapper.findAll('button').find(b => b.text().includes('Remove from Learned'))
@@ -143,6 +114,6 @@ describe('KanaChartView.vue Integration Tests', () => {
     
     // Click again to remove
     await removeButton?.trigger('click')
-    expect(store.progress['あ'].hasLearned).toBe(false)
+    expect(store.progress['h-a'].hasLearned).toBe(false)
   })
 })
