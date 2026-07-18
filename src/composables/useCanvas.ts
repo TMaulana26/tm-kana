@@ -9,6 +9,7 @@ export function useCanvas() {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   const isDrawing = ref(false);
   const points = ref<Point[]>([]);
+  const strokes = ref<Point[][]>([]);
   const lastX = ref(0);
   const lastY = ref(0);
 
@@ -49,6 +50,7 @@ export function useCanvas() {
     lastX.value = coords.x;
     lastY.value = coords.y;
     points.value.push(coords);
+    strokes.value.push([coords]);
   }
 
   function draw(e: MouseEvent | TouchEvent) {
@@ -72,6 +74,9 @@ export function useCanvas() {
     lastX.value = coords.x;
     lastY.value = coords.y;
     points.value.push(coords);
+    if (strokes.value.length > 0) {
+      strokes.value[strokes.value.length - 1].push(coords);
+    }
   }
 
   function stopDrawing() {
@@ -84,6 +89,7 @@ export function useCanvas() {
     if (!canvas || !ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     points.value = [];
+    strokes.value = [];
   }
 
   function resizeCanvas() {
@@ -137,6 +143,7 @@ export function useCanvas() {
     canvasRef,
     isDrawing,
     points,
+    strokes,
     startDrawing,
     draw,
     stopDrawing,

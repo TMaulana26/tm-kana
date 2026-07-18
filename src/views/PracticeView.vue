@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, nextTick } from "vue";
+import { ref, computed, nextTick, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useProgressStore } from "@/stores/progress";
 import { kanaData, type KanaItem } from "@/constants/kanaData";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
 import KanaCanvas from "@/components/KanaCanvas.vue";
-import { recognizeStroke } from "@/utils/strokeRecognizer";
+import { recognizeStroke, recognizeStrokeSequence, recognizeSingleStroke, type Point } from "@/utils/strokeRecognizer";
 import {
   Check,
   X,
@@ -39,6 +39,9 @@ interface QuestionResult {
   userAnswer: string;
   isCorrect: boolean;
   isSkipped: boolean;
+  completedStrokes?: number;
+  totalStrokes?: number;
+  strokePaths?: string[];
 }
 
 // 1. Configurator State
@@ -63,6 +66,15 @@ const canvasRef = ref<InstanceType<typeof KanaCanvas> | null>(null);
 const showFeedback = ref(false);
 const feedbackStatus = ref<"correct" | "incorrect" | null>(null);
 const feedbackMessage = ref("");
+
+// 6. Draw Mode New State (Hint & Strict SVG stroke guide)
+const showDrawHint = ref(false);
+const activeTemplateStrokes = ref<Point[][] | null>(null);
+const activeTemplatePaths = ref<string[]>([]);
+const hasUsedHint = ref(false);
+const svgLoadFailed = ref(false);
+const completedStrokesCount = ref(0);
+const strokeWarning = ref("");
 
 // Compute dynamic selectable groups from kanaData
 const selectableGroups = computed<SelectableGroup[]>(() => {
@@ -150,6 +162,101 @@ const accuracyPercentage = computed(() => {
   return Math.round((correctCount.value / results.value.length) * 100);
 });
 
+const tableFilter = ref<"all" | "correct" | "incorrect">("all");
+
+const filteredResults = computed(() => {
+  if (tableFilter.value === "correct") return results.value.filter((r) => r.isCorrect);
+  if (tableFilter.value === "incorrect") return results.value.filter((r) => !r.isCorrect);
+  return results.value;
+});
+
+const strokeOrderUrl = computed(() => {
+  if (!currentQuestion.value?.item.character) return "";
+  const char = currentQuestion.value.item.character;
+  const hex = char.charCodeAt(0).toString(16).toLowerCase().padStart(5, "0");
+  return `https://raw.githubusercontent.com/KanjiVG/KanjiVG/master/kanji/${hex}.svg`;
+});
+
+// Fetch Template SVG paths for stroke sequence validation and hint outline background
+async function fetchTemplateSVG(char: string) {
+  activeTemplateStrokes.value = null;
+  activeTemplatePaths.value = [];
+  svgLoadFailed.value = false;
+  
+  try {
+    const hex = char.charCodeAt(0).toString(16).toLowerCase().padStart(5, '0');
+    const url = `https://raw.githubusercontent.com/KanjiVG/KanjiVG/master/kanji/${hex}.svg`;
+    
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch SVG");
+    const svgText = await response.text();
+    
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgText, "image/svg+xml");
+    
+    let pathElements = doc.querySelectorAll("g[id^='kvg:StrokePaths'] path");
+    if (pathElements.length === 0) {
+      pathElements = doc.querySelectorAll("path[id*='-s']");
+    }
+    if (pathElements.length === 0) {
+      pathElements = doc.querySelectorAll("path");
+    }
+    
+    const strokesData: Point[][] = [];
+    const pathsData: string[] = [];
+    pathElements.forEach(path => {
+      const d = path.getAttribute("d");
+      if (d) {
+        pathsData.push(d);
+        const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathEl.setAttribute('d', d);
+        const length = pathEl.getTotalLength();
+        const pts: Point[] = [];
+        const numSamples = 32;
+        for (let i = 0; i < numSamples; i++) {
+          const dist = (i / (numSamples - 1)) * length;
+          const pt = pathEl.getPointAtLength(dist);
+          pts.push({ x: pt.x, y: pt.y });
+        }
+        strokesData.push(pts);
+      }
+    });
+    
+    if (strokesData.length > 0) {
+      activeTemplateStrokes.value = strokesData;
+      activeTemplatePaths.value = pathsData;
+    } else {
+      svgLoadFailed.value = true;
+    }
+  } catch (e) {
+    console.warn("Failed to load or parse template SVG", e);
+    svgLoadFailed.value = true;
+  }
+}
+
+// Watch question changes to fetch stroke template XML
+watch(
+  [() => currentQuestion.value, () => practiceMode.value],
+  ([newQ, mode]) => {
+    showDrawHint.value = false;
+    hasUsedHint.value = false;
+    completedStrokesCount.value = 0;
+    strokeWarning.value = "";
+    if (newQ && mode === "draw") {
+      fetchTemplateSVG(newQ.item.character);
+    }
+  },
+  { immediate: true }
+);
+
+// Treat hint click as automatic incorrect answer submission
+function toggleHint() {
+  if (showFeedback.value || !currentQuestion.value) return;
+
+  showDrawHint.value = true;
+  hasUsedHint.value = true;
+}
+
 // 6. Action Functions
 function toggleGroup(groupId: string) {
   const group = selectableGroups.value.find((g) => g.id === groupId);
@@ -221,6 +328,7 @@ function startPractice() {
   isSessionFinished.value = false;
   quizInput.value = "";
   showFeedback.value = false;
+  showDrawHint.value = false;
 
   // Focus input if quiz mode
   if (practiceMode.value === "quiz") {
@@ -252,27 +360,141 @@ function submitQuizAnswer() {
   triggerFeedback(isCorrect, correctRomaji);
 }
 
+// Handle dynamic stroke completion from KanaCanvas
+function handleStrokeCompleted(userStrokes: Point[][]) {
+  if (showFeedback.value || !currentQuestion.value || !canvasRef.value) return;
+  if (!activeTemplateStrokes.value || activeTemplateStrokes.value.length === 0) return;
+
+  const K = completedStrokesCount.value;
+  if (K >= activeTemplateStrokes.value.length) return;
+
+  const latestStroke = userStrokes[userStrokes.length - 1];
+  const targetTemplateStroke = activeTemplateStrokes.value[K];
+
+  const canvasSize = canvasRef.value.getCanvasSize ? canvasRef.value.getCanvasSize() : { width: 320, height: 320 };
+
+  const result = recognizeSingleStroke(
+    latestStroke,
+    targetTemplateStroke,
+    canvasSize.width,
+    canvasSize.height
+  );
+
+  if (result.isMatch) {
+    // Success! Update stroke count
+    completedStrokesCount.value++;
+    strokeWarning.value = "";
+
+    // Clear user hand drawing, redraw only completed template strokes
+    const completed = activeTemplateStrokes.value.slice(0, completedStrokesCount.value);
+    canvasRef.value.drawCompleted(completed);
+
+    // If character is fully completed
+    if (completedStrokesCount.value === activeTemplateStrokes.value.length) {
+      const isCorrect = !hasUsedHint.value;
+
+      // Save to store
+      store.recordDrawResult(
+        currentQuestion.value.item.id,
+        isCorrect
+      );
+
+      results.value.push({
+        item: currentQuestion.value.item,
+        userAnswer: "[coretan]",
+        isCorrect,
+        isSkipped: false,
+        completedStrokes: completedStrokesCount.value,
+        totalStrokes: activeTemplateStrokes.value ? activeTemplateStrokes.value.length : 0,
+        strokePaths: activeTemplatePaths.value ? [...activeTemplatePaths.value] : []
+      });
+
+      triggerFeedback(isCorrect, currentQuestion.value.item.romaji);
+    }
+  } else {
+    // Incorrect stroke - show warning message
+    let warning = result.message || "";
+    if (warning === "Posisi kurang tepat.") {
+      warning = t("practice.strokeWarningPosition", { num: K + 1 });
+    } else if (warning === "Arah terbalik.") {
+      warning = t("practice.strokeWarningDirection", { num: K + 1 });
+    } else if (warning === "Kurang melengkung.") {
+      warning = t("practice.strokeWarningCurvatureLess", { num: K + 1 });
+    } else if (warning === "Terlalu melengkung.") {
+      warning = t("practice.strokeWarningCurvatureMore", { num: K + 1 });
+    } else if (warning === "Bentuk kurang sesuai.") {
+      warning = t("practice.strokeWarningShape", { num: K + 1 });
+    } else {
+      warning = t("practice.strokeWarningGeneral", { num: K + 1 });
+    }
+    strokeWarning.value = warning;
+  }
+}
+
+// Clear active drawing mistakes and restore completed strokes
+function handleCanvasClear() {
+  strokeWarning.value = "";
+  if (canvasRef.value) {
+    const completed = activeTemplateStrokes.value
+      ? activeTemplateStrokes.value.slice(0, completedStrokesCount.value)
+      : [];
+    canvasRef.value.drawCompleted(completed);
+  }
+}
+
 // Submit Draw Answer
 function submitDrawAnswer() {
   if (showFeedback.value || !currentQuestion.value || !canvasRef.value) return;
 
-  const drawnPoints = canvasRef.value.getPoints();
   const targetChar = currentQuestion.value.item.character;
+  let isCorrect: boolean;
+  let feedbackText: string;
 
-  const matchResult = recognizeStroke(drawnPoints, targetChar);
-  const isCorrect = matchResult.isMatch;
+  // If template SVG stroke path data is available, do strict sequential stroke order check
+  if (hasUsedHint.value) {
+    isCorrect = false;
+    feedbackText = t("practice.incorrectFeedback", { romaji: currentQuestion.value.item.romaji.toUpperCase() });
+  } else if (activeTemplateStrokes.value && activeTemplateStrokes.value.length > 0) {
+    const userStrokes = canvasRef.value.getStrokes();
+    const canvasSize = canvasRef.value.getCanvasSize ? canvasRef.value.getCanvasSize() : { width: 320, height: 320 };
+    const matchResult = recognizeStrokeSequence(
+      userStrokes,
+      activeTemplateStrokes.value,
+      targetChar,
+      canvasSize.width,
+      canvasSize.height
+    );
+    isCorrect = matchResult.isMatch;
+    
+    if (isCorrect) {
+      feedbackText = t("practice.correctFeedback");
+    } else {
+      feedbackText = matchResult.message || t("practice.incorrectFeedback", { romaji: currentQuestion.value.item.romaji.toUpperCase() });
+    }
+  } else {
+    // Fallback to standard $1 recognizer if SVG didn't load (offline)
+    const drawnPoints = canvasRef.value.getPoints();
+    const matchResult = recognizeStroke(drawnPoints, targetChar);
+    isCorrect = matchResult.isMatch;
+    feedbackText = isCorrect
+      ? t("practice.correctFeedback")
+      : t("practice.incorrectFeedback", { romaji: currentQuestion.value.item.romaji.toUpperCase() });
+  }
 
   // Record inside Store Action
   store.recordDrawResult(currentQuestion.value.item.id, isCorrect);
 
   results.value.push({
     item: currentQuestion.value.item,
-    userAnswer: isCorrect ? "OK" : "FAIL",
+    userAnswer: hasUsedHint.value ? "HINT" : (isCorrect ? "OK" : "FAIL"),
     isCorrect,
     isSkipped: false,
+    completedStrokes: completedStrokesCount.value,
+    totalStrokes: activeTemplateStrokes.value ? activeTemplateStrokes.value.length : 0,
+    strokePaths: activeTemplatePaths.value ? [...activeTemplatePaths.value] : []
   });
 
-  triggerFeedback(isCorrect, currentQuestion.value.item.romaji);
+  triggerFeedback(isCorrect, feedbackText, true);
 }
 
 // Skip Question
@@ -291,24 +513,34 @@ function skipQuestion() {
     userAnswer: "-",
     isCorrect: false,
     isSkipped: true,
+    completedStrokes: practiceMode.value === "draw" ? completedStrokesCount.value : undefined,
+    totalStrokes: practiceMode.value === "draw" && activeTemplateStrokes.value ? activeTemplateStrokes.value.length : undefined,
+    strokePaths: practiceMode.value === "draw" && activeTemplatePaths.value ? [...activeTemplatePaths.value] : undefined
   });
 
   triggerFeedback(false, currentQuestion.value.item.romaji);
 }
 
 // Trigger screen feedback
-function triggerFeedback(isCorrect: boolean, romaji: string) {
+function triggerFeedback(isCorrect: boolean, msgOrRomaji: string, isCustomMsg = false) {
   feedbackStatus.value = isCorrect ? "correct" : "incorrect";
-  feedbackMessage.value = isCorrect
-    ? t("practice.correctFeedback")
-    : t("practice.incorrectFeedback", { romaji: romaji.toUpperCase() });
+  if (isCustomMsg) {
+    feedbackMessage.value = msgOrRomaji;
+  } else {
+    feedbackMessage.value = isCorrect
+      ? t("practice.correctFeedback")
+      : t("practice.incorrectFeedback", { romaji: msgOrRomaji.toUpperCase() });
+  }
 
   showFeedback.value = true;
 
-  // Automatically transition to next question after 800ms
+  // Delay transition: in drawing mode, give user a few seconds to compare drawing side-by-side
+  const delay = practiceMode.value === "draw"
+    ? (isCorrect ? 2500 : 3500)
+    : (isCorrect ? 800 : 1800);
   setTimeout(() => {
     goToNextQuestion();
-  }, 800);
+  }, delay);
 }
 
 // Navigate to next question or score page
@@ -316,6 +548,7 @@ function goToNextQuestion() {
   showFeedback.value = false;
   feedbackStatus.value = null;
   feedbackMessage.value = "";
+  showDrawHint.value = false;
 
   if (currentQuestionIndex.value + 1 < questions.value.length) {
     currentQuestionIndex.value++;
@@ -335,6 +568,7 @@ function goToNextQuestion() {
 
 // Restart session with same configurations
 function restartPractice() {
+  showDrawHint.value = false;
   startPractice();
 }
 
@@ -342,6 +576,7 @@ function restartPractice() {
 function stopSession() {
   isSessionActive.value = false;
   isSessionFinished.value = false;
+  showDrawHint.value = false;
 }
 </script>
 
@@ -734,13 +969,60 @@ function stopSession() {
         >
           <!-- Target Character Box -->
           <div
-            class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white py-12 px-6 aspect-square max-w-[340px] mx-auto w-full shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff]"
+            class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white px-6 mx-auto w-full h-[340px] shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff]"
+            :class="[
+              (currentQuestion?.item.character.length ?? 1) > 1
+                ? 'max-w-[420px]'
+                : 'max-w-[340px]'
+            ]"
           >
-            <span
-              class="text-9xl md:text-[10rem] font-black text-slate-950 dark:text-white font-sans select-none leading-none"
-            >
-              {{ currentQuestion?.item.character }}
-            </span>
+            <template v-if="practiceMode === 'quiz'">
+              <span
+                class="font-black text-slate-950 dark:text-white font-sans select-none leading-none text-center"
+                :class="[
+                  (currentQuestion?.item.character.length ?? 1) > 2
+                    ? 'text-6xl md:text-7xl'
+                    : (currentQuestion?.item.character.length ?? 1) > 1
+                      ? 'text-8xl md:text-9xl'
+                      : 'text-9xl md:text-[10rem]'
+                ]"
+              >
+                {{ currentQuestion?.item.character }}
+              </span>
+            </template>
+            <template v-else>
+              <!-- Drawing mode: show Romaji prompt by default -->
+              <div v-show="!showDrawHint && !showFeedback" class="flex flex-col items-center justify-center space-y-3">
+                <span class="text-xs font-black uppercase text-slate-400 dark:text-slate-500 tracking-widest">
+                  {{ $t("practice.drawPrompt") }}
+                </span>
+                <span class="text-7xl md:text-8xl font-black text-slate-950 dark:text-white uppercase tracking-tight select-none">
+                  {{ currentQuestion?.item.romaji }}
+                </span>
+              </div>
+              
+              <!-- Draw mode hint/mistake: show stroke order SVG -->
+              <div v-show="showDrawHint || showFeedback" class="w-full h-full flex flex-col items-center justify-center space-y-2">
+                <span class="text-[10px] font-black uppercase text-amber-500 tracking-wider">
+                  {{ showDrawHint ? $t("practice.hintLabel") : (feedbackStatus === 'correct' ? $t("practice.correctFeedback") : $t("practice.incorrectLabel")) }}
+                </span>
+                <div class="relative w-44 h-44 bg-white border-2 border-slate-950 p-2 flex items-center justify-center">
+                  <img
+                    v-if="!svgLoadFailed && strokeOrderUrl"
+                    :src="strokeOrderUrl"
+                    @error="svgLoadFailed = true"
+                    class="w-full h-full object-contain select-none"
+                    :alt="$t('practice.strokeGuideAlt')"
+                  />
+                  <span
+                    v-else
+                    class="text-8xl font-black text-slate-950 select-none leading-none"
+                  >
+                    {{ currentQuestion?.item.character }}
+                  </span>
+                </div>
+              </div>
+            </template>
           </div>
 
           <!-- Input arena (Quiz vs Canvas) -->
@@ -804,20 +1086,34 @@ function stopSession() {
               <KanaCanvas
                 ref="canvasRef"
                 :char="currentQuestion?.item.character || ''"
+                :show-outline="showDrawHint || showFeedback"
+                @stroke-completed="handleStrokeCompleted"
+                @clear="handleCanvasClear"
               />
 
-              <div class="flex gap-4 w-full max-w-[280px] sm:max-w-[320px]">
+              <p v-if="strokeWarning" class="text-rose-500 dark:text-rose-400 font-black text-xs uppercase tracking-wider text-center max-w-[280px] sm:max-w-[320px] leading-tight transition-all duration-200">
+                {{ strokeWarning }}
+              </p>
+
+              <div class="flex gap-2 w-full max-w-[280px] sm:max-w-[320px]">
                 <NeoBrutalistButton
                   @click="submitDrawAnswer"
                   :disabled="showFeedback"
-                  class="flex-1 py-3 bg-emerald-400 text-slate-950 hover:bg-emerald-500 disabled:opacity-40"
+                  class="flex-1 py-3 bg-emerald-400 text-slate-950 hover:bg-emerald-500 disabled:opacity-40 text-xs sm:text-sm font-black"
                 >
                   {{ $t("practice.submitBtn") }}
                 </NeoBrutalistButton>
                 <NeoBrutalistButton
+                  @click="toggleHint"
+                  :disabled="showFeedback"
+                  class="px-3 py-3 bg-amber-300 text-slate-950 hover:bg-amber-400 disabled:opacity-40 text-xs sm:text-sm font-black"
+                >
+                  {{ $t("practice.hintBtn") }}
+                </NeoBrutalistButton>
+                <NeoBrutalistButton
                   @click="skipQuestion"
                   :disabled="showFeedback"
-                  class="px-5 py-3 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-40"
+                  class="px-3 py-3 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-40 text-xs sm:text-sm font-black"
                 >
                   {{ $t("practice.skipBtn") }}
                 </NeoBrutalistButton>
@@ -910,7 +1206,7 @@ function stopSession() {
             <div
               class="text-xs font-black uppercase text-slate-400 tracking-wider"
             >
-              {{ $t("progress.title") }}
+              {{ $t("practice.score") }}
             </div>
             <div
               class="text-3xl font-black text-slate-950 dark:text-white mt-1"
@@ -923,77 +1219,158 @@ function stopSession() {
 
       <!-- Details Summary Table -->
       <section class="space-y-4">
-        <h3
-          class="font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 text-sm"
-        >
-          {{ $t("practice.questionSummary") }}
-        </h3>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <h3 class="font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 text-sm">
+            {{ $t("practice.questionSummary") }}
+          </h3>
 
-        <div
-          class="overflow-x-auto border-[3px] border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]"
-        >
-          <table
-            class="w-full text-left bg-white dark:bg-slate-900 border-collapse"
-          >
-            <thead>
-              <tr
-                class="bg-slate-50 dark:bg-slate-800 border-b-[3px] border-slate-950 dark:border-white font-black uppercase text-xs tracking-wider text-slate-600 dark:text-slate-400"
-              >
-                <th class="py-3 px-4">{{ $t("practice.tableChar") }}</th>
-                <th class="py-3 px-4">{{ $t("practice.tableRomaji") }}</th>
-                <th class="py-3 px-4">{{ $t("practice.tableYourAnswer") }}</th>
-                <th class="py-3 px-4 text-center">
-                  {{ $t("practice.tableResult") }}
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="divide-y-[2px] divide-slate-100 dark:divide-slate-800 font-semibold text-sm"
+          <!-- Filter Tabs -->
+          <div class="flex items-center gap-1 border-[2px] border-slate-950 dark:border-white p-0.5 w-fit shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]">
+            <button
+              @click="tableFilter = 'all'"
+              class="px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-colors"
+              :class="tableFilter === 'all'
+                ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950'
+                : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'"
             >
-              <tr
-                v-for="(res, idx) in results"
-                :key="idx"
-                class="hover:bg-slate-50/50 dark:hover:bg-slate-850/30"
-              >
-                <td
-                  class="py-3 px-4 font-black text-lg text-slate-950 dark:text-white"
+              {{ $t("practice.filterAll") }} ({{ results.length }})
+            </button>
+            <button
+              @click="tableFilter = 'correct'"
+              class="px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-colors"
+              :class="tableFilter === 'correct'
+                ? 'bg-emerald-500 text-white'
+                : 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'"
+            >
+              <span class="inline-flex items-center gap-1">
+                <Check class="w-3 h-3 stroke-[3]" />
+                {{ $t("practice.filterCorrect") }} ({{ correctCount }})
+              </span>
+            </button>
+            <button
+              @click="tableFilter = 'incorrect'"
+              class="px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-colors"
+              :class="tableFilter === 'incorrect'
+                ? 'bg-rose-500 text-white'
+                : 'text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30'"
+            >
+              <span class="inline-flex items-center gap-1">
+                <X class="w-3 h-3 stroke-[3]" />
+                {{ $t("practice.filterIncorrect") }} ({{ results.length - correctCount }})
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="border-[3px] border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] overflow-hidden">
+          <!-- Sticky Header -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left bg-white dark:bg-slate-900 border-collapse">
+              <thead class="sticky top-0 z-10">
+                <tr class="bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black uppercase text-xs tracking-wider">
+                  <th class="py-3 px-4 whitespace-nowrap">#</th>
+                  <th class="py-3 px-4 whitespace-nowrap">{{ $t("practice.tableChar") }}</th>
+                  <th class="py-3 px-4 whitespace-nowrap">{{ $t("practice.tableRomaji") }}</th>
+                  <th class="py-3 px-4 whitespace-nowrap">{{ $t("practice.tableYourAnswer") }}</th>
+                  <th class="py-3 px-4 text-center whitespace-nowrap">{{ $t("practice.tableResult") }}</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <!-- Scrollable Body -->
+          <div class="overflow-auto max-h-[520px] overflow-x-auto">
+            <table class="w-full text-left bg-white dark:bg-slate-900 border-collapse">
+              <tbody class="text-sm divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Empty state -->
+                <tr v-if="filteredResults.length === 0">
+                  <td colspan="5" class="py-10 text-center text-slate-400 dark:text-slate-600 font-black uppercase tracking-wider text-xs">
+                    {{ $t("practice.filterEmpty") }}
+                  </td>
+                </tr>
+
+                <tr
+                  v-for="(res, idx) in filteredResults"
+                  :key="idx"
+                  class="transition-colors"
+                  :class="[
+                    res.isCorrect
+                      ? idx % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-emerald-50/40 dark:bg-emerald-950/10'
+                      : idx % 2 === 0 ? 'bg-rose-50/60 dark:bg-rose-950/15' : 'bg-rose-50/30 dark:bg-rose-950/10'
+                  ]"
                 >
-                  {{ res.item.character }}
-                </td>
-                <td class="py-3 px-4 font-mono font-bold uppercase">
-                  {{ res.item.romaji }}
-                </td>
-                <td class="py-3 px-4 font-mono">
-                  {{ res.userAnswer }}
-                </td>
-                <td class="py-3 px-4">
-                  <div class="flex justify-center">
-                    <span
-                      v-if="res.isCorrect"
-                      class="inline-flex items-center gap-1 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-[10px] font-black uppercase px-2 py-0.5 border border-emerald-300 rounded-none"
-                    >
-                      <Check class="w-3 h-3 stroke-[3]" />
-                      {{ $t("practice.resultCorrect") }}
-                    </span>
-                    <span
-                      v-else-if="res.isSkipped"
-                      class="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-850/50 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase px-2 py-0.5 border border-slate-300 dark:border-slate-700 rounded-none"
-                    >
-                      <ArrowRight class="w-3 h-3 stroke-[3]" />
-                      {{ $t("practice.resultSkipped") }}
-                    </span>
-                    <span
-                      v-else
-                      class="inline-flex items-center gap-1 bg-rose-100 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-[10px] font-black uppercase px-2 py-0.5 border border-rose-300 rounded-none"
-                    >
-                      <X class="w-3 h-3 stroke-[3]" />
-                      {{ $t("practice.resultIncorrect") }}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <!-- Row number -->
+                  <td class="py-2.5 px-4 text-xs font-black text-slate-400 dark:text-slate-600 w-10 whitespace-nowrap">
+                    {{ idx + 1 }}
+                  </td>
+                  <!-- Character -->
+                  <td class="py-2.5 px-4 font-black text-2xl text-slate-950 dark:text-white whitespace-nowrap">
+                    {{ res.item.character }}
+                  </td>
+                  <!-- Romaji -->
+                  <td class="py-2.5 px-4 font-mono font-bold uppercase text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                    {{ res.item.romaji }}
+                  </td>
+                  <!-- Answer / Stroke Preview -->
+                  <td class="py-2.5 px-4 font-mono">
+                    <template v-if="res.strokePaths && res.strokePaths.length > 0">
+                      <div class="flex items-center gap-2">
+                        <svg
+                          viewBox="0 0 109 109"
+                          class="w-9 h-9 border-2 border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-950 p-0.5 flex-shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+                        >
+                          <g class="stroke-slate-950/12 dark:stroke-white/10 stroke-[4] fill-none">
+                            <path v-for="(d, pidx) in res.strokePaths" :key="'bg-'+pidx" :d="d" />
+                          </g>
+                          <g class="stroke-emerald-600 dark:stroke-emerald-400 stroke-[8] stroke-linecap-round stroke-linejoin-round fill-none">
+                            <path
+                              v-for="(d, pidx) in res.strokePaths.slice(0, res.completedStrokes)"
+                              :key="'fg-'+pidx"
+                              :d="d"
+                            />
+                          </g>
+                        </svg>
+                        <span class="text-[11px] font-black whitespace-nowrap"
+                          :class="res.completedStrokes === res.totalStrokes ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'"
+                        >
+                          {{ res.completedStrokes }} / {{ res.totalStrokes }}
+                        </span>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <span class="text-slate-600 dark:text-slate-400">{{ res.userAnswer }}</span>
+                    </template>
+                  </td>
+                  <!-- Result Badge -->
+                  <td class="py-2.5 px-4">
+                    <div class="flex justify-center">
+                      <span
+                        v-if="res.isCorrect"
+                        class="inline-flex items-center gap-1 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-[10px] font-black uppercase px-2 py-0.5 border border-emerald-300 dark:border-emerald-700 whitespace-nowrap"
+                      >
+                        <Check class="w-3 h-3 stroke-[3]" />
+                        {{ $t("practice.resultCorrect") }}
+                      </span>
+                      <span
+                        v-else-if="res.isSkipped"
+                        class="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase px-2 py-0.5 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+                      >
+                        <ArrowRight class="w-3 h-3 stroke-[3]" />
+                        {{ $t("practice.resultSkipped") }}
+                      </span>
+                      <span
+                        v-else
+                        class="inline-flex items-center gap-1 bg-rose-100 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 text-[10px] font-black uppercase px-2 py-0.5 border border-rose-300 dark:border-rose-700 whitespace-nowrap"
+                      >
+                        <X class="w-3 h-3 stroke-[3]" />
+                        {{ $t("practice.resultIncorrect") }}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 

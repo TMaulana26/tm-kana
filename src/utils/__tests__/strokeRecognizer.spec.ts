@@ -5,7 +5,8 @@ import {
   resample,
   centroid,
   boundingBox,
-  recognizeStroke
+  recognizeStroke,
+  recognizeStrokeSequence
 } from '../strokeRecognizer'
 
 describe('strokeRecognizer.ts', () => {
@@ -90,10 +91,59 @@ describe('strokeRecognizer.ts', () => {
         { x: 100, y: 100 }
       ]
       const result = recognizeStroke(path, 'あ')
-      // In node tests, templatePoints is empty because canvas is not fully implemented in jsdom.
-      // So the fallback logic returns score: 0.9, isMatch: true.
       expect(result.isMatch).toBe(true)
       expect(result.score).toBeGreaterThanOrEqual(0.7)
+    })
+  })
+
+  describe('recognizeStrokeSequence main function', () => {
+    it('should fail if stroke counts do not match', () => {
+      const user = [[{ x: 0, y: 0 }, { x: 10, y: 10 }]]
+      const template = [
+        [{ x: 0, y: 0 }, { x: 10, y: 10 }],
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const result = recognizeStrokeSequence(user, template)
+      expect(result.isMatch).toBe(false)
+      expect(result.message).toContain('Goresan tidak pas')
+    })
+
+    it('should fail if any stroke is too short', () => {
+      const user = [[{ x: 0, y: 0 }], [{ x: 10, y: 0 }, { x: 0, y: 10 }]]
+      const template = [
+        [{ x: 0, y: 0 }, { x: 10, y: 10 }],
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const result = recognizeStrokeSequence(user, template)
+      expect(result.isMatch).toBe(false)
+      expect(result.message).toContain('terlalu pendek')
+    })
+
+    it('should fail if stroke direction is reversed', () => {
+      const user = [
+        [{ x: 10, y: 10 }, { x: 0, y: 0 }], // reversed
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const template = [
+        [{ x: 0, y: 0 }, { x: 10, y: 10 }],
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const result = recognizeStrokeSequence(user, template)
+      expect(result.isMatch).toBe(false)
+      expect(result.message).toContain('Arah goresan ke-1 terbalik')
+    })
+
+    it('should pass if stroke count, shapes, and directions match correctly', () => {
+      const user = [
+        [{ x: 0, y: 0 }, { x: 10, y: 10 }],
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const template = [
+        [{ x: 0, y: 0 }, { x: 10, y: 10 }],
+        [{ x: 10, y: 0 }, { x: 0, y: 10 }]
+      ]
+      const result = recognizeStrokeSequence(user, template)
+      expect(result.isMatch).toBe(true)
     })
   })
 })
