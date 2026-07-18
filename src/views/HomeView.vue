@@ -8,7 +8,15 @@ import NeoBrutalistCard from "@/components/NeoBrutalistCard.vue";
 import NeoBrutalistInput from "@/components/NeoBrutalistInput.vue";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
 import NeoBrutalistLinkCard from "@/components/NeoBrutalistLinkCard.vue";
-import { User, Download, Upload, BookOpen, Info } from "lucide-vue-next";
+import {
+  User,
+  Download,
+  Upload,
+  BookOpen,
+  Info,
+  CheckCircle2,
+  XCircle,
+} from "lucide-vue-next";
 
 const { t } = useI18n();
 const store = useProgressStore();
@@ -45,6 +53,8 @@ function handleExport() {
 
 const fileInputRef = ref<HTMLInputElement | null>(null);
 const isDragging = ref(false);
+const importStatus = ref<"idle" | "success" | "error">("idle");
+const importMessage = ref("");
 
 function triggerFileInput() {
   fileInputRef.value?.click();
@@ -85,24 +95,26 @@ function processFile(file: File) {
     if (result.success && result.progressData) {
       store.loadProgress(result.progressData);
       localNickname.value = store.nickname;
-      toast.success(
-        t("toast.importSuccess", { name: result.progressData.nickname }),
-      );
+
+      importStatus.value = "success";
+      importMessage.value = t("toast.importSuccess", {
+        name: result.progressData.nickname,
+      });
+      toast.success(importMessage.value);
     } else {
+      importStatus.value = "error";
       if (result.error === "nickname_mismatch") {
-        toast.error(
-          t("toast.importErrorMismatch", {
-            fileNickname: result.fileNickname || "?",
-            currentNickname: store.nickname,
-          }),
-        );
+        importMessage.value = t("toast.importErrorMismatch");
       } else {
-        toast.error(t("toast.importErrorInvalid"));
+        importMessage.value = t("toast.importErrorInvalid");
       }
+      toast.error(importMessage.value);
     }
   };
   reader.onerror = () => {
-    toast.error(t("toast.importErrorInvalid"));
+    importStatus.value = "error";
+    importMessage.value = t("toast.importErrorInvalid");
+    toast.error(importMessage.value);
   };
   reader.readAsText(file);
 }
@@ -133,7 +145,7 @@ function processFile(file: File) {
       <div
         class="absolute right-0 bottom-0 translate-x-1/6 translate-y-1/6 text-[10rem] font-black text-slate-950/10 select-none pointer-events-none font-sans"
       >
-        {{ 'あア' }}
+        {{ "たまかな" }}
       </div>
     </div>
 
@@ -222,17 +234,18 @@ function processFile(file: File) {
               class="text-sm font-black uppercase tracking-wide text-slate-800 dark:text-slate-200"
               >{{ $t("home.importTitle") }}</span
             >
+            <!-- Idle State -->
             <div
+              v-if="importStatus === 'idle'"
               @dragover="handleDragOver"
               @dragleave="handleDragLeave"
               @drop="handleDrop"
               @click="triggerFileInput"
-              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center"
-              :class="[
-                isDragging
-                  ? 'border-violet-500 bg-violet-100 dark:bg-violet-950/40 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]'
-                  : 'border-slate-950 dark:border-white hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-[#1f2028] shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]',
-              ]"
+              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center border-slate-950 dark:border-white hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-[#1f2028] shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]"
+              :class="{
+                'border-violet-500 bg-violet-100 dark:bg-violet-950/40':
+                  isDragging,
+              }"
             >
               <div
                 class="w-12 h-12 rounded-none border-[3px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 flex items-center justify-center text-slate-950 dark:text-white"
@@ -259,6 +272,63 @@ function processFile(file: File) {
                 @change="handleFileChange"
               />
             </div>
+
+            <!-- Success State -->
+            <div
+              v-else-if="importStatus === 'success'"
+              class="border-[3px] border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 rounded-none p-8 flex flex-col items-center justify-center gap-3 text-center shadow-[4px_4px_0px_0px_#10b981]"
+            >
+              <div
+                class="w-12 h-12 rounded-none border-[3px] border-emerald-500 bg-white dark:bg-slate-950 flex items-center justify-center text-emerald-500"
+              >
+                <CheckCircle2 class="w-6 h-6" />
+              </div>
+              <div>
+                <p class="text-sm font-black uppercase tracking-wide">
+                  {{ $t("home.importSuccessLabel") }}
+                </p>
+                <p class="text-xs font-bold mt-1 leading-relaxed">
+                  {{ importMessage }}
+                </p>
+              </div>
+              <button
+                @click.stop="importStatus = 'idle'"
+                class="mt-1 px-3 py-1.5 border-[2px] border-emerald-500 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-[10px] font-black uppercase tracking-wider transition-colors"
+              >
+                {{ $t("home.importAnotherBtn") }}
+              </button>
+            </div>
+
+            <!-- Error State -->
+            <div
+              v-else-if="importStatus === 'error'"
+              class="border-[3px] border-rose-500 bg-rose-50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-300 rounded-none p-8 flex flex-col items-center justify-center gap-3 text-center shadow-[4px_4px_0px_0px_#f43f5e]"
+            >
+              <div
+                class="w-12 h-12 rounded-none border-[3px] border-rose-500 bg-white dark:bg-slate-950 flex items-center justify-center text-rose-500"
+              >
+                <XCircle class="w-6 h-6" />
+              </div>
+              <div>
+                <p class="text-sm font-black uppercase tracking-wide">
+                  {{ $t("home.importFailedLabel") }}
+                </p>
+                <p
+                  class="text-xs font-bold mt-1 max-w-sm mx-auto leading-relaxed"
+                >
+                  {{ importMessage }}
+                </p>
+              </div>
+              <button
+                @click.stop="
+                  importStatus = 'idle';
+                  triggerFileInput();
+                "
+                class="mt-1 px-3 py-1.5 border-[2px] border-rose-500 text-rose-800 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-[10px] font-black uppercase tracking-wider transition-colors"
+              >
+                {{ $t("home.importRetryBtn") }}
+              </button>
+            </div>
           </div>
         </NeoBrutalistCard>
       </div>
@@ -277,7 +347,7 @@ function processFile(file: File) {
             <BookOpen class="w-6 h-6" />
           </template>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-6">
             <!-- Tofugu Hiragana Card -->
             <NeoBrutalistLinkCard
               href="https://www.tofugu.com/japanese/learn-hiragana/"

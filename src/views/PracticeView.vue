@@ -345,7 +345,17 @@ function submitQuizAnswer() {
   const inputCleaned = quizInput.value.trim().toLowerCase();
   const correctRomaji = currentQuestion.value.item.romaji.toLowerCase();
 
-  const isCorrect = inputCleaned === correctRomaji;
+  let isCorrect = inputCleaned === correctRomaji;
+
+  // Allow alternate romaji answers for special Dakuon characters (ぢ/ヂ -> di, づ/ヅ -> du)
+  const charId = currentQuestion.value.item.id;
+  if (!isCorrect) {
+    if ((charId === "h-dji" || charId === "k-dji") && inputCleaned === "di") {
+      isCorrect = true;
+    } else if ((charId === "h-dzu" || charId === "k-dzu") && inputCleaned === "du") {
+      isCorrect = true;
+    }
+  }
 
   // Record inside Store Action
   store.recordQuizResult(currentQuestion.value.item.id, isCorrect);

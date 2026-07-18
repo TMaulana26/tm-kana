@@ -39,12 +39,16 @@
     "tofuguHiraganaDesc": "Learn how to read, write, and memorize Hiragana from scratch.",
     "tofuguKatakanaTitle": "Tofugu's Katakana Guide",
     "tofuguKatakanaDesc": "An interactive workbook to master reading and writing Katakana.",
-    "learnMore": "Learn More"
+    "learnMore": "Learn More",
+    "importSuccessLabel": "Import Successful!",
+    "importFailedLabel": "Import Failed!",
+    "importAnotherBtn": "Import Another File",
+    "importRetryBtn": "Try Again"
   },
   "toast": {
     "exportSuccess": "Progress data successfully exported!",
     "importSuccess": "Welcome back, {name}! Progress data successfully imported.",
-    "importErrorMismatch": "Import failed: Backup nickname ({fileNickname}) does not match current active nickname ({currentNickname}).",
+    "importErrorMismatch": "Import failed: Nickname does not match your active nickname.",
     "importErrorInvalid": "Import failed: Damaged file or invalid TM-KANA progress backup format."
   },
   "chart": {
@@ -161,5 +165,43 @@
     "filterCorrect": "Correct",
     "filterIncorrect": "Incorrect",
     "filterEmpty": "No data for this filter."
+  },
+  "progressPage": {
+    "title": "Learning Progress Dashboard",
+    "desc": "Track your Hiragana & Katakana reading, pronunciation, and writing progress in detail.",
+    "summaryTitle": "Key Statistics",
+    "hiraganaProgress": "Hiragana Progress",
+    "katakanaProgress": "Katakana Progress",
+    "quizAccuracy": "Quiz Accuracy",
+    "writingAccuracy": "Writing Accuracy",
+    "totalAttempts": "Total Attempts",
+    "charLearnedCount": "{learned} of {total} Characters",
+    "searchPlaceholder": "Search romaji or character...",
+    "allAlphabet": "All Alphabets",
+    "allGroup": "All Groups",
+    "tableNo": "#",
+    "tableChar": "Character",
+    "tableRomaji": "Romaji",
+    "tableStatus": "Mastered",
+    "tableQuiz": "Quiz History",
+    "tableWriting": "Writing History",
+    "statusLearned": "Mastered",
+    "statusNotLearned": "Not Yet",
+    "noHistory": "No practice",
+    "dangerZoneTitle": "Danger Zone: Reset Progress",
+    "dangerZoneDesc": "Permanently deletes all of your learning history, accuracy statistics, mastery status, and nickname from this device.",
+    "resetBtn": "Reset All Learning Progress",
+    "resetConfirmTitle": "Reset All of Your Progress?",
+    "resetConfirmDesc": "Are you sure you want to delete all of your learning progress? This action cannot be undone.",
+    "resetConfirmBtn": "Yes, Reset Progress",
+    "resetCancelBtn": "Cancel",
+    "resetToastSuccess": "All learning progress has been successfully reset.",
+    "hiraganaFilter": "Hiragana",
+    "katakanaFilter": "Katakana",
+    "gojuonFilter": "Gojuon",
+    "dakutenFilter": "Dakuten",
+    "yoonFilter": "Yoon",
+    "correctSymbol": "✓",
+    "incorrectSymbol": "✗"
   }
 }

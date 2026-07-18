@@ -169,6 +169,6 @@ describe('HomeView.vue integration tests', () => {
     
     // Nickname remains 'ユーザー'
     expect(store.nickname).toBe('ユーザー')
-    expect(toast.error).toHaveBeenCalledWith('Import failed: Backup nickname (Budi) does not match current active nickname (ユーザー).')
+    expect(toast.error).toHaveBeenCalledWith('Import failed: Nickname does not match your active nickname.')
   })
 })

@@ -1,43 +1,54 @@
 # Modul Tugas 4: Halaman Dashboard Progres & Statistik (Progress Page)
 
 ## 1. Deskripsi Tugas
-Tugas ini berfokus pada pembuatan Halaman Dasbor Kemajuan Pengguna (Progress & Statistics View). Halaman ini bertugas menyajikan ringkasan data analitik dari Pinia store secara visual, memberikan informasi detail mengenai persentase penguasaan karakter Hiragana dan Katakana, serta menyediakan kontrol untuk melakukan reset data.
+Tugas ini berfokus pada pembuatan Halaman Dasbor Kemajuan Pengguna (Progress & Statistics View). Halaman ini bertugas menyajikan ringkasan data analitik dari Pinia store (`useProgressStore`) secara visual dengan desain Neo-Brutalisme yang konsisten, menyajikan persentase penguasaan karakter Hiragana dan Katakana, rincian aktivitas latihan (Kuis vs Menulis Goresan), serta menyediakan tombol destruktif untuk me-reset data dengan aman menggunakan dialog konfirmasi.
 
 ## 2. Kriteria Sukses & Ketentuan Spesifik Fitur
-- **Internasionalisasi (i18n):** Semua teks label grafik, kartu ringkasan data, dan jendela konfirmasi reset wajib terintegrasi dengan berkas lokalisasi bahasa.
+- **Internasionalisasi (i18n):** Semua label teks, status progres, tooltip grafik, dan pesan konfirmasi dialog wajib menggunakan lokalisasi bahasa via `$t()` atau `t()`.
+- **Desain & Estetika Neo-Brutalisme:**
+  - Layout wajib menggunakan border tegas (`border-[3px] border-slate-950 dark:border-white`), bayangan solid tanpa blur (`shadow-[4px_4px_0px_0px_#000]`), warna kontras (seperti warna primer kuning `bg-yellow-300`, violet `bg-violet-400`, atau emerald `bg-emerald-400`), serta tipografi tebal (`font-black uppercase`).
 - **Visualisasi Statistik & Persentase:**
-  - Menampilkan kartu ringkasan (Summary Cards) berisi total karakter yang sudah dikuasai vs total keseluruhan (contoh: "35 / 46 Hiragana", "12 / 46 Katakana").
-  - Menampilkan komponen bilah kemajuan (Progress Bar dari shadcn-vue) yang menunjukkan persentase kelulusan secara real-time.
-  - Menyediakan ringkasan performa latihan (berapa kali mencoba kuis dan menggambar untuk tiap karakter).
-- **Fitur Destruktif (Reset Data):**
-  - Menyediakan tombol "Reset Semua Progres" untuk menghapus seluruh data belajar yang ada di LocalStorage.
-  - **Keamanan Aksi:** Aksi ini wajib memicu jendela konfirmasi (AlertDialog dari shadcn-vue) untuk mencegah ketidaksengajaan pengguna. Data hanya akan benar-benar dihapus jika pengguna memberikan konfirmasi final. Setelah di-reset, status aplikasi akan kembali ke keadaan awal (kondisi bersih).
+  - **Summary Cards (Kartu Ringkasan):**
+    - Total karakter yang telah dipelajari (`hasLearned: true`) dibandingkan dengan jumlah total Hiragana (46) dan Katakana (46).
+    - Statistik detail latihan: total percobaan kuis dan menggambar coretan, rasio akurasi sukses/gagal secara kumulatif.
+  - **Progress Bar:** Menampilkan bar progres visual yang tebal dan kontras untuk Hiragana dan Katakana.
+- **Rincian Performa Karakter (Detailed List):**
+  - Menyediakan filter atau tabel kolaps (Accordion/Table) untuk melihat performa per karakter.
+  - Setiap baris menunjukkan: karakter, romaji, jumlah keberhasilan/kegagalan kuis (`quizSuccessCount` / `quizFailCount`), serta jumlah keberhasilan/kegagalan coretan (`drawSuccessCount` / `drawFailCount`).
+  - Menyediakan tombol cepat untuk mengubah status hafalan (`hasLearned`) per karakter langsung dari tabel secara reaktif.
+- **Fitur Reset Data Belajar:**
+  - Menyediakan tombol "Reset Semua Progres" dengan peringatan bahaya yang jelas.
+  - Wajib dilindungi dengan `AlertDialog` konfirmasi. Jika disetujui, panggil action `resetProgress` di Pinia store dan alihkan user ke halaman Home dengan state bersih.
 
 ## 3. Daftar Tugas (Checklist Kerja AI)
 
 ### [ ] Pembaruan Berkas Bahasa (i18n JSON)
-- [ ] Lengkapi string i18n khusus halaman progres di `src/locales/id.json` dan `src/locales/en.json` (termasuk teks peringatan bahaya reset data).
+- [ ] Tambahkan i18n keys untuk halaman progres (misal: statistik utama, tabel riwayat latihan, konfirmasi dialog reset, tombol filter) di `src/locales/id.json`, `src/locales/en.json`, dan `src/locales/ja.json`.
 
 ### [ ] Desain Tampilan UI Dashboard
-- [ ] Susun layout grid untuk kartu informasi statistik utama (Total Hafal, Akurasi Latihan, Hari Belajar).
-- [ ] Implementasikan komponen Progress Bar shadcn-vue untuk visualisasi persentase penguasaan alfabet Hiragana dan Katakana secara terpisah.
+- [ ] Implementasikan grid layout yang responsif untuk kartu statistik (Kemajuan Hiragana, Kemajuan Katakana, Akurasi Latihan, Hari Belajar).
+- [ ] Gunakan komponen Progress Bar ber-style Neo-Brutalisme dengan border hitam solid dan warna cerah (`bg-emerald-400` / `bg-violet-400`).
 
-### [ ] Pembuatan Daftar Rincian Karakter (Detailed List)
-- [ ] Buat tabel atau list kolaps (Accordion/Table dari shadcn-vue) yang menjabarkan riwayat performa per karakter (menampilkan berapa kali salah/benar dalam mode kuis dan menggambar).
+### [ ] Tabel Rincian & Riwayat Latihan Per Karakter
+- [ ] Buat tabel rincian ber-style Neo-Brutalisme dengan sticky header dan scrollable container (`max-h-[600px]`) agar nyaman saat data banyak.
+- [ ] Tampilkan statistik latihan Kuis dan Menulis secara berdampingan untuk setiap karakter.
+- [ ] Tambahkan badge reaktif untuk menunjukkan status "Dikuasai" yang dapat di-toggle (`toggleLearned`) langsung oleh user di baris tabel.
+- [ ] Tambahkan pencarian sederhana atau filter grup (Gojuon, Dakuten, Yoon) untuk menyaring data karakter yang tampil di tabel.
 
 ### [ ] Integrasi Jendela Konfirmasi & Fungsi Reset
-- [ ] Implementasikan komponen AlertDialog shadcn-vue pada tombol reset.
-- [ ] Hubungkan konfirmasi sukses dengan *action* di Pinia store untuk mengosongkan state progres dan membersihkan LocalStorage, lalu arahkan user kembali ke halaman Home dengan status awal.
+- [ ] Pasang tombol Reset dengan visualisasi peringatan merah (`bg-rose-400`).
+- [ ] Integrasikan dengan komponen dialog konfirmasi agar aman dari salah klik.
+- [ ] Pastikan setelah reset berhasil, LocalStorage bersih, state Pinia di-reset, dan view diperbarui secara instan.
 
 ### [ ] Pembuatan Component & Integration Testing
 - [ ] Buat berkas pengujian komponen `src/views/__tests__/ProgressView.spec.ts`.
-- [ ] Pastikan skenario pengujian mencakup: data statistik terhitung dengan benar dari mock store, bar kemajuan merespons perubahan state, dan fungsi pembersihan LocalStorage terpicu saat konfirmasi dialog reset ditekan.
+- [ ] Uji kalkulasi persentase kemajuan di dashboard, interaksi pencarian/filter di tabel rincian, pemanggilan action `toggleLearned` di store, serta alur sukses pembersihan data progres saat tombol reset dikonfirmasi.
 
 ## 4. Validasi Akhir (Wajib Dijalankan Berurutan)
-- [ ] `npm run lint` (Bebas eror)
-- [ ] `npm run test` (Semua tes unit & komponen berstatus lolos)
-- [ ] `npm run build` (Berhasil terkompilasi sukses)
+- [ ] `npm run lint` (Bebas dari segala peringatan/eror linting)
+- [ ] `npm run test` (Semua pengujian unit & komponen lolos 100%)
+- [ ] `npm run build` (Build produksi berhasil terkompilasi bersih)
 
 ---
 ## Catatan Teknis (Diisi oleh AI jika ada perubahan skema)
-*Belum ada catatan.*
+*Disesuaikan agar sejalan dengan implementasi interaktif stroke-by-stroke dan fungsionalitas detail dialog.*

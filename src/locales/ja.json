@@ -39,12 +39,16 @@
     "tofuguHiraganaDesc": "ゼロからひらがなを読み、書き、覚える方法を学びます。",
     "tofuguKatakanaTitle": "Tofuguのカタカナガイド",
     "tofuguKatakanaDesc": "カタカナの読み書きをマスターするためのワークブックです。",
-    "learnMore": "詳細を見る"
+    "learnMore": "詳細を見る",
+    "importSuccessLabel": "インポートに成功しました！",
+    "importFailedLabel": "インポートに失敗しました！",
+    "importAnotherBtn": "別のファイルを取り込む",
+    "importRetryBtn": "もう一度試す"
   },
   "toast": {
     "exportSuccess": "学習データの書き出しに成功しました！",
     "importSuccess": "おかえりなさい、{name}さん！進捗データが正常に取り込まれました。",
-    "importErrorMismatch": "取り込み失敗：バックアップファイルのニックネーム ({fileNickname}) が現在のニックネーム ({currentNickname}) と一致しません。",
+    "importErrorMismatch": "インポート失敗：ニックネームが現在のニックネームと一致しません。",
     "importErrorInvalid": "取り込み失敗：ファイルが破損しているか、無効なTM-KANAバックアップ形式です。"
   },
   "chart": {
@@ -161,5 +165,43 @@
     "filterCorrect": "正解",
     "filterIncorrect": "不正解",
     "filterEmpty": "このフィルターに該当するデータはありません。"
+  },
+  "progressPage": {
+    "title": "学習進捗ダッシュボード",
+    "desc": "ひらがなとカタカナの読み方、発音、書き順の学習進捗状況を詳しく追跡します。",
+    "summaryTitle": "主な統計情報",
+    "hiraganaProgress": "ひらがなの進捗",
+    "katakanaProgress": "カタカナの進捗",
+    "quizAccuracy": "クイズの正解率",
+    "writingAccuracy": "手書きの正解率",
+    "totalAttempts": "総試行回数",
+    "charLearnedCount": "{total}文字中 {learned}文字修得",
+    "searchPlaceholder": "ローマ字または文字で検索...",
+    "allAlphabet": "すべての文字",
+    "allGroup": "すべてのグループ",
+    "tableNo": "#",
+    "tableChar": "文字",
+    "tableRomaji": "ローマ字",
+    "tableStatus": "修得状態",
+    "tableQuiz": "クイズ履歴",
+    "tableWriting": "手書き履歴",
+    "statusLearned": "修得済み",
+    "statusNotLearned": "未修得",
+    "noHistory": "練習なし",
+    "dangerZoneTitle": "危険区域：進捗のリセット",
+    "dangerZoneDesc": "このデバイスから、すべての学習履歴、正解率の統計、修得ステータス、およびニックネームを完全に削除します。",
+    "resetBtn": "すべての学習進捗をリセットする",
+    "resetConfirmTitle": "進捗状況をすべてリセットしますか？",
+    "resetConfirmDesc": "学習進捗状況をすべて削除してもよろしいですか？この操作は取り消すことができません。",
+    "resetConfirmBtn": "はい、リセットします",
+    "resetCancelBtn": "キャンセル",
+    "resetToastSuccess": "すべての学習進捗状況が正常にリセットされました。",
+    "hiraganaFilter": "ひらがな",
+    "katakanaFilter": "カタカナ",
+    "gojuonFilter": "五十音",
+    "dakutenFilter": "濁音",
+    "yoonFilter": "拗音",
+    "correctSymbol": "✓",
+    "incorrectSymbol": "✗"
   }
 }

@@ -39,12 +39,16 @@
     "tofuguHiraganaDesc": "Belajar membaca, menulis, dan menghafal Hiragana dari awal.",
     "tofuguKatakanaTitle": "Panduan Katakana Tofugu",
     "tofuguKatakanaDesc": "Panduan interaktif untuk menguasai pembacaan dan penulisan Katakana.",
-    "learnMore": "Pelajari Selengkapnya"
+    "learnMore": "Pelajari Selengkapnya",
+    "importSuccessLabel": "Impor Berhasil!",
+    "importFailedLabel": "Impor Gagal!",
+    "importAnotherBtn": "Impor File Lain",
+    "importRetryBtn": "Coba Lagi"
   },
   "toast": {
     "exportSuccess": "Data progres berhasil diekspor!",
     "importSuccess": "Selamat datang kembali, {name}! Data progres berhasil diimpor.",
-    "importErrorMismatch": "Gagal impor: Nama panggilan file ({fileNickname}) tidak cocok dengan nama panggilan aktif ({currentNickname}).",
+    "importErrorMismatch": "Gagal impor: Nama panggilan tidak cocok dengan nama panggilan aktif Anda.",
     "importErrorInvalid": "Gagal impor: File rusak atau bukan file cadangan progres TM-KANA."
   },
   "chart": {
@@ -161,5 +165,43 @@
     "filterCorrect": "Benar",
     "filterIncorrect": "Salah",
     "filterEmpty": "Tidak ada data untuk filter ini."
+  },
+  "progressPage": {
+    "title": "Dasbor Progres Belajar",
+    "desc": "Pantau kemajuan membaca, melafalkan, dan menulis karakter Hiragana & Katakana Anda secara mendalam.",
+    "summaryTitle": "Statistik Utama",
+    "hiraganaProgress": "Progres Hiragana",
+    "katakanaProgress": "Progres Katakana",
+    "quizAccuracy": "Akurasi Kuis",
+    "writingAccuracy": "Akurasi Menulis",
+    "totalAttempts": "Total Percobaan",
+    "charLearnedCount": "{learned} dari {total} Karakter",
+    "searchPlaceholder": "Cari romaji atau karakter...",
+    "allAlphabet": "Semua Alfabet",
+    "allGroup": "Semua Grup",
+    "tableNo": "#",
+    "tableChar": "Karakter",
+    "tableRomaji": "Romaji",
+    "tableStatus": "Status Hafalan",
+    "tableQuiz": "Riwayat Kuis",
+    "tableWriting": "Riwayat Menulis",
+    "statusLearned": "Dikuasai",
+    "statusNotLearned": "Belum",
+    "noHistory": "Belum latihan",
+    "dangerZoneTitle": "Zona Bahaya: Reset Progres",
+    "dangerZoneDesc": "Menghapus seluruh riwayat belajar, statistik akurasi, status hafalan, dan nama panggilan Anda secara permanen dari perangkat ini.",
+    "resetBtn": "Reset Semua Progres Belajar",
+    "resetConfirmTitle": "Reset Semua Progres Anda?",
+    "resetConfirmDesc": "Apakah Anda yakin ingin menghapus seluruh progres belajar Anda? Tindakan ini tidak dapat dibatalkan.",
+    "resetConfirmBtn": "Ya, Reset Progres",
+    "resetCancelBtn": "Batal",
+    "resetToastSuccess": "Seluruh progres belajar telah di-reset ke awal.",
+    "hiraganaFilter": "Hiragana",
+    "katakanaFilter": "Katakana",
+    "gojuonFilter": "Gojuon",
+    "dakutenFilter": "Dakuten",
+    "yoonFilter": "Yoon",
+    "correctSymbol": "✓",
+    "incorrectSymbol": "✗"
   }
 }

@@ -99,7 +99,7 @@ describe('PracticeView.vue component tests', () => {
     await input.trigger('keyup.enter')
 
     // Verify feedback is visible
-    expect(wrapper.text()).toContain('Correct!')
+    expect(wrapper.text()).toContain('Nailed it!')
     // Verify store hasLearned is updated to true
     expect(store.progress[currentQ.item.id].hasLearned).toBe(true)
     expect(store.progress[currentQ.item.id].quizSuccessCount).toBe(1)
@@ -124,9 +124,42 @@ describe('PracticeView.vue component tests', () => {
     await skipBtn?.trigger('click')
 
     // Verify feedback is visible (incorrect feedback since skipped)
-    expect(wrapper.text()).toContain('Incorrect!')
+    expect(wrapper.text()).toContain('Try again')
     // Verify store hasLearned is false, fail count is incremented
     expect(store.progress[currentQ.item.id].hasLearned).toBe(false)
     expect(store.progress[currentQ.item.id].quizFailCount).toBe(1)
+  })
+
+  it('accepts alternate inputs di and du for dji and dzu dakuon characters', async () => {
+    const wrapper = mountPracticeView()
+
+    // Inject mock question pool for ぢ (h-dji) and づ (h-dzu)
+    const mockQuestions = [
+      {
+        index: 0,
+        item: { id: 'h-dji', character: 'ぢ', romaji: 'JI', rowGroup: 'd' }
+      },
+      {
+        index: 1,
+        item: { id: 'h-dzu', character: 'づ', romaji: 'ZU', rowGroup: 'd' }
+      }
+    ];
+    (wrapper.vm as any).questions = mockQuestions;
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+    (wrapper.vm as any).currentQuestionIndex = 0;
+    (wrapper.vm as any).practiceMode = 'quiz';
+
+    // Wait for Vue to update the DOM
+    await wrapper.vm.$nextTick();
+
+    // Set alternate input 'di'
+    const input = wrapper.find('input#quiz-input')
+    await input.setValue('di')
+    await input.trigger('keyup.enter')
+
+    expect(wrapper.text()).toContain('Nailed it!')
+    expect(store.progress['h-dji'].hasLearned).toBe(true)
+    expect(store.progress['h-dji'].quizSuccessCount).toBe(1)
   })
 })
