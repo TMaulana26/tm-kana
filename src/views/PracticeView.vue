@@ -610,7 +610,7 @@ function stopSession() {
     </header>
 
     <!-- Phase 1: Configuration Menu -->
-    <main v-if="!isSessionActive && !isSessionFinished" class="space-y-8">
+    <div v-if="!isSessionActive && !isSessionFinished" class="space-y-8">
       <!-- Select Rows Section -->
       <section class="space-y-6">
         <div
@@ -926,10 +926,10 @@ function stopSession() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
 
     <!-- Phase 2: Active Practice Arena -->
-    <main
+    <div
       v-else-if="isSessionActive"
       class="flex-1 flex flex-col items-center justify-center py-6 sm:py-10 w-full"
     >
@@ -1174,10 +1174,10 @@ function stopSession() {
           </span>
         </div>
       </Transition>
-    </main>
+    </div>
 
     <!-- Phase 3: Score Results Screen -->
-    <main v-else-if="isSessionFinished" class="space-y-8">
+    <div v-else-if="isSessionFinished" class="space-y-8">
       <section
         class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff] space-y-6"
       >
@@ -1401,6 +1401,6 @@ function stopSession() {
           {{ $t("practice.configBtn") }}
         </NeoBrutalistButton>
       </section>
-    </main>
+    </div>
   </div>
 </template>

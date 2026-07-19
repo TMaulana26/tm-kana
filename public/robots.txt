@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tm-kana.mtim.my.id/sitemap.xml
