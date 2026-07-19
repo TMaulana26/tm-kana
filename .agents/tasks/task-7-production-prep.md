@@ -18,28 +18,28 @@ Tugas ini berfokus pada pematangan aplikasi TM-KANA untuk siap rilis ke lingkung
 
 ## 3. Daftar Tugas (Checklist Kerja AI)
 
-### [ ] Pembersihan & Optimasi Konfigurasi Vite
-- [ ] Sunting `vite.config.ts` untuk mengonfigurasi opsi kompresi `esbuild` agar menghapus `console.log` dan `debugger` khusus pada build produksi.
+### [x] Pembersihan & Optimasi Konfigurasi Vite
+- [x] Sunting `vite.config.ts` untuk mengonfigurasi opsi kompresi `esbuild` agar menghapus `console.log` dan `debugger` khusus pada build produksi.
 
-### [ ] Pengamanan Impor Progres Belajar (Input Sanitation)
-- [ ] Tambahkan sanitasi string menggunakan regex atau parser sederhana pada properti `nickname` di `src/utils/progressCrypto.ts` saat mendekripsi berkas impor. Pastikan karakter HTML khusus disanitasi.
+### [x] Pengamanan Impor Progres Belajar (Input Sanitation)
+- [x] Tambahkan sanitasi string menggunakan regex atau parser sederhana pada properti `nickname` di `src/utils/progressCrypto.ts` saat mendekripsi berkas impor. Pastikan karakter HTML khusus disanitasi.
 
-### [ ] Layar Penanganan Eror Global (Error Boundary)
-- [ ] Buat komponen Neo-Brutalist error fallback screen sederhana `src/components/ErrorFallback.vue`.
-- [ ] Daftarkan penanganan eror global di `src/main.ts` untuk merender fallback component tersebut ketika terjadi *unhandled runtime error*.
+### [x] Layar Penanganan Eror Global (Error Boundary)
+- [x] Buat komponen Neo-Brutalist error fallback screen sederhana `src/components/ErrorFallback.vue`.
+- [x] Daftarkan penanganan eror global di `src/main.ts` untuk merender fallback component tersebut ketika terjadi *unhandled runtime error*.
 
-### [ ] Konfigurasi Manifest PWA Dasar & Favicon
-- [ ] Buat berkas `public/manifest.json` berisi detail instalasi aplikasi (ikon, warna dasar, orientasi display standalone).
-- [ ] Tambahkan ikon-ikon PWA standar ke folder `public/` (favicon.ico, icon-192.png, icon-512.png).
-- [ ] Daftarkan manifest di `<head>` pada `index.html`.
+### [x] Konfigurasi Manifest PWA Dasar & Favicon
+- [x] Buat berkas `public/manifest.json` berisi detail instalasi aplikasi (ikon, warna dasar, orientasi display standalone).
+- [x] Tambahkan ikon-ikon PWA standar ke folder `public/` (favicon.ico, icon-192.png, icon-512.png).
+- [x] Daftarkan manifest di `<head>` pada `index.html`.
 
-### [ ] Pembuatan Unit Test Keamanan Input
-- [ ] Buat berkas unit test `src/utils/__tests__/security.spec.ts` untuk memverifikasi bahwa parser progres menolak payload impor yang disusupi skrip XSS berbahaya (`<script>alert(1)</script>`) atau melakukan sanitasi dengan benar.
+### [x] Pembuatan Unit Test Keamanan Input
+- [x] Buat berkas unit test `src/utils/__tests__/security.spec.ts` untuk memverifikasi bahwa parser progres menolak payload impor yang disusupi skrip XSS berbahaya (`<script>alert(1)</script>`) atau melakukan sanitasi dengan benar.
 
 ## 4. Validasi Akhir (Wajib Dijalankan Berurutan)
-- [ ] `npm run lint` (Bebas eror linting)
-- [ ] `npm run test` (Semua tes unit lolos 100%)
-- [ ] `npm run build` (Build produksi terkompilasi bersih)
+- [x] `npm run lint` (Bebas eror linting)
+- [x] `npm run test` (Semua tes unit lolos 100%)
+- [x] `npm run build` (Build produksi terkompilasi bersih)
 
 ---
 ## Catatan Teknis (Diisi oleh AI jika ada perubahan skema)

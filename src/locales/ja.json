@@ -203,5 +203,11 @@
     "yoonFilter": "拗音",
     "correctSymbol": "✓",
     "incorrectSymbol": "✗"
+  },
+  "errorPage": {
+    "title": "アプリケーションエラー",
+    "desc": "アプリケーションの実行中に予期しないエラーが発生しました。",
+    "messageLabel": "エラーメッセージ",
+    "reloadBtn": "アプリを再読み込み"
   }
 }

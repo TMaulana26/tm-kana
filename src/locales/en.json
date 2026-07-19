@@ -203,5 +203,11 @@
     "yoonFilter": "Yoon",
     "correctSymbol": "✓",
     "incorrectSymbol": "✗"
+  },
+  "errorPage": {
+    "title": "Application Error",
+    "desc": "An unexpected error occurred while running the application.",
+    "messageLabel": "Error Message",
+    "reloadBtn": "Reload Application"
   }
 }

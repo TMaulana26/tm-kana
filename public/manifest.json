@@ -1,0 +1,22 @@
+{
+  "name": "TM-KANA - Learn Japanese Kana",
+  "short_name": "TM-KANA",
+  "description": "An interactive Neo-Brutalist tool for learning and practicing Japanese Hiragana and Katakana stroke order and pronunciation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f3ec",
+  "theme_color": "#00f5d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

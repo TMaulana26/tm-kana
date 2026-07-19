@@ -54,6 +54,9 @@ export function importProgress(base64Str: string, currentNickname: string): Impo
     if (typeof parsed.nickname !== 'string' || !parsed.progress || typeof parsed.progress !== 'object') {
       return { success: false, error: 'invalid_schema' };
     }
+
+    // Sanitize nickname to prevent XSS
+    parsed.nickname = sanitizeString(parsed.nickname);
     
     // Case-insensitive nickname validation
     const fileNickname = parsed.nickname.trim().toLowerCase();
@@ -73,4 +76,17 @@ export function importProgress(base64Str: string, currentNickname: string): Impo
       error: 'decryption_failed'
     };
   }
+}
+
+/**
+ * Escapes special HTML characters to prevent XSS injections.
+ */
+function sanitizeString(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
 }

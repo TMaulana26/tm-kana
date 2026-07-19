@@ -203,5 +203,11 @@
     "yoonFilter": "Yoon",
     "correctSymbol": "✓",
     "incorrectSymbol": "✗"
+  },
+  "errorPage": {
+    "title": "Aplikasi Eror",
+    "desc": "Terjadi kesalahan tidak terduga saat menjalankan aplikasi.",
+    "messageLabel": "Pesan Eror",
+    "reloadBtn": "Muat Ulang Aplikasi"
   }
 }
