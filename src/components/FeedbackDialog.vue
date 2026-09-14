@@ -88,6 +88,7 @@ async function submitFeedback() {
 
   // Prepare FormData matching Formspree Vanilla JS Ajax guide
   const formData = new FormData();
+  formData.append("_gotcha", ""); // Formspree honeypot confirmation
   formData.append("category", category.value);
   if (email.value.trim()) {
     formData.append("email", email.value.trim());
@@ -96,11 +97,12 @@ async function submitFeedback() {
   formData.append("_subject", `[TM-KANA ${APP_VERSION}] ${category.value.toUpperCase()} Report`);
   formData.append("waktuPengiriman", formatIndonesianDateTime());
   formData.append("appVersion", APP_VERSION);
-  if (typeof window !== "undefined") {
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1"
+  ) {
     formData.append("pageUrl", window.location.href);
-  }
-  if (typeof navigator !== "undefined") {
-    formData.append("userAgent", navigator.userAgent);
   }
 
   try {
@@ -216,21 +218,23 @@ function resetAndClose() {
           <label class="block text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
             {{ $t("feedback.categoryLabel") }}
           </label>
-          <div class="grid grid-cols-3 gap-2">
+          <div class="grid grid-cols-3 gap-2 sm:gap-2.5">
             <button
               v-for="cat in categories"
               :key="cat.id"
               type="button"
               @click="category = cat.id"
-              class="flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2 px-2 border-[2px] border-slate-950 dark:border-white text-xs font-black uppercase tracking-wider transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px]"
+              class="flex flex-col items-center justify-center gap-1.5 p-2 sm:p-2.5 min-h-[68px] sm:min-h-[72px] border-[2px] border-slate-950 dark:border-white transition-all active:translate-x-[1px] active:translate-y-[1px]"
               :class="[
                 category === cat.id
-                  ? cat.activeColor
-                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'
+                  ? [cat.activeColor, 'shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]']
+                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]'
               ]"
             >
-              <component :is="cat.icon" class="w-4 h-4 shrink-0" />
-              <span class="text-xs text-center truncate">{{ $t(cat.labelKey) }}</span>
+              <component :is="cat.icon" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 stroke-[2.5]" />
+              <span class="text-xs font-black uppercase tracking-wide text-center leading-tight whitespace-normal break-words max-w-full">
+                {{ $t(cat.labelKey) }}
+              </span>
             </button>
           </div>
         </div>
