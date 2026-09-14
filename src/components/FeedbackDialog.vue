@@ -85,24 +85,29 @@ async function submitFeedback() {
   isSubmitting.value = true;
   errorMessage.value = "";
 
-  const payload = {
-    category: category.value,
-    email: email.value.trim() || undefined,
-    message: trimmedMessage,
-    appVersion: APP_VERSION,
-    pageUrl: typeof window !== "undefined" ? window.location.href : "",
-    userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-    submittedAt: new Date().toISOString(),
-  };
+  // Prepare FormData matching Formspree Vanilla JS Ajax guide
+  const formData = new FormData();
+  formData.append("category", category.value);
+  if (email.value.trim()) {
+    formData.append("email", email.value.trim());
+  }
+  formData.append("message", trimmedMessage);
+  formData.append("_subject", `[TM-KANA ${APP_VERSION}] ${category.value.toUpperCase()} Report`);
+  formData.append("appVersion", APP_VERSION);
+  if (typeof window !== "undefined") {
+    formData.append("pageUrl", window.location.href);
+  }
+  if (typeof navigator !== "undefined") {
+    formData.append("userAgent", navigator.userAgent);
+  }
 
   try {
     const response = await fetch(FORMSPREE_ENDPOINT, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: formData,
     });
 
     if (response.ok) {
@@ -111,8 +116,13 @@ async function submitFeedback() {
       email.value = "";
     } else {
       const data = await response.json().catch(() => null);
-      errorMessage.value =
-        (data && data.error) || t("feedback.errorDesc");
+      if (data?.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+        errorMessage.value = data.errors.map((err: any) => err.message).join(", ");
+      } else if (data?.error) {
+        errorMessage.value = data.error;
+      } else {
+        errorMessage.value = t("feedback.errorDesc");
+      }
     }
   } catch (err) {
     console.error("Formspree submission error:", err);
@@ -189,7 +199,16 @@ function resetAndClose() {
       </div>
 
       <!-- Form Screen -->
-      <form v-else @submit.prevent="submitFeedback" class="space-y-4 text-left">
+      <form
+        v-else
+        :action="FORMSPREE_ENDPOINT"
+        method="POST"
+        @submit.prevent="submitFeedback"
+        class="space-y-4 text-left"
+      >
+        <!-- Formspree Anti-Spam Honeypot Field -->
+        <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
         <!-- Category Selector -->
         <div class="space-y-1.5">
           <label class="block text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
@@ -224,6 +243,7 @@ function resetAndClose() {
           </label>
           <input
             id="feedback-email"
+            name="email"
             v-model="email"
             type="email"
             class="w-full px-3 py-2 text-xs sm:text-sm font-medium border-[2px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
@@ -245,6 +265,7 @@ function resetAndClose() {
           </label>
           <textarea
             id="feedback-message"
+            name="message"
             v-model="message"
             rows="4"
             required

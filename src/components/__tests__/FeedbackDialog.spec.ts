@@ -98,25 +98,26 @@ describe("FeedbackDialog.vue Component", () => {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
         },
       })
     );
 
-    const callBody = JSON.parse(fetchMock.mock.calls[0][1].body);
-    expect(callBody.message).toBe("Ada kendala pada tampilan kanvas di perangkat mobile");
-    expect(callBody.email).toBe("tester@example.com");
-    expect(callBody.category).toBe("bug");
-    expect(callBody.appVersion).toBeDefined();
+    const callBody = fetchMock.mock.calls[0][1].body as FormData;
+    expect(callBody.get("message")).toBe("Ada kendala pada tampilan kanvas di perangkat mobile");
+    expect(callBody.get("email")).toBe("tester@example.com");
+    expect(callBody.get("category")).toBe("bug");
+    expect(callBody.get("appVersion")).toBeDefined();
 
     // Success screen should be rendered
     expect(document.body.textContent).toContain("Thank You So Much!");
   });
 
-  it("displays error message when Formspree submission fails", async () => {
+  it("displays error message when Formspree submission fails with errors array", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: false,
-      json: async () => ({ error: "Submission failed" }),
+      json: async () => ({
+        errors: [{ message: "Bad form post request" }],
+      }),
     });
     vi.stubGlobal("fetch", fetchMock);
 
@@ -143,7 +144,7 @@ describe("FeedbackDialog.vue Component", () => {
     await wrapper.vm.$nextTick();
 
     expect(document.body.textContent).toContain("Submission Failed");
-    expect(document.body.textContent).toContain("Submission failed");
+    expect(document.body.textContent).toContain("Bad form post request");
   });
 
   it("emits update:open false when clicking top close button", async () => {
