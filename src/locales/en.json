@@ -164,7 +164,11 @@
     "filterAll": "All",
     "filterCorrect": "Correct",
     "filterIncorrect": "Incorrect",
-    "filterEmpty": "No data for this filter."
+    "filterEmpty": "No data for this filter.",
+    "exitConfirmTitle": "Leave Practice?",
+    "exitConfirmDesc": "A practice session is currently in progress. If you leave now, your session progress will not be saved.",
+    "stayBtn": "Continue Practice",
+    "leaveBtn": "Leave"
   },
   "progressPage": {
     "title": "Learning Progress Dashboard",

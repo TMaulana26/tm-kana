@@ -4,6 +4,18 @@ import { createPinia, setActivePinia } from 'pinia'
 import PracticeView from '../PracticeView.vue'
 import { useProgressStore } from '@/stores/progress'
 
+const mockPush = vi.fn()
+let capturedBeforeRouteLeaveGuard: any = null
+
+vi.mock('vue-router', () => ({
+  useRouter: () => ({
+    push: mockPush
+  }),
+  onBeforeRouteLeave: (guard: any) => {
+    capturedBeforeRouteLeaveGuard = guard
+  }
+}))
+
 describe('PracticeView.vue component tests', () => {
   let pinia: any
   let store: any
@@ -272,4 +284,82 @@ describe('PracticeView.vue component tests', () => {
     expect(store.progress['h-nya'].hasLearned).toBe(true);
     expect(store.progress['h-nya'].drawSuccessCount).toBe(1);
   })
+
+  it('intercepts route leave navigation when practice session is active and allows proceeding on confirm', async () => {
+    const wrapper = mountPracticeView();
+
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+
+    expect(capturedBeforeRouteLeaveGuard).toBeDefined();
+    const allowed = capturedBeforeRouteLeaveGuard({ fullPath: '/chart' }, { fullPath: '/practice' });
+
+    expect(allowed).toBe(false);
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(true);
+    expect((wrapper.vm as any).pendingNavigation).toEqual({ fullPath: '/chart' });
+
+    (wrapper.vm as any).confirmExit();
+    expect((wrapper.vm as any).isSessionActive).toBe(false);
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(false);
+    expect(mockPush).toHaveBeenCalledWith({ fullPath: '/chart' });
+  });
+
+  it('keeps practice session active when user cancels exit confirmation', async () => {
+    const wrapper = mountPracticeView();
+
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+
+    capturedBeforeRouteLeaveGuard({ fullPath: '/chart' }, { fullPath: '/practice' });
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(true);
+
+    (wrapper.vm as any).cancelExit();
+    expect((wrapper.vm as any).isSessionActive).toBe(true);
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(false);
+  });
+
+  it('allows navigation without warning when session is not active or is finished', async () => {
+    const wrapper = mountPracticeView();
+
+    // Case 1: Session not started
+    (wrapper.vm as any).isSessionActive = false;
+    (wrapper.vm as any).isSessionFinished = false;
+    expect(capturedBeforeRouteLeaveGuard({ fullPath: '/chart' }, { fullPath: '/practice' })).toBe(true);
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(false);
+
+    // Case 2: Session finished
+    (wrapper.vm as any).isSessionActive = false;
+    (wrapper.vm as any).isSessionFinished = true;
+    expect(capturedBeforeRouteLeaveGuard({ fullPath: '/chart' }, { fullPath: '/practice' })).toBe(true);
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(false);
+  });
+
+  it('triggers exit warning when config button is clicked during active practice', () => {
+    const wrapper = mountPracticeView();
+
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+
+    (wrapper.vm as any).handleConfigClick();
+    expect((wrapper.vm as any).showExitConfirmDialog).toBe(true);
+    expect(typeof (wrapper.vm as any).pendingNavigation).toBe('function');
+
+    // Executing confirmExit should execute the pending callback
+    (wrapper.vm as any).confirmExit();
+    expect((wrapper.vm as any).isSessionActive).toBe(false);
+  });
+
+  it('prevents browser tab close/reload during active practice via beforeunload event', () => {
+    const wrapper = mountPracticeView();
+
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+
+    const event = new Event('beforeunload', { cancelable: true }) as BeforeUnloadEvent;
+    const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
+    window.dispatchEvent(event);
+
+    expect(preventDefaultSpy).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(true);
+  });
 })

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, watch } from "vue";
+import { ref, computed, nextTick, watch, onMounted, onUnmounted } from "vue";
+import { onBeforeRouteLeave, useRouter, type RouteLocationNormalized } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useProgressStore } from "@/stores/progress";
 import { usePreferencesStore } from "@/stores/preferences";
 import { kanaData, type KanaItem } from "@/constants/kanaData";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
+import PracticeExitConfirmDialog from "@/components/PracticeExitConfirmDialog.vue";
 import KanaCanvas from "@/components/KanaCanvas.vue";
 import { recognizeStroke, recognizeStrokeSequence, recognizeSingleStroke, type Point } from "@/utils/strokeRecognizer";
 import { loadKanaTemplate } from "@/utils/strokeTemplate";
@@ -577,6 +579,67 @@ function restartPractice() {
   showDrawHint.value = false;
   startPractice();
 }
+
+// 7. Navigation Guard & Exit Confirmation State
+const router = useRouter();
+const showExitConfirmDialog = ref(false);
+const pendingNavigation = ref<RouteLocationNormalized | (() => void) | null>(null);
+
+// Route navigation leave guard: intercepts when user attempts to leave during active session
+onBeforeRouteLeave((to) => {
+  if (isSessionActive.value && !isSessionFinished.value) {
+    pendingNavigation.value = to;
+    showExitConfirmDialog.value = true;
+    return false;
+  }
+  return true;
+});
+
+function confirmExit() {
+  const target = pendingNavigation.value;
+  pendingNavigation.value = null;
+  isSessionActive.value = false;
+  isSessionFinished.value = false;
+  showExitConfirmDialog.value = false;
+
+  if (typeof target === "function") {
+    target();
+  } else if (target && router) {
+    router.push(target);
+  }
+}
+
+function cancelExit() {
+  pendingNavigation.value = null;
+  showExitConfirmDialog.value = false;
+}
+
+function handleConfigClick() {
+  if (isSessionActive.value && !isSessionFinished.value) {
+    pendingNavigation.value = () => {
+      stopSession();
+    };
+    showExitConfirmDialog.value = true;
+  } else {
+    stopSession();
+  }
+}
+
+// Browser tab close / reload protection
+const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  if (isSessionActive.value && !isSessionFinished.value) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("beforeunload", handleBeforeUnload);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("beforeunload", handleBeforeUnload);
+});
 
 // Go back to main configurations panel
 function stopSession() {
@@ -1169,7 +1232,7 @@ function stopSession() {
         <!-- Bottom controls: abort session -->
         <div class="flex justify-center pt-2">
           <button
-            @click="stopSession"
+            @click="handleConfigClick"
             class="flex items-center gap-2 text-xs font-black uppercase text-slate-500 hover:text-slate-950 dark:hover:text-white transition-all"
           >
             <Settings class="w-4 h-4" />
@@ -1436,5 +1499,12 @@ function stopSession() {
         </NeoBrutalistButton>
       </section>
     </div>
+
+    <!-- Exit Confirmation Warning Dialog -->
+    <PracticeExitConfirmDialog
+      v-model:open="showExitConfirmDialog"
+      @confirm="confirmExit"
+      @cancel="cancelExit"
+    />
   </div>
 </template>

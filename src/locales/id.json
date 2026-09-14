@@ -164,7 +164,11 @@
     "filterAll": "Semua",
     "filterCorrect": "Benar",
     "filterIncorrect": "Salah",
-    "filterEmpty": "Tidak ada data untuk filter ini."
+    "filterEmpty": "Tidak ada data untuk filter ini.",
+    "exitConfirmTitle": "Tinggalkan Latihan?",
+    "exitConfirmDesc": "Sesi latihan sedang berlangsung. Jika Anda keluar sekarang, progres sesi latihan saat ini tidak akan disimpan.",
+    "stayBtn": "Lanjutkan Latihan",
+    "leaveBtn": "Keluar"
   },
   "progressPage": {
     "title": "Dasbor Progres Belajar",

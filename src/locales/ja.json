@@ -164,7 +164,11 @@
     "filterAll": "すべて",
     "filterCorrect": "正解",
     "filterIncorrect": "不正解",
-    "filterEmpty": "このフィルターに該当するデータはありません。"
+    "filterEmpty": "このフィルターに該当するデータはありません。",
+    "exitConfirmTitle": "練習を中断しますか？",
+    "exitConfirmDesc": "練習セッションが進行中です。今終了すると、現在の練習データは保存されません。",
+    "stayBtn": "練習を続ける",
+    "leaveBtn": "終了する"
   },
   "progressPage": {
     "title": "学習進捗ダッシュボード",

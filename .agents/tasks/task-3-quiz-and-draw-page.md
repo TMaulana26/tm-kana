@@ -63,3 +63,5 @@ Tugas ini berfokus pada pembuatan fitur utama aplikasi: Arena Latihan. Modul ini
 
 - Implementasi algoritma stroke recognizer hibrida ($1 Recognizer + offscreen pixel tracer) berhasil disematkan dengan kinerja tinggi secara offline.
 - Canvas state management diekstrak secara fungsional ke dalam `useCanvas` composable untuk menjaga kebersihan komponen dan mempermudah unit testing.
+- **Sistem Perlindungan Sesi Latihan (Exit Confirmation Guard):** Disematkan `onBeforeRouteLeave` Vue Router, `beforeunload` browser window event, serta modal Neo-Brutalism `PracticeExitConfirmDialog.vue` untuk memperingatkan dan mencegah pengguna kehilangan progres latihan yang belum selesai saat menavigasi ke halaman lain, menekan tombol back/forward di browser, atau memuat ulang tab.
+
