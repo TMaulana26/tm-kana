@@ -48,6 +48,10 @@ export default {
           foreground: "var(--card-foreground)",
         },
       },
+      fontFamily: {
+        sans: ["'Outfit'", "'Noto Sans JP'", "system-ui", "sans-serif"],
+        heading: ["'Outfit'", "'Noto Sans JP'", "system-ui", "sans-serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

@@ -131,8 +131,14 @@ watch(() => props.char, () => {
       
       <!-- Faint Character Outline Template -->
       <div
-        class="absolute inset-0 flex items-center justify-center font-black text-slate-350/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap"
-        :class="char.length > 1 ? 'text-[5.5rem]' : 'text-[10rem]'"
+        class="absolute inset-0 flex items-center justify-center font-black text-slate-350/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap px-2"
+        :class="[
+          char.length > 2
+            ? 'text-3xl sm:text-4xl tracking-tight'
+            : char.length > 1
+              ? 'text-4xl sm:text-5xl tracking-tight'
+              : 'text-[8.5rem]'
+        ]"
       >
         {{ char }}
       </div>
@@ -153,7 +159,7 @@ watch(() => props.char, () => {
     
     <NeoBrutalistButton
       @click="clearCanvas"
-      class="h-9 px-4 text-xs bg-amber-300 hover:bg-amber-400 text-slate-950"
+      class="h-9 px-4 text-xs bg-amber-300 hover:bg-amber-400 text-black font-extrabold"
     >
       {{ $t('chart.clearPad') }}
     </NeoBrutalistButton>

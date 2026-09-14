@@ -209,5 +209,24 @@
     "desc": "Terjadi kesalahan tidak terduga saat menjalankan aplikasi.",
     "messageLabel": "Pesan Eror",
     "reloadBtn": "Muat Ulang Aplikasi"
+  },
+  "preferences": {
+    "title": "Pengaturan & Preferensi",
+    "desc": "Sesuaikan kenyamanan tampilan dan metode belajar Anda.",
+    "language": "Bahasa Aplikasi",
+    "theme": "Tema Antarmuka",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "themeToggle": "Ganti Tema",
+    "autoSubmit": "Auto-Submit Kuis Romaji",
+    "autoSubmitDesc": "Otomatis periksa jawaban saat mengetik romaji yang benar tanpa perlu menekan Enter.",
+    "openBtn": "Preferensi",
+    "closeBtn": "Tutup"
+  },
+  "footer": {
+    "version": "Versi",
+    "github": "Repositori GitHub",
+    "openSource": "Open Source",
+    "tagline": "Dibuat dengan cinta dalam belajar"
   }
 }

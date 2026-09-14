@@ -162,4 +162,40 @@ describe('PracticeView.vue component tests', () => {
     expect(store.progress['h-dji'].hasLearned).toBe(true)
     expect(store.progress['h-dji'].quizSuccessCount).toBe(1)
   })
+
+  it('automatically submits when autoSubmitQuiz is enabled in preferencesStore without pressing enter', async () => {
+    const { usePreferencesStore } = await import('@/stores/preferences')
+    const preferencesStore = usePreferencesStore()
+    preferencesStore.setAutoSubmitQuiz(true)
+
+    const wrapper = mountPracticeView()
+
+    // Inject mock question pool
+    const mockQuestions = [
+      {
+        index: 0,
+        item: { id: 'h-ka', character: 'か', romaji: 'KA', rowGroup: 'k' }
+      }
+    ];
+    (wrapper.vm as any).questions = mockQuestions;
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+    (wrapper.vm as any).currentQuestionIndex = 0;
+    (wrapper.vm as any).practiceMode = 'quiz';
+
+    await wrapper.vm.$nextTick();
+
+    // Verify submit button is hidden when autoSubmitQuiz is true
+    const submitBtn = wrapper.findAll('button').find(b => b.text().includes('Submit') || b.text().includes('Periksa') || b.text().includes('practice.submitBtn'))
+    expect(submitBtn).toBeUndefined()
+
+    // Type correct romaji 'ka' without pressing Enter
+    const input = wrapper.find('input#quiz-input')
+    await input.setValue('ka')
+    await wrapper.vm.$nextTick()
+
+    // Feedback should automatically trigger
+    expect(wrapper.text()).toContain('Nailed it!')
+    expect(store.progress['h-ka'].hasLearned).toBe(true)
+  })
 })

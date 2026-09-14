@@ -154,7 +154,7 @@ function handleResetConfirm() {
 
     <!-- Phase 1: Summary Statistics Cards -->
     <section class="space-y-4">
-      <h2 class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-yellow-950 dark:text-slate-50 border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]">
+      <h2 class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-yellow-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]">
         {{ $t("progressPage.summaryTitle") }}
       </h2>
 
@@ -399,7 +399,7 @@ function handleResetConfirm() {
                       @click="toggleCharacterLearned(c.id)"
                       class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-1 border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000] dark:active:shadow-[1px_1px_0px_0px_#fff] transition-all"
                       :class="store.progress[c.id]?.hasLearned
-                        ? 'bg-emerald-400 text-slate-950 hover:bg-emerald-500'
+                        ? 'bg-emerald-400 text-black hover:bg-emerald-500'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200'"
                     >
                       <component :is="store.progress[c.id]?.hasLearned ? Unlock : Lock" class="w-3.5 h-3.5" />

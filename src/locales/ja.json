@@ -209,5 +209,24 @@
     "desc": "アプリケーションの実行中に予期しないエラーが発生しました。",
     "messageLabel": "エラーメッセージ",
     "reloadBtn": "アプリを再読み込み"
+  },
+  "preferences": {
+    "title": "設定と環境設定",
+    "desc": "インターフェースの外観と学習スタイルをカスタマイズします。",
+    "language": "アプリ言語",
+    "theme": "テーマ",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "themeToggle": "テーマ切替",
+    "autoSubmit": "ローマ字自動送信",
+    "autoSubmitDesc": "Enterキーを押さずに正しいローマ字が入力されたときに自動的に回答を送信します。",
+    "openBtn": "環境設定",
+    "closeBtn": "閉じる"
+  },
+  "footer": {
+    "version": "バージョン",
+    "github": "GitHubリポジトリ",
+    "openSource": "オープンソース",
+    "tagline": "学びへの愛を込めて制作"
   }
 }

@@ -29,7 +29,7 @@ function setLocale(newLocale: "id" | "en" | "ja") {
       <DropdownMenuItem
         @click="setLocale('id')"
         :class="{
-          'font-bold bg-violet-300 dark:bg-violet-900 text-slate-950 dark:text-white':
+          'font-bold bg-violet-300 dark:bg-violet-900 text-black dark:text-white':
             locale === 'id',
         }"
       >
@@ -38,7 +38,7 @@ function setLocale(newLocale: "id" | "en" | "ja") {
       <DropdownMenuItem
         @click="setLocale('en')"
         :class="{
-          'font-bold bg-violet-300 dark:bg-violet-900 text-slate-950 dark:text-white':
+          'font-bold bg-violet-300 dark:bg-violet-900 text-black dark:text-white':
             locale === 'en',
         }"
       >
@@ -47,7 +47,7 @@ function setLocale(newLocale: "id" | "en" | "ja") {
       <DropdownMenuItem
         @click="setLocale('ja')"
         :class="{
-          'font-bold bg-violet-300 dark:bg-violet-900 text-slate-950 dark:text-white':
+          'font-bold bg-violet-300 dark:bg-violet-900 text-black dark:text-white':
             locale === 'ja',
         }"
       >

@@ -19,10 +19,10 @@ function handleReload() {
       <div class="flex items-center gap-4 bg-rose-300 dark:bg-rose-950/40 border-[3px] border-slate-950 dark:border-white p-4">
         <AlertOctagon class="w-10 h-10 text-rose-600 shrink-0" />
         <div>
-          <h1 class="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
+          <h1 class="text-xl sm:text-2xl font-black uppercase tracking-tight text-black dark:text-white leading-tight">
             {{ $t('errorPage.title') }}
           </h1>
-          <p class="text-xs font-bold text-slate-800 dark:text-slate-300 mt-1">
+          <p class="text-xs font-bold text-rose-950 dark:text-rose-100 mt-1">
             {{ $t('errorPage.desc') }}
           </p>
         </div>
@@ -45,7 +45,7 @@ function handleReload() {
       <div class="flex flex-col sm:flex-row gap-4 pt-2">
         <button
           @click="handleReload"
-          class="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-[#00f5d4] hover:bg-[#00e1c2] text-slate-950 border-[3px] border-slate-950 font-black uppercase text-sm tracking-wide shadow-[4px_4px_0px_0px_#000] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] transition-all"
+          class="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-[#00f5d4] hover:bg-[#00e1c2] text-black border-[3px] border-slate-950 font-black uppercase text-sm tracking-wide shadow-[4px_4px_0px_0px_#000] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] transition-all"
         >
           <RotateCw class="w-4 h-4" />
           {{ $t('errorPage.reloadBtn') }}

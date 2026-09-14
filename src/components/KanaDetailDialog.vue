@@ -98,11 +98,11 @@ watch(() => props.character, () => {
             class="text-xs font-black uppercase border-[2px] border-slate-950 dark:border-white px-2 py-0.5 rounded-none"
             :class="[
               character.id.startsWith('h-')
-                ? 'bg-violet-300 text-slate-950'
-                : 'bg-indigo-300 text-slate-950'
+                ? 'bg-violet-300 text-black'
+                : 'bg-indigo-300 text-black'
             ]"
           >
-            {{ character.id.startsWith('h-') ? 'hiragana' : 'katakana' }}
+            {{ character.id.startsWith('h-') ? $t('chart.hiragana') : $t('chart.katakana') }}
           </span>
         </DialogTitle>
         <DialogDescription class="font-bold text-slate-600 dark:text-slate-400">
@@ -163,7 +163,7 @@ watch(() => props.character, () => {
             <!-- Offline Fallback Info -->
             <div
               v-else
-              class="border-[3px] border-slate-950 bg-amber-100 dark:bg-amber-950 dark:text-slate-200 p-3 shadow-[3px_3px_0px_0px_#000] text-[10px] font-bold flex gap-2 items-start text-left text-slate-800"
+              class="border-[3px] border-slate-950 bg-amber-100 dark:bg-amber-950 dark:text-amber-100 p-3 shadow-[3px_3px_0px_0px_#000] text-[10px] font-bold flex gap-2 items-start text-left text-amber-950"
             >
               <Info class="w-3.5 h-3.5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
               <span>{{ $t('chart.offlineStrokeOrder') }}</span>
@@ -206,8 +206,8 @@ watch(() => props.character, () => {
             class="w-full h-10 px-4 flex items-center justify-center gap-2 text-xs font-black uppercase tracking-wider"
             :class="[
               isLearned
-                ? 'bg-rose-300 hover:bg-rose-400 text-slate-950'
-                : 'bg-[#00f5d4] hover:bg-[#00d4b8] text-slate-950'
+                ? 'bg-rose-300 hover:bg-rose-400 text-black'
+                : 'bg-[#00f5d4] hover:bg-[#00d4b8] text-black'
             ]"
           >
             <component :is="isLearned ? Trash2 : Check" class="w-3.5 h-3.5 stroke-[2.5]" />

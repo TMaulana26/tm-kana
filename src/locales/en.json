@@ -209,5 +209,24 @@
     "desc": "An unexpected error occurred while running the application.",
     "messageLabel": "Error Message",
     "reloadBtn": "Reload Application"
+  },
+  "preferences": {
+    "title": "Settings & Preferences",
+    "desc": "Customize your interface appearance and learning style.",
+    "language": "App Language",
+    "theme": "Interface Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeToggle": "Toggle Theme",
+    "autoSubmit": "Auto-Submit Romaji Quiz",
+    "autoSubmitDesc": "Automatically submit answer when matching romaji is typed without pressing Enter.",
+    "openBtn": "Preferences",
+    "closeBtn": "Close"
+  },
+  "footer": {
+    "version": "Version",
+    "github": "GitHub Repository",
+    "openSource": "Open Source",
+    "tagline": "Made with love for learning"
   }
 }

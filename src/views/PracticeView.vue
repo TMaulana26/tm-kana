@@ -2,6 +2,7 @@
 import { ref, computed, nextTick, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useProgressStore } from "@/stores/progress";
+import { usePreferencesStore } from "@/stores/preferences";
 import { kanaData, type KanaItem } from "@/constants/kanaData";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
 import KanaCanvas from "@/components/KanaCanvas.vue";
@@ -18,6 +19,7 @@ import {
 
 const { t } = useI18n();
 const store = useProgressStore();
+const preferencesStore = usePreferencesStore();
 
 // Types
 interface SelectableGroup {
@@ -171,7 +173,7 @@ const filteredResults = computed(() => {
 });
 
 const strokeOrderUrl = computed(() => {
-  if (!currentQuestion.value?.item.character) return "";
+  if (!currentQuestion.value?.item.character || currentQuestion.value.item.character.length > 1) return "";
   const char = currentQuestion.value.item.character;
   const hex = char.charCodeAt(0).toString(16).toLowerCase().padStart(5, "0");
   return `https://raw.githubusercontent.com/KanjiVG/KanjiVG/master/kanji/${hex}.svg`;
@@ -369,6 +371,29 @@ function submitQuizAnswer() {
 
   triggerFeedback(isCorrect, correctRomaji);
 }
+
+// Watcher untuk auto-submit romaji jika diaktifkan di preferensi pengguna
+watch(quizInput, (newVal) => {
+  if (!preferencesStore.autoSubmitQuiz || showFeedback.value || !currentQuestion.value) return;
+  const inputCleaned = newVal.trim().toLowerCase();
+  if (!inputCleaned) return;
+
+  const correctRomaji = currentQuestion.value.item.romaji.toLowerCase();
+  const charId = currentQuestion.value.item.id;
+
+  let isMatch = inputCleaned === correctRomaji;
+  if (!isMatch) {
+    if ((charId === "h-dji" || charId === "k-dji") && inputCleaned === "di") {
+      isMatch = true;
+    } else if ((charId === "h-dzu" || charId === "k-dzu") && inputCleaned === "du") {
+      isMatch = true;
+    }
+  }
+
+  if (isMatch) {
+    submitQuizAnswer();
+  }
+});
 
 // Handle dynamic stroke completion from KanaCanvas
 function handleStrokeCompleted(userStrokes: Point[][]) {
@@ -617,7 +642,7 @@ function stopSession() {
           class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         >
           <h2
-            class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-yellow-950 dark:text-slate-50 border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+            class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-yellow-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
           >
             {{ $t("practice.selectRows") }}
           </h2>
@@ -625,7 +650,7 @@ function stopSession() {
           <div v-if="isAnyCharacterSelected" class="flex items-center gap-3">
             <NeoBrutalistButton
               @click="startPractice"
-              class="px-6 py-2.5 text-xs font-black uppercase tracking-wider bg-violet-400 text-slate-950 hover:bg-violet-500"
+              class="px-6 py-2.5 text-xs font-black uppercase tracking-wider bg-violet-400 text-black hover:bg-violet-500"
             >
               {{ $t("practice.startBtn") }}
             </NeoBrutalistButton>
@@ -855,7 +880,7 @@ function stopSession() {
                       :class="[
                         'p-2 border-[2px] border-slate-950 dark:border-white cursor-pointer flex flex-col items-center justify-center transition-all select-none h-14',
                         selectedCharacters[item.id]
-                          ? 'bg-violet-300 dark:bg-violet-800 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]'
+                          ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]'
                           : 'bg-transparent text-slate-400 dark:text-slate-600 hover:border-slate-400 hover:text-slate-600 dark:hover:text-slate-400 border-dashed',
                       ]"
                     >
@@ -903,7 +928,7 @@ function stopSession() {
                     :class="[
                       'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-white transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
                       practiceMode === 'quiz'
-                        ? 'bg-violet-300 dark:bg-violet-800 text-slate-950 dark:text-white font-black'
+                        ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white font-black'
                         : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800',
                     ]"
                   >
@@ -914,7 +939,7 @@ function stopSession() {
                     :class="[
                       'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-white transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
                       practiceMode === 'draw'
-                        ? 'bg-violet-300 dark:bg-violet-800 text-slate-950 dark:text-white font-black'
+                        ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white font-black'
                         : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800',
                     ]"
                   >
@@ -991,9 +1016,9 @@ function stopSession() {
                 class="font-black text-slate-950 dark:text-white font-sans select-none leading-none text-center"
                 :class="[
                   (currentQuestion?.item.character.length ?? 1) > 2
-                    ? 'text-6xl md:text-7xl'
+                    ? 'text-5xl md:text-6xl'
                     : (currentQuestion?.item.character.length ?? 1) > 1
-                      ? 'text-8xl md:text-9xl'
+                      ? 'text-7xl md:text-8xl'
                       : 'text-9xl md:text-[10rem]'
                 ]"
               >
@@ -1026,7 +1051,14 @@ function stopSession() {
                   />
                   <span
                     v-else
-                    class="text-8xl font-black text-slate-950 select-none leading-none"
+                    class="font-black text-slate-950 select-none leading-none text-center"
+                    :class="[
+                      (currentQuestion?.item.character.length ?? 1) > 2
+                        ? 'text-4xl sm:text-5xl'
+                        : (currentQuestion?.item.character.length ?? 1) > 1
+                          ? 'text-5xl sm:text-6xl'
+                          : 'text-8xl'
+                    ]"
                   >
                     {{ currentQuestion?.item.character }}
                   </span>
@@ -1067,16 +1099,21 @@ function stopSession() {
 
               <div class="flex gap-4">
                 <NeoBrutalistButton
+                  v-if="!preferencesStore.autoSubmitQuiz"
                   @click="submitQuizAnswer"
                   :disabled="showFeedback || !quizInput.trim()"
-                  class="flex-1 py-3 bg-emerald-400 text-slate-950 hover:bg-emerald-500 disabled:opacity-40"
+                  class="flex-1 py-3 bg-emerald-400 text-black hover:bg-emerald-500 disabled:opacity-40"
                 >
                   {{ $t("practice.submitBtn") }}
                 </NeoBrutalistButton>
                 <NeoBrutalistButton
                   @click="skipQuestion"
                   :disabled="showFeedback"
-                  class="px-5 py-3 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-40"
+                  :class="[
+                    preferencesStore.autoSubmitQuiz
+                      ? 'w-full py-3 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-40'
+                      : 'px-5 py-3 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-40'
+                  ]"
                 >
                   {{ $t("practice.skipBtn") }}
                 </NeoBrutalistButton>
@@ -1109,14 +1146,14 @@ function stopSession() {
                 <NeoBrutalistButton
                   @click="submitDrawAnswer"
                   :disabled="showFeedback"
-                  class="flex-1 py-3 bg-emerald-400 text-slate-950 hover:bg-emerald-500 disabled:opacity-40 text-xs sm:text-sm font-black"
+                  class="flex-1 py-3 bg-emerald-400 text-black hover:bg-emerald-500 disabled:opacity-40 text-xs sm:text-sm font-black"
                 >
                   {{ $t("practice.submitBtn") }}
                 </NeoBrutalistButton>
                 <NeoBrutalistButton
                   @click="toggleHint"
                   :disabled="showFeedback"
-                  class="px-3 py-3 bg-amber-300 text-slate-950 hover:bg-amber-400 disabled:opacity-40 text-xs sm:text-sm font-black"
+                  class="px-3 py-3 bg-amber-300 text-black hover:bg-amber-400 disabled:opacity-40 text-xs sm:text-sm font-black"
                 >
                   {{ $t("practice.hintBtn") }}
                 </NeoBrutalistButton>
@@ -1158,8 +1195,8 @@ function stopSession() {
           class="fixed top-4 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:mx-0 z-50 w-auto sm:w-full sm:max-w-xl flex items-center justify-center gap-3 border-[3px] border-slate-950 p-4 shadow-[4px_4px_0px_0px_#000]"
           :class="[
             feedbackStatus === 'correct'
-              ? 'bg-emerald-400 text-slate-950'
-              : 'bg-rose-400 text-slate-950',
+              ? 'bg-emerald-400 text-black'
+              : 'bg-rose-400 text-black',
           ]"
         >
           <Check
@@ -1388,7 +1425,7 @@ function stopSession() {
       <section class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
         <NeoBrutalistButton
           @click="restartPractice"
-          class="py-3 px-6 bg-violet-400 text-slate-950 hover:bg-violet-500 flex items-center justify-center gap-2"
+          class="py-3 px-6 bg-violet-400 text-black hover:bg-violet-500 flex items-center justify-center gap-2"
         >
           <RotateCcw class="w-4 h-4" />
           {{ $t("practice.restartBtn") }}

@@ -25,7 +25,7 @@ const {
 const svgError = ref(false)
 
 const svgUrl = computed(() => {
-  if (!props.char) return ''
+  if (!props.char || props.char.length > 1) return ''
   const hex = props.char.charCodeAt(0).toString(16).toLowerCase().padStart(5, '0')
   return `https://raw.githubusercontent.com/KanjiVG/KanjiVG/master/kanji/${hex}.svg`
 })
@@ -125,8 +125,14 @@ defineExpose({
         />
         <div
           v-else
-          class="absolute inset-0 flex items-center justify-center font-black text-slate-300/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap"
-          :class="char.length > 1 ? 'text-[6rem] sm:text-[7rem]' : 'text-[11rem] sm:text-[12rem]'"
+          class="absolute inset-0 flex items-center justify-center font-black text-slate-300/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap px-2"
+          :class="[
+            char.length > 2
+              ? 'text-4xl sm:text-5xl tracking-tight'
+              : char.length > 1
+                ? 'text-5xl sm:text-6xl tracking-tight'
+                : 'text-[9rem] sm:text-[10rem]'
+          ]"
         >
           {{ char }}
         </div>
@@ -149,7 +155,7 @@ defineExpose({
     <div class="flex gap-4">
       <NeoBrutalistButton
         @click="handleClear"
-        class="h-9 px-4 text-xs bg-amber-300 hover:bg-amber-400 text-slate-950"
+        class="h-9 px-4 text-xs bg-amber-300 hover:bg-amber-400 text-black font-extrabold"
       >
         {{ $t('practice.clearBtn') }}
       </NeoBrutalistButton>

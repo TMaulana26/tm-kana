@@ -2,7 +2,10 @@
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useProgressStore } from "@/stores/progress";
-import LanguageSwitcher from "./LanguageSwitcher.vue";
+import { usePreferencesStore } from "@/stores/preferences";
+import UserPreferencesDialog from "./UserPreferencesDialog.vue";
+import AppLogo from "./AppLogo.vue";
+import AppFooter from "./AppFooter.vue";
 import {
   Home,
   BookOpen,
@@ -11,12 +14,15 @@ import {
   Menu,
   X,
   User,
+  Settings
 } from "lucide-vue-next";
 
 const route = useRoute();
 const progressStore = useProgressStore();
+const preferencesStore = usePreferencesStore();
 
 const isMobileMenuOpen = ref(false);
+const isPreferencesOpen = ref(false);
 
 const nickname = computed(() => progressStore.nickname);
 
@@ -46,22 +52,20 @@ function closeMobileMenu() {
     >
       <!-- Logo Section -->
       <div
-        class="h-16 flex items-center justify-between px-6 border-b-[4px] border-slate-950 dark:border-white"
+        class="h-16 flex items-center justify-center px-4 border-b-[4px] border-slate-950 dark:border-white"
       >
-        <span
-          class="text-2xl font-extrabold tracking-wider uppercase text-slate-950 dark:text-white"
+        <router-link
+          to="/"
+          class="w-full h-full flex items-center justify-center hover:opacity-95 transition-opacity"
         >
-          {{ $t("common.appName") }}
-        </span>
-        <LanguageSwitcher
-          class="border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
-        />
+          <AppLogo size="md" />
+        </router-link>
       </div>
 
       <!-- User Profile Summary (Neo-brutalist card) -->
       <div class="p-6 border-b-[4px] border-slate-950 dark:border-white">
         <div
-          class="bg-amber-300 dark:bg-amber-500 text-slate-950 border-[3px] border-slate-950 dark:border-white p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] flex items-center gap-3"
+          class="bg-amber-300 dark:bg-amber-500 text-black border-[3px] border-slate-950 dark:border-white p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] flex items-center gap-3"
         >
           <div
             class="w-10 h-10 bg-white border-[2px] border-slate-950 flex items-center justify-center"
@@ -70,7 +74,7 @@ function closeMobileMenu() {
           </div>
           <div class="overflow-hidden">
             <p
-              class="text-[10px] uppercase font-black tracking-wider text-slate-800"
+              class="text-xs uppercase font-black tracking-wider text-amber-950"
             >
               {{ $t("common.nickname") }}
             </p>
@@ -88,7 +92,7 @@ function closeMobileMenu() {
           class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform hover:-translate-x-1 hover:-translate-y-1 hover:border-slate-950 dark:hover:border-white hover:bg-violet-200 dark:hover:bg-violet-950 hover:shadow-[3px_3px_0px_0px_#000] dark:hover:shadow-[3px_3px_0px_0px_#fff]"
           :class="[
             route.path === item.path
-              ? 'bg-violet-300 text-slate-950 dark:bg-violet-400 dark:text-slate-950 border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] translate-x-[-2px] translate-y-[-2px]'
+              ? 'bg-violet-300 text-black dark:bg-violet-400 dark:text-black border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] translate-x-[-2px] translate-y-[-2px]'
               : 'text-slate-700 dark:text-slate-300',
           ]"
         >
@@ -96,13 +100,30 @@ function closeMobileMenu() {
           {{ $t(item.name) }}
         </router-link>
       </nav>
+
+      <!-- Desktop Sidebar Bottom Preferences -->
+      <div class="p-4 border-t-[4px] border-slate-950 dark:border-white">
+        <button
+          type="button"
+          @click="isPreferencesOpen = true"
+          class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px]"
+        >
+          <span class="flex items-center gap-2">
+            <Settings class="w-4 h-4" />
+            {{ $t('preferences.openBtn') }}
+          </span>
+          <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white border border-slate-950 text-slate-950">
+            {{ preferencesStore.theme }}
+          </span>
+        </button>
+      </div>
     </aside>
 
     <!-- Mobile Top Header -->
     <header
-      class="md:hidden h-16 bg-white dark:bg-slate-900 border-b-[4px] border-slate-950 dark:border-white flex items-center justify-between px-6 sticky top-0 z-40"
+      class="md:hidden h-16 bg-white dark:bg-slate-900 border-b-[4px] border-slate-950 dark:border-white flex items-center justify-between px-4 sticky top-0 z-40"
     >
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <button
           @click="toggleMobileMenu"
           class="p-2 border-[2px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]"
@@ -114,21 +135,18 @@ function closeMobileMenu() {
           />
           <X v-else class="w-5 h-5 text-slate-950 dark:text-white" />
         </button>
-        <span
-          class="text-xl font-black uppercase tracking-wider text-slate-950 dark:text-white"
-        >
-          {{ $t("common.appName") }}
-        </span>
+        <router-link to="/" class="flex items-center">
+          <AppLogo size="sm" />
+        </router-link>
       </div>
-      <div class="flex items-center gap-3">
-        <span
-          class="text-xs font-bold px-3 py-1 bg-amber-300 dark:bg-amber-500 text-slate-950 border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] truncate max-w-[100px]"
-          >{{ nickname }}</span
-        >
-        <LanguageSwitcher
-          class="border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
-        />
-      </div>
+      <button
+        type="button"
+        @click="isPreferencesOpen = true"
+        class="w-8 h-8 flex items-center justify-center border-[2px] border-slate-950 dark:border-white bg-white dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] text-slate-950 dark:text-white"
+        :aria-label="$t('preferences.title')"
+      >
+        <Settings class="w-4 h-4" />
+      </button>
     </header>
 
     <!-- Mobile Sidebar Menu Overlay -->
@@ -164,11 +182,9 @@ function closeMobileMenu() {
         <div
           class="h-16 flex items-center justify-between px-6 border-b-[4px] border-slate-950 dark:border-white"
         >
-          <span
-            class="text-xl font-black uppercase text-slate-950 dark:text-white"
-          >
-            {{ $t("common.appName") }}
-          </span>
+          <router-link to="/" @click="closeMobileMenu" class="flex items-center">
+            <AppLogo size="sm" />
+          </router-link>
           <button
             @click="closeMobileMenu"
             class="p-2 border-[2px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-800"
@@ -180,7 +196,7 @@ function closeMobileMenu() {
         <!-- Nickname -->
         <div class="p-6 border-b-[4px] border-slate-950 dark:border-white">
           <div
-            class="bg-amber-300 dark:bg-amber-500 text-slate-950 border-[2px] border-slate-950 dark:border-white p-3 shadow-[3px_3px_0px_0px_#000] flex items-center gap-3"
+            class="bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white p-3 shadow-[3px_3px_0px_0px_#000] flex items-center gap-3"
           >
             <div
               class="w-8 h-8 bg-white border-[2px] border-slate-950 flex items-center justify-center"
@@ -188,7 +204,7 @@ function closeMobileMenu() {
               <User class="w-4 h-4 text-slate-950" />
             </div>
             <div>
-              <p class="text-[9px] uppercase font-black text-slate-700">
+              <p class="text-xs uppercase font-black text-amber-950">
                 {{ $t('common.nickname') }}
               </p>
               <p class="font-extrabold text-sm">{{ nickname }}</p>
@@ -206,7 +222,7 @@ function closeMobileMenu() {
             class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform active:translate-x-[1px] active:translate-y-[1px]"
             :class="[
               route.path === item.path
-                ? 'bg-violet-300 text-slate-950 dark:bg-violet-400 dark:text-slate-950 border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]'
+                ? 'bg-violet-300 text-black dark:bg-violet-400 dark:text-black border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]'
                 : 'text-slate-700 dark:text-slate-300',
             ]"
           >
@@ -214,20 +230,45 @@ function closeMobileMenu() {
             {{ $t(item.name) }}
           </router-link>
         </nav>
+
+        <!-- Mobile Drawer Bottom Preferences -->
+        <div class="p-4 border-t-[4px] border-slate-950 dark:border-white">
+          <button
+            type="button"
+            @click="isPreferencesOpen = true; closeMobileMenu()"
+            class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px]"
+          >
+            <span class="flex items-center gap-2">
+              <Settings class="w-4 h-4" />
+              {{ $t('preferences.openBtn') }}
+            </span>
+            <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white border border-slate-950 text-slate-950">
+              {{ preferencesStore.theme }}
+            </span>
+          </button>
+        </div>
       </aside>
     </transition>
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
-      <!-- App container -->
-      <div class="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl w-full mx-auto">
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+      <!-- App scroll container -->
+      <div class="flex-1 overflow-y-auto flex flex-col">
+        <div class="flex-1 p-4 md:p-8 max-w-7xl w-full mx-auto">
+          <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </div>
+
+        <!-- Global App Footer -->
+        <AppFooter />
       </div>
     </main>
+
+    <!-- Global User Preferences Dialog -->
+    <UserPreferencesDialog v-model:open="isPreferencesOpen" />
   </div>
 </template>
 

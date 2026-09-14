@@ -64,7 +64,7 @@ function selectCharacter(char: KanaItem) {
           <!-- Gojuon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-950 dark:text-slate-50 border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
             >
               {{ $t('chart.gojuon') }}
             </h2>
@@ -105,7 +105,7 @@ function selectCharacter(char: KanaItem) {
           <!-- Dakuon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-950 dark:text-slate-50 border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
             >
               {{ $t('chart.dakuon') }}
             </h2>
@@ -133,7 +133,7 @@ function selectCharacter(char: KanaItem) {
           <!-- Yoon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-950 dark:text-slate-50 border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
             >
               {{ $t('chart.yoon') }}
             </h2>
