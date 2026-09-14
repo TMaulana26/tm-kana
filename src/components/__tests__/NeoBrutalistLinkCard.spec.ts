@@ -40,6 +40,6 @@ describe('NeoBrutalistLinkCard.vue Component', () => {
     const link = wrapper.find('a')
     expect(link.classes()).toContain('dark:bg-slate-900')
     expect(link.classes()).toContain('dark:hover:bg-slate-800')
-    expect(link.classes()).toContain('dark:hover:border-amber-400')
+    expect(link.classes()).toContain('dark:hover:border-violet-400')
   })
 })

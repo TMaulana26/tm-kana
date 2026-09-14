@@ -88,7 +88,7 @@ watch(() => props.character, () => {
 <template>
   <Dialog v-model:open="isOpen">
     <DialogContent
-      class="bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-slate-700 rounded-none p-6 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#000] sm:max-w-2xl w-full text-slate-950 dark:text-white"
+      class="bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-slate-700 rounded-none p-6 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#8b5cf6] sm:max-w-2xl w-full text-slate-950 dark:text-white"
     >
       <DialogHeader class="border-b-[3px] border-slate-950 dark:border-slate-700 pb-4 mb-6">
         <DialogTitle class="text-2xl font-black uppercase tracking-wider flex items-center gap-3">
@@ -117,7 +117,7 @@ watch(() => props.character, () => {
         <div class="space-y-4 flex flex-col items-stretch w-full">
           <!-- Character Card & Romaji Side-by-Side -->
           <div class="flex gap-4 items-center justify-start w-full">
-            <div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f3ec] dark:bg-slate-800 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] shrink-0">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f3ec] dark:bg-slate-800 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6] shrink-0">
               <span
                 class="font-black font-sans select-none whitespace-nowrap"
                 :class="character.character.length > 1 ? 'text-4xl' : 'text-6xl'"
@@ -148,7 +148,7 @@ watch(() => props.character, () => {
             
             <div
               v-if="!hasSvgError && strokeOrderUrls.length > 0"
-              class="bg-white dark:bg-white border-[3px] border-slate-950 dark:border-slate-700 p-2 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] inline-flex gap-2 justify-center items-center"
+              class="bg-white dark:bg-white border-[3px] border-slate-950 dark:border-slate-700 p-2 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6] inline-flex gap-2 justify-center items-center"
             >
               <img
                 v-for="(url, idx) in strokeOrderUrls"
@@ -163,7 +163,7 @@ watch(() => props.character, () => {
             <!-- Offline Fallback Info -->
             <div
               v-else
-              class="border-[3px] border-slate-950 dark:border-slate-700 bg-amber-100 dark:bg-amber-950/60 dark:text-amber-100 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] text-[10px] font-bold flex gap-2 items-start text-left text-amber-950"
+              class="border-[3px] border-slate-950 dark:border-slate-700 bg-amber-100 dark:bg-amber-950/60 dark:text-amber-100 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] text-[10px] font-bold flex gap-2 items-start text-left text-amber-950"
             >
               <Info class="w-3.5 h-3.5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
               <span>{{ $t('chart.offlineStrokeOrder') }}</span>
@@ -171,7 +171,7 @@ watch(() => props.character, () => {
           </div>
 
           <!-- Statistics section -->
-          <div class="w-full grid grid-cols-2 gap-2 bg-[#f4f3ec] dark:bg-slate-950 p-2.5 border-[3px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]">
+          <div class="w-full grid grid-cols-2 gap-2 bg-[#f4f3ec] dark:bg-slate-950 p-2.5 border-[3px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6]">
             <div class="text-center border-r-2 border-slate-950 dark:border-slate-700 pr-2">
               <div class="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">
                 {{ $t('chart.quizLabel') }}

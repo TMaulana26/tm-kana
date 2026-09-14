@@ -59,12 +59,12 @@ function closeDialog() {
   <Dialog v-model:open="isOpen">
     <DialogContent
       :show-close-button="false"
-      class="max-w-md w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#000]"
+      class="max-w-md w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#8b5cf6]"
     >
       <DialogHeader class="border-b-[3px] border-slate-950 dark:border-slate-700 pb-4 mb-5 relative">
         <div class="flex items-start gap-3.5 pr-10">
           <div
-            class="w-10 h-10 bg-violet-300 dark:bg-violet-950/70 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] mt-0.5"
+            class="w-10 h-10 bg-violet-300 dark:bg-violet-950/70 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#8b5cf6] mt-0.5"
           >
             <Settings class="w-5 h-5 text-slate-950 dark:text-violet-300" />
           </div>
@@ -82,7 +82,7 @@ function closeDialog() {
         <button
           type="button"
           @click="closeDialog"
-          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] transition-transform active:translate-x-0.5 active:translate-y-0.5"
+          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#ef4444] transition-transform active:translate-x-0.5 active:translate-y-0.5"
           :aria-label="$t('preferences.closeBtn')"
         >
           <X class="w-4 h-4" />
@@ -108,7 +108,7 @@ function closeDialog() {
               class="p-2 border-[2px] border-slate-950 dark:border-slate-700 flex flex-col items-center justify-center text-center transition-all text-slate-950 dark:text-white"
               :class="[
                 preferencesStore.locale === lang.id
-                  ? 'bg-amber-300 dark:bg-amber-400 text-black font-black shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] translate-x-[-1px] translate-y-[-1px]'
+                  ? 'bg-amber-300 dark:bg-amber-400 text-black font-black shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] translate-x-[-1px] translate-y-[-1px]'
                   : 'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 opacity-80'
               ]"
             >
@@ -158,7 +158,7 @@ function closeDialog() {
               class="flex items-center justify-center gap-2 p-3 border-[2px] border-slate-950 dark:border-slate-700 transition-all text-slate-950 dark:text-white"
               :class="[
                 preferencesStore.theme === 'dark'
-                  ? 'bg-violet-400 dark:bg-violet-600 text-white font-black shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] translate-x-[-1px] translate-y-[-1px]'
+                  ? 'bg-violet-400 dark:bg-violet-600 text-white font-black shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6] translate-x-[-1px] translate-y-[-1px]'
                   : 'bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 opacity-80'
               ]"
             >
@@ -170,7 +170,7 @@ function closeDialog() {
         </div>
 
         <!-- Section: Mode Auto-Submit Kuis -->
-        <div class="p-3 bg-white dark:bg-slate-800 border-[2px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]">
+        <div class="p-3 bg-white dark:bg-slate-800 border-[2px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#10b981]">
           <div class="flex items-start justify-between gap-3">
             <div class="space-y-1">
               <div class="flex items-center gap-1.5">
@@ -191,7 +191,7 @@ function closeDialog() {
               class="shrink-0 px-3 py-1.5 border-[2px] border-slate-950 dark:border-slate-700 font-black text-xs uppercase tracking-wider transition-all"
               :class="[
                 preferencesStore.autoSubmitQuiz
-                  ? 'bg-emerald-400 dark:bg-emerald-500 text-black shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]'
+                  ? 'bg-emerald-400 dark:bg-emerald-500 text-black shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#10b981]'
                   : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
               ]"
             >

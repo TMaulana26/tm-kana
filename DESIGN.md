@@ -19,7 +19,11 @@ colors:
   border-light: "#020617"
   border-dark: "#334155"
   shadow-light: "#000000"
-  shadow-dark: "#000000"
+  shadow-dark-primary: "#f59e0b"
+  shadow-dark-secondary: "#8b5cf6"
+  shadow-dark-success: "#10b981"
+  shadow-dark-danger: "#ef4444"
+  shadow-dark-neutral: "#1e293b"
 typography:
   font-family: "'Outfit', 'Noto Sans JP', system-ui, sans-serif"
   display:
@@ -86,10 +90,15 @@ Palet warna TM-KANA dirancang dengan rasio kontras tinggi, kenyamanan visual (*e
 
 ### A. Surface & Canvas
 - **Light Mode Canvas (`#f4f3ec`):** Warna kertas hangat (*warm retro newsprint*). Menghilangkan silau putih murni pada layar dan memberikan tekstur editorial klasik.
-- **Dark Mode Canvas (`#0c0e14`):** Hitam arang mendalam (*deep midnight slate*). Mengeliminasi silau retina, menciptakan kontras yang nyaman dan elegan untuk sesi belajar panjang tanpa efek "menggelegar".
+- **Dark Mode Canvas (`#0c0e14`):** Hitam arang mendalam (*deep midnight slate*). Mengeliminasi silau retina, menciptakan kontras yang nyaman dan berkarakter.
 - **Card Surface (`#ffffff` light / `#0f172a` dark):** Latar kartu konten utama.
-- **Dark Mode Borders (`#334155` / `slate-700`):** Garis batas industrial slate yang tegas dan rapi, menggantikan garis putih murni yang sebelumnya terlalu menusuk mata (*retinal glare*).
-- **Dark Mode Hard Shadows (`#000000`):** Bayangan fisik sejati (*true physical occlusion*) berwarna hitam solid di atas kanvas gelap, memberikan kedalaman taktil 3D tanpa radiasi cahaya putih.
+- **Dark Mode Borders (`#334155` / `slate-700`):** Garis batas industrial slate yang tegas dan rapi, atau border beraksen warna sesuai status.
+- **Dark Mode Colored Offset Shadows (Vibe 2):** Bayangan blok fisik berwarna solid (*solid colored hard drop shadows*) tanpa blur ala arcade retro era 90-an. Memberikan kedalaman 3D taktil yang hidup di atas kanvas gelap:
+  - **Amber (`#f59e0b`):** Kartu profil, hero banner, primary buttons, stroke master.
+  - **Violet (`#8b5cf6`):** Active nav link, external resource cards, quiz master.
+  - **Emerald (`#10b981`):** Success buttons, learned kana cards, progress completion.
+  - **Rose (`#ef4444`):** Danger zone, reset actions, exit modal, ultimate master.
+  - **Neutral Slate (`#1e293b`):** Unlearned kana cards (beralih ke violet cerah saat hover).
 
 ### B. Functional & Accent Colors
 - **Amber (`#fbbf24` / `#f59e0b`):** Warna primer aksi utama, sorotan kartu profil, kartu CTA kuis, dan tombol bersihkan kanvas. Di dark mode, aksen menggunakan `dark:bg-amber-400` atau `dark:border-amber-400`.
@@ -127,20 +136,31 @@ Palet warna TM-KANA dirancang dengan rasio kontras tinggi, kenyamanan visual (*e
 
 ---
 
-## 5. Elevation & Depth (Hard Shadows)
+## 5. Elevation & Depth (Colored Offset Shadows)
 
 Dalam Neo-Brutalism, kedalaman tidak menggunakan *blur radius*, melainkan proyeksi bayangan solid bergeser 45 derajat ke kanan bawah:
 
 - **Kartu Besar / Dialog Modal:**
-  - Light Mode: `shadow-[6px_6px_0px_0px_#000]`
-  - Dark Mode: `dark:shadow-[6px_6px_0px_0px_#000]`
+  - Light Mode: `shadow-[6px_6px_0px_0px_#000]` / `shadow-[8px_8px_0px_0px_#000]`
+  - Dark Mode: `dark:shadow-[6px_6px_0px_0px_#f59e0b]` (Amber hero) atau `dark:shadow-[8px_8px_0px_0px_#8b5cf6]` (Violet dialog)
 - **Tombol Standar & Card Biasa:**
   - Light Mode: `shadow-[3px_3px_0px_0px_#000]` atau `shadow-[4px_4px_0px_0px_#000]`
-  - Dark Mode: `dark:shadow-[3px_3px_0px_0px_#000]` atau `dark:shadow-[4px_4px_0px_0px_#000]`
+  - Dark Mode (Per Fungsi):
+    - Primary: `dark:shadow-[4px_4px_0px_0px_#f59e0b]`
+    - Secondary: `dark:shadow-[4px_4px_0px_0px_#8b5cf6]`
+    - Success: `dark:shadow-[4px_4px_0px_0px_#10b981]`
+    - Danger: `dark:shadow-[4px_4px_0px_0px_#ef4444]`
+- **Kartu Karakter Kana (KanaCard):**
+  - Belum Hafal: `dark:shadow-[3px_3px_0px_0px_#1e293b]` (hover: `dark:hover:shadow-[5px_5px_0px_0px_#8b5cf6]`)
+  - Sudah Dipelajari: `dark:shadow-[3px_3px_0px_0px_#10b981]`
+  - Quiz Master: `dark:shadow-[3px_3px_0px_0px_#8b5cf6]`
+  - Stroke Master: `dark:shadow-[3px_3px_0px_0px_#f59e0b]`
+  - Ultimate Master: `dark:shadow-[3px_3px_0px_0px_#ef4444]`
 - **Micro Badge / Mini Buttons:**
-  - `shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]`
+  - Light Mode: `shadow-[2px_2px_0px_0px_#000]`
+  - Dark Mode: `dark:shadow-[2px_2px_0px_0px_#f59e0b]` atau warna aksen terkait.
 - **Efek Tekan (Tactile Press Interaction):**
-  - Pada status `:active`: Elemen bergeser `translate-x-[2px] translate-y-[2px]` dan ukuran bayangan menyusut menjadi `shadow-[1px_1px_0px_0px_#000] dark:shadow-[1px_1px_0px_0px_#000]`, memberikan sensasi tombol fisik mekanis yang nyata.
+  - Pada status `:active`: Elemen bergeser `translate-x-[2px] translate-y-[2px]` dan ukuran bayangan menyusut menjadi `shadow-[1px_1px_0px_0px_...]`, memberikan sensasi tombol fisik mekanis yang nyata.
 
 ---
 

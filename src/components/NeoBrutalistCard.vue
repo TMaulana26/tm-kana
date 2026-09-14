@@ -13,7 +13,7 @@ defineProps<{
 <template>
   <Card
     :class="[
-      'border-[4px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-none shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#000]',
+      'border-[4px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-none shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#8b5cf6]',
       cardClass
     ]"
   >

@@ -69,7 +69,7 @@ function closeMobileMenu() {
       <!-- User Profile Summary (Neo-brutalist card) -->
       <div class="p-6 border-b-[4px] border-slate-950 dark:border-slate-700">
         <div
-          class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 p-4 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex items-center gap-3"
+          class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 p-4 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#f59e0b] flex items-center gap-3"
         >
           <div
             class="w-10 h-10 bg-white dark:bg-slate-900 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center"
@@ -93,10 +93,10 @@ function closeMobileMenu() {
           v-for="item in navigationItems"
           :key="item.path"
           :to="item.path"
-          class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform hover:-translate-x-1 hover:-translate-y-1 hover:border-slate-950 dark:hover:border-slate-700 hover:bg-violet-200 dark:hover:bg-violet-950/60 hover:shadow-[3px_3px_0px_0px_#000] dark:hover:shadow-[3px_3px_0px_0px_#000]"
+          class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform hover:-translate-x-1 hover:-translate-y-1 hover:border-slate-950 dark:hover:border-violet-400 hover:bg-violet-200 dark:hover:bg-violet-950/60 hover:shadow-[3px_3px_0px_0px_#000] dark:hover:shadow-[3px_3px_0px_0px_#8b5cf6]"
           :class="[
             route.path === item.path
-              ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] translate-x-[-2px] translate-y-[-2px]'
+              ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] translate-x-[-2px] translate-y-[-2px]'
               : 'text-slate-700 dark:text-slate-300',
           ]"
         >
@@ -110,7 +110,7 @@ function closeMobileMenu() {
         <button
           type="button"
           @click="isPreferencesOpen = true"
-          class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px]"
+          class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] active:translate-x-[1px] active:translate-y-[1px]"
         >
           <span class="flex items-center gap-2">
             <Settings class="w-4 h-4" />
@@ -130,7 +130,7 @@ function closeMobileMenu() {
       <div class="flex items-center gap-2">
         <button
           @click="toggleMobileMenu"
-          class="p-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]"
+          class="p-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#f59e0b] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]"
           aria-label="Toggle menu"
         >
           <Menu
@@ -146,7 +146,7 @@ function closeMobileMenu() {
       <button
         type="button"
         @click="isPreferencesOpen = true"
-        class="w-8 h-8 flex items-center justify-center border-[2px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] text-slate-950 dark:text-white"
+        class="w-8 h-8 flex items-center justify-center border-[2px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#f59e0b] active:translate-x-[1px] active:translate-y-[1px] text-slate-950 dark:text-white"
         :aria-label="$t('preferences.title')"
       >
         <Settings class="w-4 h-4" />
@@ -200,7 +200,7 @@ function closeMobileMenu() {
         <!-- Nickname -->
         <div class="p-6 border-b-[4px] border-slate-950 dark:border-slate-700">
           <div
-            class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] flex items-center gap-3"
+            class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] flex items-center gap-3"
           >
             <div
               class="w-8 h-8 bg-white dark:bg-slate-900 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center"
@@ -226,7 +226,7 @@ function closeMobileMenu() {
             class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform active:translate-x-[1px] active:translate-y-[1px]"
             :class="[
               route.path === item.path
-                ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]'
+                ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6]'
                 : 'text-slate-700 dark:text-slate-300',
             ]"
           >
@@ -240,7 +240,7 @@ function closeMobileMenu() {
           <button
             type="button"
             @click="isPreferencesOpen = true; closeMobileMenu()"
-            class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px]"
+            class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] active:translate-x-[1px] active:translate-y-[1px]"
           >
             <span class="flex items-center gap-2">
               <Settings class="w-4 h-4" />

@@ -154,13 +154,13 @@ function handleResetConfirm() {
 
     <!-- Phase 1: Summary Statistics Cards -->
     <section class="space-y-4">
-      <h2 class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-amber-400 text-black border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]">
+      <h2 class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-amber-400 text-black border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]">
         {{ $t("progressPage.summaryTitle") }}
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Hiragana Progress Card -->
-        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {{ $t("progressPage.hiraganaProgress") }}
@@ -178,7 +178,7 @@ function handleResetConfirm() {
         </div>
 
         <!-- Katakana Progress Card -->
-        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#10b981] flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {{ $t("progressPage.katakanaProgress") }}
@@ -196,7 +196,7 @@ function handleResetConfirm() {
         </div>
 
         <!-- Quiz Accuracy Card -->
-        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#f59e0b] flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {{ $t("progressPage.quizAccuracy") }}
@@ -214,7 +214,7 @@ function handleResetConfirm() {
         </div>
 
         <!-- Writing Accuracy Card -->
-        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-5 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#ef4444] flex flex-col justify-between">
           <div class="flex justify-between items-start">
             <span class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {{ $t("progressPage.writingAccuracy") }}
@@ -236,12 +236,12 @@ function handleResetConfirm() {
     <!-- Progress Bars Row -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Hiragana Progress Bar Card -->
-      <div class="bg-[#f4f3ec] dark:bg-slate-950 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] space-y-3">
+      <div class="bg-[#f4f3ec] dark:bg-slate-950 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#10b981] space-y-3">
         <div class="flex justify-between items-center font-black uppercase text-sm">
           <span>{{ $t("progressPage.hiraganaProgress") }}</span>
           <span>{{ Math.round((learnedHiraganaCount / hiraganaCharacters.length) * 100) }}%</span>
         </div>
-        <div class="w-full bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 h-8 overflow-hidden flex shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
+        <div class="w-full bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 h-8 overflow-hidden flex shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#10b981]">
           <div
             class="bg-emerald-400 border-r-[3px] border-slate-950 dark:border-slate-700 transition-all duration-500"
             :style="{ width: `${(learnedHiraganaCount / hiraganaCharacters.length) * 100}%` }"
@@ -250,12 +250,12 @@ function handleResetConfirm() {
       </div>
 
       <!-- Katakana Progress Bar Card -->
-      <div class="bg-[#f4f3ec] dark:bg-slate-950 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] space-y-3">
+      <div class="bg-[#f4f3ec] dark:bg-slate-950 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] space-y-3">
         <div class="flex justify-between items-center font-black uppercase text-sm">
           <span>{{ $t("progressPage.katakanaProgress") }}</span>
           <span>{{ Math.round((learnedKatakanaCount / katakanaCharacters.length) * 100) }}%</span>
         </div>
-        <div class="w-full bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 h-8 overflow-hidden flex shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
+        <div class="w-full bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 h-8 overflow-hidden flex shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#8b5cf6]">
           <div
             class="bg-violet-400 border-r-[3px] border-slate-950 dark:border-slate-700 transition-all duration-500"
             :style="{ width: `${(learnedKatakanaCount / katakanaCharacters.length) * 100}%` }"
@@ -279,13 +279,13 @@ function handleResetConfirm() {
             <input
               v-model="searchQuery"
               type="text"
-              class="w-full pl-9 pr-4 py-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-950 font-black text-xs uppercase placeholder:text-slate-400 focus:outline-none focus:bg-white dark:focus:bg-slate-900 dark:focus:border-amber-400 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
+              class="w-full pl-9 pr-4 py-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-950 font-black text-xs uppercase placeholder:text-slate-400 focus:outline-none focus:bg-white dark:focus:bg-slate-900 dark:focus:border-amber-400 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#f59e0b]"
               :placeholder="$t('progressPage.searchPlaceholder')"
             />
           </div>
 
           <!-- Alphabet filter tabs -->
-          <div class="flex border-[2px] border-slate-950 dark:border-slate-700 p-0.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
+          <div class="flex border-[2px] border-slate-950 dark:border-slate-700 p-0.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#8b5cf6]">
             <button
               @click="alphabetFilter = 'all'"
               class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-all"
@@ -310,7 +310,7 @@ function handleResetConfirm() {
           </div>
 
           <!-- Group filter tabs -->
-          <div class="flex border-[2px] border-slate-950 dark:border-slate-700 p-0.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
+          <div class="flex border-[2px] border-slate-950 dark:border-slate-700 p-0.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#8b5cf6]">
             <button
               @click="groupFilter = 'all'"
               class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider transition-all"
@@ -344,7 +344,7 @@ function handleResetConfirm() {
       </div>
 
       <!-- Detailed Table container -->
-      <div class="border-[3px] border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] overflow-hidden">
+      <div class="border-[3px] border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#8b5cf6] overflow-hidden">
         <!-- Table header wrapper -->
         <div class="overflow-x-auto">
           <table class="w-full text-left bg-white dark:bg-slate-900 border-collapse">
@@ -397,10 +397,10 @@ function handleResetConfirm() {
                   <div class="flex justify-center">
                     <button
                       @click="toggleCharacterLearned(c.id)"
-                      class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-1 border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000] dark:active:shadow-[1px_1px_0px_0px_#000] transition-all"
+                      class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-1 border-[2px] border-slate-950 dark:border-slate-700 active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000] dark:active:shadow-[1px_1px_0px_0px_#000] transition-all"
                       :class="store.progress[c.id]?.hasLearned
-                        ? 'bg-emerald-400 text-black hover:bg-emerald-500'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200'"
+                        ? 'bg-emerald-400 text-black hover:bg-emerald-500 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#10b981]'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#1e293b]'"
                     >
                       <component :is="store.progress[c.id]?.hasLearned ? Unlock : Lock" class="w-3.5 h-3.5" />
                       {{ store.progress[c.id]?.hasLearned ? $t("progressPage.statusLearned") : $t("progressPage.statusNotLearned") }}
@@ -459,7 +459,7 @@ function handleResetConfirm() {
       </div>
       <button
         @click="showResetModal = true"
-        class="px-5 py-3 text-xs font-black uppercase bg-rose-500 text-white hover:bg-rose-600 border-[2px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_#000] dark:active:shadow-[2px_2px_0px_0px_#000] transition-all"
+        class="px-5 py-3 text-xs font-black uppercase bg-rose-500 text-white hover:bg-rose-600 border-[2px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#ef4444] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_#000] dark:active:shadow-[2px_2px_0px_0px_#ef4444] transition-all"
       >
         {{ $t("progressPage.resetBtn") }}
       </button>
@@ -479,7 +479,7 @@ function handleResetConfirm() {
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm"
         @click.self="showResetModal = false"
       >
-        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 max-w-md w-full p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#000] space-y-6">
+        <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 max-w-md w-full p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#ef4444] space-y-6">
           <div class="space-y-2">
             <h3 class="text-xl font-black uppercase text-slate-950 dark:text-white tracking-tight flex items-center gap-2">
               <AlertTriangle class="w-5 h-5 text-rose-500" />
@@ -492,12 +492,14 @@ function handleResetConfirm() {
 
           <div class="flex flex-col sm:flex-row gap-3 justify-end pt-2">
             <NeoBrutalistButton
+              variant="neutral"
               @click="showResetModal = false"
               class="py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-black uppercase"
             >
               {{ $t("progressPage.resetCancelBtn") }}
             </NeoBrutalistButton>
             <NeoBrutalistButton
+              variant="danger"
               @click="handleResetConfirm"
               class="py-2.5 bg-rose-500 text-white hover:bg-rose-600 text-xs font-black uppercase"
             >

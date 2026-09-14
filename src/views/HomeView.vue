@@ -124,7 +124,7 @@ function processFile(file: File) {
   <div class="space-y-8 py-4 animate-fade-in">
     <!-- Welcome Header Banner (Neo-brutalist Style) -->
     <div
-      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 md:p-12 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#000]"
+      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 md:p-12 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#f59e0b]"
     >
       <div
         class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.04),transparent)]"
@@ -179,6 +179,7 @@ function processFile(file: File) {
                 class="flex-1 h-12"
               />
               <NeoBrutalistButton
+                variant="danger"
                 @click="updateNickname"
                 class="h-12 px-6 bg-[#ff007f] hover:bg-[#e60072] text-white"
               >
@@ -220,6 +221,7 @@ function processFile(file: File) {
               </p>
             </div>
             <NeoBrutalistButton
+              variant="success"
               @click="handleExport"
               class="w-full sm:w-auto h-11 px-5 bg-[#00f5d4] hover:bg-[#00d4b8] text-slate-950"
             >
@@ -241,7 +243,7 @@ function processFile(file: File) {
               @dragleave="handleDragLeave"
               @drop="handleDrop"
               @click="triggerFileInput"
-              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center border-slate-950 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-slate-900 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]"
+              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center border-slate-950 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-slate-900 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6]"
               :class="{
                 'border-violet-500 bg-violet-100 dark:bg-violet-950/40':
                   isDragging,

@@ -147,13 +147,13 @@ function resetAndClose() {
   <Dialog v-model:open="isOpen">
     <DialogContent
       :show-close-button="false"
-      class="max-w-lg w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-5 sm:p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#000]"
+      class="max-w-lg w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-5 sm:p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b]"
     >
       <!-- Header -->
       <DialogHeader class="border-b-[3px] border-slate-950 dark:border-slate-700 pb-4 mb-4 relative">
         <div class="flex items-start gap-3.5 pr-10">
           <div
-            class="w-10 h-10 bg-amber-300 dark:bg-amber-400 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] mt-0.5"
+            class="w-10 h-10 bg-amber-300 dark:bg-amber-400 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#f59e0b] mt-0.5"
           >
             <MessageSquarePlus class="w-5 h-5 text-slate-950 stroke-[2.5]" />
           </div>
@@ -171,7 +171,7 @@ function resetAndClose() {
         <button
           type="button"
           @click="resetAndClose"
-          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] transition-transform active:translate-x-0.5 active:translate-y-0.5"
+          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#ef4444] transition-transform active:translate-x-0.5 active:translate-y-0.5"
           :aria-label="$t('feedback.closeBtn')"
         >
           <X class="w-4 h-4 stroke-[2.5]" />
@@ -181,7 +181,7 @@ function resetAndClose() {
       <!-- Success Screen -->
       <div v-if="isSuccess" class="py-6 flex flex-col items-center text-center space-y-4">
         <div
-          class="w-16 h-16 bg-emerald-400 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]"
+          class="w-16 h-16 bg-emerald-400 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#10b981]"
         >
           <CheckCircle2 class="w-10 h-10 text-slate-950 stroke-[2.5]" />
         </div>
@@ -195,6 +195,7 @@ function resetAndClose() {
         </div>
         <NeoBrutalistButton
           type="button"
+          variant="success"
           @click="resetAndClose"
           class="px-6 py-2.5 bg-emerald-400 text-black hover:bg-emerald-500 text-xs sm:text-sm font-black mt-2"
         >
@@ -214,7 +215,7 @@ function resetAndClose() {
         <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
 
         <!-- Category Selector -->
-        <div class="space-y-1.5">
+        <div class="space-y-2">
           <label class="block text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
             {{ $t("feedback.categoryLabel") }}
           </label>
@@ -227,8 +228,8 @@ function resetAndClose() {
               class="flex flex-col items-center justify-center gap-1.5 p-2 sm:p-2.5 min-h-[68px] sm:min-h-[72px] border-[2px] border-slate-950 dark:border-slate-700 transition-all active:translate-x-[1px] active:translate-y-[1px]"
               :class="[
                 category === cat.id
-                  ? [cat.activeColor, 'shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]']
-                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]'
+                  ? [cat.activeColor, 'shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]']
+                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#1e293b]'
               ]"
             >
               <component :is="cat.icon" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 stroke-[2.5]" />

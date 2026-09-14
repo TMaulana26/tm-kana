@@ -26,7 +26,7 @@ function selectCharacter(char: KanaItem) {
   <div class="p-6 max-w-7xl mx-auto space-y-8 animate-fade-in">
     <!-- Header -->
     <div
-      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#000]"
+      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#8b5cf6]"
     >
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.04),transparent)]"></div>
       <div class="relative z-10 space-y-2">
@@ -42,7 +42,7 @@ function selectCharacter(char: KanaItem) {
     <!-- Tabs Section -->
     <Tabs default-value="hiragana" v-model="activeTab" class="w-full">
       <TabsList
-        class="w-full grid grid-cols-2 h-14 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-1 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] mb-8"
+        class="w-full grid grid-cols-2 h-14 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-1 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] mb-8"
       >
         <TabsTrigger
           value="hiragana"
@@ -64,11 +64,11 @@ function selectCharacter(char: KanaItem) {
           <!-- Gojuon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6]"
             >
               {{ $t('chart.gojuon') }}
             </h2>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000]">
+            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#8b5cf6]">
               <!-- Grid Header columns: Vowels (A, I, U, E, O) -->
               <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
                 <div class="w-20 shrink-0"></div>
@@ -105,11 +105,11 @@ function selectCharacter(char: KanaItem) {
           <!-- Dakuon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#6366f1]"
             >
               {{ $t('chart.dakuon') }}
             </h2>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000]">
+            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#6366f1]">
               <div class="space-y-4">
                 <div
                   v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.dakuon : katakanaGroups.dakuon)"
@@ -133,11 +133,11 @@ function selectCharacter(char: KanaItem) {
           <!-- Yoon Section -->
           <section class="space-y-6">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
+              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
             >
               {{ $t('chart.yoon') }}
             </h2>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000]">
+            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b]">
               <div class="space-y-4">
                 <div
                   v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.yoon : katakanaGroups.yoon)"
