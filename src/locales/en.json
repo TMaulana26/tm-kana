@@ -232,5 +232,28 @@
     "github": "GitHub Repository",
     "openSource": "Open Source",
     "tagline": "Made with love for learning"
+  },
+  "feedback": {
+    "triggerBtn": "Feedback & Bugs",
+    "title": "Report Bug & Suggestions",
+    "desc": "Help us improve TM-KANA by reporting issues, sharing feedback, or suggesting new features.",
+    "categoryLabel": "Feedback Type",
+    "categoryBug": "Bug Report",
+    "categorySuggestion": "Feature Suggestion",
+    "categoryOther": "Question / Other",
+    "emailLabel": "Your Email (Optional)",
+    "emailPlaceholder": "name@email.com",
+    "emailHint": "Enter your email if you would like to receive a follow-up response.",
+    "messageLabel": "Feedback Details",
+    "messagePlaceholder": "Describe the issue you encountered or the feature idea you'd like to see in TM-KANA...",
+    "messageRequired": "Please enter your feedback message.",
+    "sendBtn": "Submit Feedback",
+    "sendingBtn": "Sending...",
+    "successTitle": "Thank You So Much!",
+    "successDesc": "Your report and feedback have been received. Your contribution means a lot to TM-KANA!",
+    "errorTitle": "Submission Failed",
+    "errorDesc": "An error occurred while sending your feedback. Please check your connection and try again.",
+    "retryBtn": "Try Again",
+    "closeBtn": "Close"
   }
 }

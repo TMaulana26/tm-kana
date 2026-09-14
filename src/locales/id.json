@@ -232,5 +232,28 @@
     "github": "Repositori GitHub",
     "openSource": "Open Source",
     "tagline": "Dibuat dengan cinta dalam belajar"
+  },
+  "feedback": {
+    "triggerBtn": "Saran & Bug",
+    "title": "Laporkan Bug & Saran",
+    "desc": "Bantu kami menyempurnakan TM-KANA dengan membagikan kendala, masukan, atau ide fitur baru.",
+    "categoryLabel": "Jenis Masukan",
+    "categoryBug": "Laporan Bug",
+    "categorySuggestion": "Saran Fitur",
+    "categoryOther": "Pertanyaan / Lainnya",
+    "emailLabel": "Email Anda (Opsional)",
+    "emailPlaceholder": "nama@email.com",
+    "emailHint": "Isi email jika Anda bersedia menerima balasan dari kami.",
+    "messageLabel": "Detail Masukan",
+    "messagePlaceholder": "Ceritakan kendala yang Anda alami atau ide fitur yang ingin Anda lihat di TM-KANA...",
+    "messageRequired": "Pesan masukan wajib diisi.",
+    "sendBtn": "Kirim Masukan",
+    "sendingBtn": "Mengirim...",
+    "successTitle": "Terima Kasih Banyak!",
+    "successDesc": "Laporan dan masukan Anda telah terkirim. Kontribusi Anda sangat berarti bagi pengembangan TM-KANA!",
+    "errorTitle": "Gagal Mengirim",
+    "errorDesc": "Terjadi kendala saat mengirim masukan. Pastikan koneksi internet aktif lalu coba lagi.",
+    "retryBtn": "Coba Lagi",
+    "closeBtn": "Tutup"
   }
 }

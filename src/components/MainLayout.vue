@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { useProgressStore } from "@/stores/progress";
 import { usePreferencesStore } from "@/stores/preferences";
 import UserPreferencesDialog from "./UserPreferencesDialog.vue";
+import FeedbackDialog from "./FeedbackDialog.vue";
 import AppLogo from "./AppLogo.vue";
 import AppFooter from "./AppFooter.vue";
 import {
@@ -23,6 +24,7 @@ const preferencesStore = usePreferencesStore();
 
 const isMobileMenuOpen = ref(false);
 const isPreferencesOpen = ref(false);
+const isFeedbackOpen = ref(false);
 
 const nickname = computed(() => progressStore.nickname);
 
@@ -263,12 +265,15 @@ function closeMobileMenu() {
         </div>
 
         <!-- Global App Footer -->
-        <AppFooter />
+        <AppFooter @open-feedback="isFeedbackOpen = true" />
       </div>
     </main>
 
     <!-- Global User Preferences Dialog -->
     <UserPreferencesDialog v-model:open="isPreferencesOpen" />
+
+    <!-- Global Feedback & Bug Report Dialog -->
+    <FeedbackDialog v-model:open="isFeedbackOpen" />
   </div>
 </template>
 

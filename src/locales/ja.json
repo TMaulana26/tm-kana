@@ -232,5 +232,28 @@
     "github": "GitHubリポジトリ",
     "openSource": "オープンソース",
     "tagline": "学びへの愛を込めて制作"
+  },
+  "feedback": {
+    "triggerBtn": "ご意見・不具合報告",
+    "title": "不具合報告とご提案",
+    "desc": "不具合の報告や新機能のアイデアを共有して、TM-KANAの改善にご協力ください。",
+    "categoryLabel": "フィードバックの種類",
+    "categoryBug": "不具合報告",
+    "categorySuggestion": "機能改善の提案",
+    "categoryOther": "質問・その他",
+    "emailLabel": "メールアドレス（任意）",
+    "emailPlaceholder": "name@email.com",
+    "emailHint": "返信をご希望の場合はメールアドレスを入力してください。",
+    "messageLabel": "詳細内容",
+    "messagePlaceholder": "遭遇した不具合や、TM-KANAに追加してほしい機能のアイデアを教えてください...",
+    "messageRequired": "メッセージを入力してください。",
+    "sendBtn": "送信する",
+    "sendingBtn": "送信中...",
+    "successTitle": "ご協力ありがとうございます！",
+    "successDesc": "フィードバックが正常に送信されました。今後の改善の参考にさせていただきます！",
+    "errorTitle": "送信に失敗しました",
+    "errorDesc": "フィードバックの送信中にエラーが発生しました。接続を確認してもう一度お試しください。",
+    "retryBtn": "再試行",
+    "closeBtn": "閉じる"
   }
 }

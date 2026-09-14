@@ -8,8 +8,8 @@ describe('AppFooter.vue Component', () => {
     const wrapper = mount(AppFooter)
 
     // Check version is displayed
-    expect(APP_VERSION).toBe('v1.1.0')
-    expect(wrapper.text()).toContain('v1.1.0')
+    expect(APP_VERSION).toBe('v1.2.0')
+    expect(wrapper.text()).toContain('v1.2.0')
 
     // Check GitHub link and attributes
     const githubLink = wrapper.find('a')
@@ -17,5 +17,15 @@ describe('AppFooter.vue Component', () => {
     expect(githubLink.attributes('href')).toBe(GITHUB_REPO_URL)
     expect(githubLink.attributes('target')).toBe('_blank')
     expect(githubLink.attributes('rel')).toContain('noopener')
+  })
+
+  it('emits openFeedback when feedback button is clicked', async () => {
+    const wrapper = mount(AppFooter)
+    const feedbackBtn = wrapper.find('button')
+    expect(feedbackBtn.exists()).toBe(true)
+    expect(feedbackBtn.text()).toContain('Feedback & Bugs')
+
+    await feedbackBtn.trigger('click')
+    expect(wrapper.emitted('openFeedback')).toBeTruthy()
   })
 })
