@@ -144,11 +144,18 @@ Dalam Neo-Brutalism, kedalaman tidak menggunakan *blur radius*, melainkan proyek
 
 ---
 
-## 6. Shapes & Form Language
+## 6. Shapes, Form Language & Scrollbars
 
 - **Sudut Siku Tegas (`rounded-none`):**
-  - Tombol, kartu, dialog, dan input secara baku menggunakan sudut siku 90 derajat (`rounded-none`).
+  - Tombol, kartu, dialog, input, dan thumb scrollbar secara baku menggunakan sudut siku 90 derajat (`rounded-none` / `border-radius: 0px`).
   - Satu-satunya pengecualian adalah elemen avatar bulat (`rounded-full`) untuk pembeda visual hierarkis.
+
+- **Neo-Brutalist Themed Scrollbars:**
+  - Lebar/Tinggi kompak: `8px` (tanpa tombol panah OS default yang kaku).
+  - Track: `transparent` (berbaur sempurna dengan kontainer atau kartu di mana pun berada).
+  - **Light Mode:** Thumb `#94a3b8` (hover: `#64748b`, active: `#020617`).
+  - **Dark Mode:** Thumb `#334155` (hover: `#475569`, active: `#fbbf24` aksen amber), didukung `color-scheme: dark`.
+  - Menggunakan properti standar W3C (`scrollbar-width: thin`, `scrollbar-color`) dan WebKit (`::-webkit-scrollbar`).
 
 ---
 

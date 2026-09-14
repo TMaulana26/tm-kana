@@ -723,7 +723,7 @@ function stopSession() {
                 </div>
               </div>
               <div
-                class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto overflow-x-hidden no-scrollbar pr-1"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto overflow-x-hidden pr-2"
               >
                 <div
                   v-for="group in hiraganaGroups"
@@ -801,7 +801,7 @@ function stopSession() {
                 </div>
               </div>
               <div
-                class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto overflow-x-hidden no-scrollbar pr-1"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto overflow-x-hidden pr-2"
               >
                 <div
                   v-for="group in katakanaGroups"
@@ -875,7 +875,7 @@ function stopSession() {
               <!-- Scrollable active groups detail selector -->
               <div
                 v-if="activeGroupsWithSelections.length > 0"
-                class="space-y-6 overflow-y-auto max-h-[420px] pr-2 no-scrollbar"
+                class="space-y-6 overflow-y-auto max-h-[420px] pr-2"
               >
                 <div
                   v-for="group in activeGroupsWithSelections"

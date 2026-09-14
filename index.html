@@ -5,7 +5,26 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>TM-KANA - Learn Japanese Hiragana & Katakana</title>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('tm_kana_preferences');
+          var theme = stored ? JSON.parse(stored).theme : null;
+          if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            theme = 'dark';
+          }
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta name="description" content="Learn reading, pronouncing, and writing Japanese Hiragana and Katakana characters interactively. 100% Client-Side, free, secure, and ad-free." />
 
     <!-- Open Graph / Facebook -->
