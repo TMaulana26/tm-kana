@@ -107,6 +107,7 @@ describe("FeedbackDialog.vue Component", () => {
     expect(callBody.get("email")).toBe("tester@example.com");
     expect(callBody.get("category")).toBe("bug");
     expect(callBody.get("appVersion")).toBeDefined();
+    expect(callBody.get("waktuPengiriman")).toContain("WIB");
 
     // Success screen should be rendered
     expect(document.body.textContent).toContain("Thank You So Much!");

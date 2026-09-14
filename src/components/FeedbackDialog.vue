@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
 import { FORMSPREE_ENDPOINT, APP_VERSION } from "@/constants/appInfo";
+import { formatIndonesianDateTime } from "@/utils/date";
 import {
   MessageSquarePlus,
   Bug,
@@ -93,6 +94,7 @@ async function submitFeedback() {
   }
   formData.append("message", trimmedMessage);
   formData.append("_subject", `[TM-KANA ${APP_VERSION}] ${category.value.toUpperCase()} Report`);
+  formData.append("waktuPengiriman", formatIndonesianDateTime());
   formData.append("appVersion", APP_VERSION);
   if (typeof window !== "undefined") {
     formData.append("pageUrl", window.location.href);
