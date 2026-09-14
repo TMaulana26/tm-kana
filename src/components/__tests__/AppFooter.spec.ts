@@ -8,7 +8,8 @@ describe('AppFooter.vue Component', () => {
     const wrapper = mount(AppFooter)
 
     // Check version is displayed
-    expect(wrapper.text()).toContain(APP_VERSION)
+    expect(APP_VERSION).toBe('v1.1.0')
+    expect(wrapper.text()).toContain('v1.1.0')
 
     // Check GitHub link and attributes
     const githubLink = wrapper.find('a')

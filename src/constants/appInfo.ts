@@ -1,4 +1,5 @@
-declare const __APP_VERSION__: string
+import { version } from '../../package.json'
 
-export const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? `v${__APP_VERSION__}` : 'v1.0.0'
+export const APP_VERSION = `v${version}`
 export const GITHUB_REPO_URL = 'https://github.com/TMaulana26/tm-kana'
+
