@@ -261,30 +261,28 @@ export async function loadKanaTemplate(
       const rawPaths1 = extractStrokePaths(svgText1);
       const rawPaths2 = extractStrokePaths(svgText2);
 
-      // Transform parameters:
+      // Transform parameters (Uniform 1:1 scaling to preserve authentic glyph proportions):
       // Left character (main kana): centered in left half
-      const sx1 = 0.52,
-        sy1 = 0.88,
-        tx1 = 28,
+      const s1 = 0.66,
+        tx1 = 33,
         ty1 = 54.5;
       // Right character (subscript Yoon kana): positioned in lower-right
-      const sx2 = 0.48,
-        sy2 = 0.72,
-        tx2 = 78,
-        ty2 = 58;
+      const s2 = 0.50,
+        tx2 = 82,
+        ty2 = 62;
 
       const tPaths1 = rawPaths1.map((d) =>
-        transformPathD(d, sx1, sy1, tx1, ty1),
+        transformPathD(d, s1, s1, tx1, ty1),
       );
       const tPaths2 = rawPaths2.map((d) =>
-        transformPathD(d, sx2, sy2, tx2, ty2),
+        transformPathD(d, s2, s2, tx2, ty2),
       );
 
-      const tNums1 = transformNumbers(svgText1, sx1, sy1, tx1, ty1, 0);
+      const tNums1 = transformNumbers(svgText1, s1, s1, tx1, ty1, 0);
       const tNums2 = transformNumbers(
         svgText2,
-        sx2,
-        sy2,
+        s2,
+        s2,
         tx2,
         ty2,
         rawPaths1.length,
