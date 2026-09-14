@@ -1,4 +1,4 @@
-﻿# Cetak Biru Arsitektur: Autentikasi Opsional (Cloud Sync) & Gamifikasi Leaderboard TM-KANA
+# Cetak Biru Arsitektur: Autentikasi Opsional (Cloud Sync) & Gamifikasi Leaderboard TM-KANA
 
 Dokumen ini memuat spesifikasi arsitektur, skema data, strategi sinkronisasi, dan konsep gamifikasi untuk menghadirkan fitur **Cloud Sync (Auth Opsional)** dan **Leaderboard Global** pada aplikasi TM-KANA tanpa menghilangkan identitas aslinya sebagai aplikasi *Local-First*, *Zero-Barrier*, dan *100% Client-Side*.
 
@@ -16,26 +16,26 @@ TM-KANA tetap berpegang teguh pada prinsip utama:
 
 ---
 
-## 2. Pilihan Komparasi Infrastruktur Backend
+## 2. Arsitektur Backend Terpilih: Laravel 11 di VPS Pribadi
 
-Frontend TM-KANA tetap di-deploy di **Cloudflare Pages** (ultra-cepat di 300+ Edge Data Center dengan proteksi DDoS bawaan). Untuk backend dan database, tersedia dua opsi utama:
+Frontend TM-KANA tetap di-deploy di **Cloudflare Pages** (ultra-cepat di 300+ Edge Data Center dengan proteksi DDoS bawaan). Untuk backend dan database, arsitektur yang dipilih adalah **Laravel 11 RESTful API yang berjalan di VPS pribadi**:
 
-### Opsi A: Serverless Edge (Cloudflare D1 + Workers) - *Rekomendasi Utama*
-- **Biaya:** Rp 0 (100% dalam batas Free Tier).
-- **Maintenance:** Zero Server Management (tanpa patching OS, tanpa kelola SSH, tanpa renew certbot manual).
-- **Komponen:**
-  - **Cloudflare Workers:** API micro-service di Edge dengan latensi ultra-rendah (<15ms).
-  - **Cloudflare D1:** Database SQLite serverless terdistribusi (gratis 5GB storage, 5 juta queries/hari).
-  - **Cloudflare KV:** Session store & caching leaderboard mingguan.
-  - **Auth Provider:** Supabase Auth (Free tier 50.000 MAU) atau Google OAuth 2.0 langsung via Workers.
+### Keunggulan Stack Laravel untuk TM-KANA:
+- **Laravel Sanctum:** Solusi autentikasi SPA (Bearer Token / Cookie HTTP-Only) yang sangat aman, ringan, dan dirancang khusus untuk SPA Vue 3.
+- **Laravel Socialite:** Memudahkan integrasi Google OAuth 2.0 (dan GitHub jika dibutuhkan) tanpa konfigurasi OAuth manual yang rumit.
+- **Eloquent ORM & Migrations:** Skema tabel `users`, `user_progress`, dan `leaderboard_scores` terkelola rapi dengan migrasi database yang *type-safe* dan bebas celah SQL Injection.
+- **Rate Limiting Bawaan (`throttle:api`):** Proteksi otomatis terhadap spam kuis atau bot yang mencoba memanipulasi skor leaderboard.
 
-### Opsi B: Self-Hosted di VPS Pribadi (Full Control)
-- **Kelebihan:** Memanfaatkan VPS yang sudah disewa dan kendali 100% atas database terpusat.
-- **Komponen:**
-  - **Backend Runtime:** Node.js (Hono / Fastify) atau Go / Bun.
-  - **Database:** PostgreSQL atau SQLite + Litestream (sangat hemat RAM).
-  - **Reverse Proxy:** Caddy / Nginx dengan SSL otomatis, diletakkan di balik **Cloudflare Proxy (Orange Cloud)** agar IP VPS tidak terekspos langsung ke internet.
-  - **Auth:** OAuth 2.0 (Google Login) + JWT HTTP-Only Cookies.
+### Skema Deployment & Keamanan VPS:
+- **Subdomain API:** `api.tm-kana.com` (menunjuk ke VPS).
+- **Web Server:** Nginx / Caddy dengan reverse proxy ke PHP-FPM 8.2+.
+- **Proteksi IP VPS via Cloudflare Proxy:** Subdomain `api.tm-kana.com` disetel dengan **Cloudflare Proxy (Orange Cloud ON)**. Dengan cara ini:
+  1. IP asli VPS akang 100% tersembunyi dari publik.
+  2. Seluruh serangan DDoS ke API ditangkis oleh Cloudflare sebelum mencapai VPS.
+  3. Konfigurasikan middleware `TrustProxies` di Laravel untuk mengenali IP pengunjung asli dari header Cloudflare (`CF-Connecting-IP`).
+- **Konfigurasi CORS (`config/cors.php`):**
+  - `allowed_origins`: `['http://localhost:5179', 'https://tm-kana.pages.dev', 'https://tm-kana.com']`
+  - `supports_credentials`: `true` (jika menggunakan cookie Sanctum) atau `false` jika menggunakan Bearer Token.
 
 ---
 
