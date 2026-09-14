@@ -69,9 +69,10 @@ Gunakan kemampuan Impeccable untuk:
 ```bash
 tm-kana/
 ├── .agents/
+│   ├── proposals/             # Cetak biru arsitektur & ide fitur masa depan (Cloud Sync, Leaderboard)
 │   ├── rules/                 # Aturan baku (goal, tech-stack, write, workflow)
 │   ├── skills/impeccable/     # Skill audit & perombakan UI/UX
-│   └── tasks/                 # Modul checklist pengerjaan tugas
+│   └── tasks/                 # Modul checklist pengerjaan tugas (Task 0 s/d 8)
 ├── AGENTS.md                  # Berkas instruksi agen (berkas ini)
 ├── public/                    # Manifest PWA, favicon, robots.txt, sitemap.xml
 ├── src/
