@@ -16,7 +16,7 @@ defineProps<{
     :href="href"
     target="_blank"
     rel="noopener noreferrer"
-    class="group border-[3px] border-slate-950 dark:border-white rounded-none p-5 hover:bg-[#ffbe0b] hover:text-slate-950 dark:hover:text-slate-950 transition-all duration-300 bg-[#f4f3ec] dark:bg-slate-800 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#fff] flex flex-col justify-between h-full"
+    class="group border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-5 hover:bg-[#ffbe0b] hover:text-slate-950 dark:hover:text-slate-950 transition-all duration-300 bg-[#f4f3ec] dark:bg-slate-900 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#000] flex flex-col justify-between h-full"
   >
     <div class="space-y-3">
       <div class="flex items-center justify-between text-slate-900 dark:text-slate-50">
@@ -37,7 +37,7 @@ defineProps<{
         {{ description }}
       </p>
     </div>
-    <div class="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-950 pt-4 mt-auto">
+    <div class="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-950 dark:text-amber-400 group-hover:text-slate-950 dark:group-hover:text-slate-950 pt-4 mt-auto">
       <span>{{ learnMoreText }}</span>
       <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
     </div>

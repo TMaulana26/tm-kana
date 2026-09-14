@@ -41,18 +41,18 @@ const isUltimateMastery = computed(() => {
 
 const cardClass = computed(() => {
   if (!hasLearned.value) {
-    return 'bg-[#f4f3ec] dark:bg-slate-800 text-slate-950 dark:text-slate-50';
+    return 'bg-[#f4f3ec] dark:bg-slate-900 text-slate-950 dark:text-slate-100';
   }
   if (isUltimateMastery.value) {
-    return 'bg-[#ff007f] dark:bg-[#e0006c] text-white';
+    return 'bg-[#ff007f] dark:bg-rose-900 dark:text-rose-100 text-white';
   }
   if (isQuizMastered.value) {
-    return 'bg-[#c084fc] dark:bg-[#a855f7] text-slate-950 dark:text-white';
+    return 'bg-[#c084fc] dark:bg-violet-900 dark:text-white text-black';
   }
   if (isDrawMastered.value) {
-    return 'bg-[#ff9f1c] dark:bg-[#e58a00] text-slate-950';
+    return 'bg-[#ff9f1c] dark:bg-amber-900 dark:text-white text-black';
   }
-  return 'bg-[#00f5d4] dark:bg-[#00c9ae] text-slate-950';
+  return 'bg-[#00f5d4] dark:bg-emerald-900 dark:text-white text-black';
 });
 
 const dotClass = computed(() => {
@@ -75,7 +75,7 @@ const masteryTooltip = computed(() => {
   <button
     @click="$emit('click', character)"
     :class="[
-      'group relative w-full aspect-square flex flex-col items-center justify-center rounded-none border-[3px] border-slate-950 dark:border-white transition-all duration-200 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[5px_5px_0px_0px_#000] dark:hover:shadow-[5px_5px_0px_0px_#fff] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#000]',
+      'group relative w-full aspect-square flex flex-col items-center justify-center rounded-none border-[3px] border-slate-950 dark:border-slate-700 transition-all duration-200 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[5px_5px_0px_0px_#000] dark:hover:border-slate-500 dark:hover:shadow-[5px_5px_0px_0px_#000] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#000]',
       cardClass,
     ]"
   >

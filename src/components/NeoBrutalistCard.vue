@@ -13,19 +13,19 @@ defineProps<{
 <template>
   <Card
     :class="[
-      'border-[4px] border-slate-950 dark:border-white bg-white dark:bg-slate-900 rounded-none shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#fff]',
+      'border-[4px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-none shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#000]',
       cardClass
     ]"
   >
     <CardHeader
       :class="[
-        'flex flex-row items-center gap-4 py-4 border-b-[3px] border-slate-950 dark:border-white rounded-none',
+        'flex flex-row items-center gap-4 py-4 border-b-[3px] border-slate-950 dark:border-slate-700 rounded-none',
         headerBg || 'bg-slate-200 dark:bg-slate-800'
       ]"
     >
       <div
         v-if="$slots.icon"
-        class="w-12 h-12 border-[3px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 flex items-center justify-center text-slate-950 dark:text-white shrink-0"
+        class="w-12 h-12 border-[3px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-950 flex items-center justify-center text-slate-950 dark:text-white shrink-0"
       >
         <slot name="icon" />
       </div>

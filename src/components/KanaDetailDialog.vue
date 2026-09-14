@@ -88,18 +88,18 @@ watch(() => props.character, () => {
 <template>
   <Dialog v-model:open="isOpen">
     <DialogContent
-      class="bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-white rounded-none p-6 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#fff] sm:max-w-2xl w-full text-slate-950 dark:text-white"
+      class="bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-slate-700 rounded-none p-6 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#000] sm:max-w-2xl w-full text-slate-950 dark:text-white"
     >
-      <DialogHeader class="border-b-[3px] border-slate-950 dark:border-white pb-4 mb-6">
+      <DialogHeader class="border-b-[3px] border-slate-950 dark:border-slate-700 pb-4 mb-6">
         <DialogTitle class="text-2xl font-black uppercase tracking-wider flex items-center gap-3">
           <span>{{ $t('chart.detailTitle') }}</span>
           <span
             v-if="character"
-            class="text-xs font-black uppercase border-[2px] border-slate-950 dark:border-white px-2 py-0.5 rounded-none"
+            class="text-xs font-black uppercase border-[2px] border-slate-950 dark:border-slate-700 px-2 py-0.5 rounded-none"
             :class="[
               character.id.startsWith('h-')
-                ? 'bg-violet-300 text-black'
-                : 'bg-indigo-300 text-black'
+                ? 'bg-violet-300 dark:bg-violet-600 text-black dark:text-white'
+                : 'bg-indigo-300 dark:bg-indigo-600 text-black dark:text-white'
             ]"
           >
             {{ character.id.startsWith('h-') ? $t('chart.hiragana') : $t('chart.katakana') }}
@@ -117,7 +117,7 @@ watch(() => props.character, () => {
         <div class="space-y-4 flex flex-col items-stretch w-full">
           <!-- Character Card & Romaji Side-by-Side -->
           <div class="flex gap-4 items-center justify-start w-full">
-            <div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f3ec] dark:bg-slate-800 border-[3px] border-slate-950 dark:border-white flex items-center justify-center shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] shrink-0">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f3ec] dark:bg-slate-800 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] shrink-0">
               <span
                 class="font-black font-sans select-none whitespace-nowrap"
                 :class="character.character.length > 1 ? 'text-4xl' : 'text-6xl'"
@@ -132,7 +132,7 @@ watch(() => props.character, () => {
                 :class="isLearned ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500'"
               >
                 <div
-                  class="w-2.5 h-2.5 rounded-full border border-slate-950 dark:border-white shrink-0"
+                  class="w-2.5 h-2.5 rounded-full border border-slate-950 dark:border-slate-700 shrink-0"
                   :class="isLearned ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-700'"
                 ></div>
                 <span>{{ isLearned ? $t('chart.learned') : $t('chart.notLearned') }}</span>
@@ -148,7 +148,7 @@ watch(() => props.character, () => {
             
             <div
               v-if="!hasSvgError && strokeOrderUrls.length > 0"
-              class="bg-white dark:bg-white border-[3px] border-slate-950 p-2 shadow-[3px_3px_0px_0px_#000] inline-flex gap-2 justify-center items-center"
+              class="bg-white dark:bg-white border-[3px] border-slate-950 dark:border-slate-700 p-2 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] inline-flex gap-2 justify-center items-center"
             >
               <img
                 v-for="(url, idx) in strokeOrderUrls"
@@ -163,7 +163,7 @@ watch(() => props.character, () => {
             <!-- Offline Fallback Info -->
             <div
               v-else
-              class="border-[3px] border-slate-950 bg-amber-100 dark:bg-amber-950 dark:text-amber-100 p-3 shadow-[3px_3px_0px_0px_#000] text-[10px] font-bold flex gap-2 items-start text-left text-amber-950"
+              class="border-[3px] border-slate-950 dark:border-slate-700 bg-amber-100 dark:bg-amber-950/60 dark:text-amber-100 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] text-[10px] font-bold flex gap-2 items-start text-left text-amber-950"
             >
               <Info class="w-3.5 h-3.5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
               <span>{{ $t('chart.offlineStrokeOrder') }}</span>
@@ -171,8 +171,8 @@ watch(() => props.character, () => {
           </div>
 
           <!-- Statistics section -->
-          <div class="w-full grid grid-cols-2 gap-2 bg-[#f4f3ec] dark:bg-slate-950 p-2.5 border-[3px] border-slate-950 dark:border-white shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]">
-            <div class="text-center border-r-2 border-slate-950 dark:border-white pr-2">
+          <div class="w-full grid grid-cols-2 gap-2 bg-[#f4f3ec] dark:bg-slate-950 p-2.5 border-[3px] border-slate-950 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]">
+            <div class="text-center border-r-2 border-slate-950 dark:border-slate-700 pr-2">
               <div class="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">
                 {{ $t('chart.quizLabel') }}
               </div>

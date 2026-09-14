@@ -13,10 +13,10 @@ function handleReload() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f4f3ec] dark:bg-[#121318] text-slate-950 dark:text-slate-50 flex items-center justify-center p-4 sm:p-6 font-sans">
-    <div class="max-w-2xl w-full bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#fff] space-y-6">
+  <div class="min-h-screen bg-[#f4f3ec] dark:bg-[#0c0e14] text-slate-950 dark:text-slate-50 flex items-center justify-center p-4 sm:p-6 font-sans">
+    <div class="max-w-2xl w-full bg-white dark:bg-slate-900 border-[4px] border-slate-950 dark:border-slate-700 p-6 sm:p-8 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#000] space-y-6">
       <!-- Error Header -->
-      <div class="flex items-center gap-4 bg-rose-300 dark:bg-rose-950/40 border-[3px] border-slate-950 dark:border-white p-4">
+      <div class="flex items-center gap-4 bg-rose-300 dark:bg-rose-950/40 border-[3px] border-slate-950 dark:border-slate-700 p-4">
         <AlertOctagon class="w-10 h-10 text-rose-600 shrink-0" />
         <div>
           <h1 class="text-xl sm:text-2xl font-black uppercase tracking-tight text-black dark:text-white leading-tight">
@@ -33,7 +33,7 @@ function handleReload() {
         <h2 class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">
           {{ $t('errorPage.messageLabel') }}
         </h2>
-        <div class="bg-[#1f2028] text-rose-300 border-[3px] border-slate-950 dark:border-white p-4 font-mono text-xs overflow-auto max-h-60 rounded-none leading-relaxed">
+        <div class="bg-[#1f2028] text-rose-300 border-[3px] border-slate-950 dark:border-slate-700 p-4 font-mono text-xs overflow-auto max-h-60 rounded-none leading-relaxed">
           <p class="font-bold text-sm text-white mb-2">
             {{ props.error?.name }}: {{ props.error?.message }}
           </p>

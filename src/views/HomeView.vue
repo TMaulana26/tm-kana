@@ -124,26 +124,26 @@ function processFile(file: File) {
   <div class="space-y-8 py-4 animate-fade-in">
     <!-- Welcome Header Banner (Neo-brutalist Style) -->
     <div
-      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-white bg-[#00f5d4] text-slate-950 p-8 md:p-12 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#fff]"
+      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 md:p-12 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#000]"
     >
       <div
-        class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent)]"
+        class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.04),transparent)]"
       ></div>
       <div class="relative z-10 max-w-3xl space-y-4">
         <h1
-          class="text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-950"
+          class="text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white"
         >
           {{ $t("common.welcome") }}
         </h1>
         <p
-          class="text-lg md:text-xl font-bold leading-relaxed text-slate-900 max-w-2xl"
+          class="text-lg md:text-xl font-bold leading-relaxed text-slate-900 dark:text-slate-300 max-w-2xl"
         >
           {{ $t("home.homeDesc") }}
         </p>
       </div>
       <!-- Background Decorative Aksara -->
       <div
-        class="absolute right-0 bottom-0 translate-x-1/6 translate-y-1/6 text-[10rem] font-black text-slate-950/10 select-none pointer-events-none font-sans"
+        class="absolute right-0 bottom-0 translate-x-1/6 translate-y-1/6 text-[10rem] font-black text-slate-950/10 dark:text-white/5 select-none pointer-events-none font-sans"
       >
         {{ "たまかな" }}
       </div>
@@ -209,7 +209,7 @@ function processFile(file: File) {
 
           <!-- Export option -->
           <div
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#f4f3ec] dark:bg-slate-950/50 border-[3px] border-slate-950 dark:border-white rounded-none gap-4"
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#f4f3ec] dark:bg-slate-950/50 border-[3px] border-slate-950 dark:border-slate-700 rounded-none gap-4"
           >
             <div>
               <p class="font-black text-sm uppercase">
@@ -241,14 +241,14 @@ function processFile(file: File) {
               @dragleave="handleDragLeave"
               @drop="handleDrop"
               @click="triggerFileInput"
-              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center border-slate-950 dark:border-white hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-[#1f2028] shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]"
+              class="border-[3px] border-dashed rounded-none p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-200 text-center border-slate-950 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 bg-[#f4f3ec] dark:bg-slate-900 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]"
               :class="{
                 'border-violet-500 bg-violet-100 dark:bg-violet-950/40':
                   isDragging,
               }"
             >
               <div
-                class="w-12 h-12 rounded-none border-[3px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 flex items-center justify-center text-slate-950 dark:text-white"
+                class="w-12 h-12 rounded-none border-[3px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-950 flex items-center justify-center text-slate-950 dark:text-white"
               >
                 <Upload class="w-6 h-6" />
               </div>

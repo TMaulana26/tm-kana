@@ -123,11 +123,11 @@ watch(() => props.char, () => {
 <template>
   <div class="space-y-3 flex flex-col items-center">
     <div
-      class="relative border-[3px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-900 w-64 h-64 select-none overflow-hidden shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+      class="relative border-[3px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-900 w-64 h-64 select-none overflow-hidden shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
     >
       <!-- Background Guide Lines -->
-      <div class="absolute inset-x-0 top-1/2 border-t-[2px] border-dashed border-slate-400/50 dark:border-slate-600/50 pointer-events-none"></div>
-      <div class="absolute inset-y-0 left-1/2 border-l-[2px] border-dashed border-slate-400/50 dark:border-slate-600/50 pointer-events-none"></div>
+      <div class="absolute inset-x-0 top-1/2 border-t-[2px] border-dashed border-slate-400/50 dark:border-slate-700/60 pointer-events-none"></div>
+      <div class="absolute inset-y-0 left-1/2 border-l-[2px] border-dashed border-slate-400/50 dark:border-slate-700/60 pointer-events-none"></div>
       
       <!-- Faint Character Outline Template -->
       <div

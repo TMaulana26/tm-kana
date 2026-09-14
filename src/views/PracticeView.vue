@@ -655,7 +655,7 @@ function stopSession() {
   >
     <!-- Headers -->
     <header
-      class="space-y-2 border-b-[3px] border-slate-950 dark:border-white pb-6"
+      class="space-y-2 border-b-[3px] border-slate-950 dark:border-slate-700 pb-6"
     >
       <h1
         class="text-4xl md:text-5xl font-black uppercase tracking-tight flex items-center gap-3"
@@ -676,7 +676,7 @@ function stopSession() {
           class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         >
           <h2
-            class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-yellow-950 text-black dark:text-white border-[3px] border-slate-950 dark:border-white px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+            class="text-2xl font-black uppercase tracking-wider bg-yellow-300 dark:bg-amber-950/70 text-black dark:text-amber-200 border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
           >
             {{ $t("practice.selectRows") }}
           </h2>
@@ -694,7 +694,7 @@ function stopSession() {
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-stretch">
           <!-- Left side: Group List (xl:col-span-5) -->
           <div
-            class="xl:col-span-5 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff] flex flex-col space-y-6 h-full"
+            class="xl:col-span-5 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000] flex flex-col space-y-6 h-full"
           >
             <!-- Hiragana Selection -->
             <div class="space-y-4">
@@ -752,7 +752,7 @@ function stopSession() {
                   </div>
                   <!-- Custom Checkbox Box -->
                   <div
-                    class="w-[18px] h-[18px] border-[2px] border-slate-950 dark:border-white flex items-center justify-center transition-all bg-white shrink-0"
+                    class="w-[18px] h-[18px] border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center transition-all bg-white dark:bg-slate-950 shrink-0"
                     :class="[
                       isGroupFullySelected(group.id)
                         ? 'bg-emerald-400 dark:bg-emerald-500'
@@ -830,7 +830,7 @@ function stopSession() {
                   </div>
                   <!-- Custom Checkbox Box -->
                   <div
-                    class="w-[18px] h-[18px] border-[2px] border-slate-950 dark:border-white flex items-center justify-center transition-all bg-white shrink-0"
+                    class="w-[18px] h-[18px] border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center transition-all bg-white dark:bg-slate-950 shrink-0"
                     :class="[
                       isGroupFullySelected(group.id)
                         ? 'bg-amber-400 dark:bg-amber-500'
@@ -857,7 +857,7 @@ function stopSession() {
           <div class="xl:col-span-7 flex flex-col space-y-6 h-full">
             <!-- Specific Character Selector Card -->
             <div
-              class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff] min-h-[350px] flex flex-col flex-1"
+              class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000] min-h-[350px] flex flex-col flex-1"
             >
               <div
                 class="border-b-[2px] border-slate-200 dark:border-slate-800 pb-3 mb-4"
@@ -912,9 +912,9 @@ function stopSession() {
                       :key="item.id"
                       @click="toggleCharacter(item.id)"
                       :class="[
-                        'p-2 border-[2px] border-slate-950 dark:border-white cursor-pointer flex flex-col items-center justify-center transition-all select-none h-14',
+                        'p-2 border-[2px] border-slate-950 dark:border-slate-700 cursor-pointer flex flex-col items-center justify-center transition-all select-none h-14',
                         selectedCharacters[item.id]
-                          ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]'
+                          ? 'bg-violet-300 dark:bg-violet-600 text-black dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]'
                           : 'bg-transparent text-slate-400 dark:text-slate-600 hover:border-slate-400 hover:text-slate-600 dark:hover:text-slate-400 border-dashed',
                       ]"
                     >
@@ -948,7 +948,7 @@ function stopSession() {
 
             <!-- Mode Selection Card -->
             <div
-              class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff]"
+              class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000]"
             >
               <div class="space-y-3">
                 <h3
@@ -960,9 +960,9 @@ function stopSession() {
                   <button
                     @click="practiceMode = 'quiz'"
                     :class="[
-                      'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-white transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
+                      'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-slate-700 transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
                       practiceMode === 'quiz'
-                        ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white font-black'
+                        ? 'bg-violet-300 dark:bg-violet-600 text-black dark:text-white font-black'
                         : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800',
                     ]"
                   >
@@ -971,9 +971,9 @@ function stopSession() {
                   <button
                     @click="practiceMode = 'draw'"
                     :class="[
-                      'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-white transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
+                      'flex-1 px-4 py-3 font-black uppercase text-xs border-[2px] border-slate-950 dark:border-slate-700 transition-all shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]',
                       practiceMode === 'draw'
-                        ? 'bg-violet-300 dark:bg-violet-800 text-black dark:text-white font-black'
+                        ? 'bg-violet-300 dark:bg-violet-600 text-black dark:text-white font-black'
                         : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800',
                     ]"
                   >
@@ -995,7 +995,7 @@ function stopSession() {
       <div class="w-full max-w-3xl space-y-8 flex flex-col">
         <!-- Arena header: count and score tracker -->
         <div
-          class="flex justify-between items-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-4 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+          class="flex justify-between items-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
         >
           <div class="space-y-1">
             <div
@@ -1009,7 +1009,7 @@ function stopSession() {
               }}
             </div>
             <div
-              class="h-2 w-48 sm:w-64 bg-slate-100 dark:bg-slate-850 border-[2px] border-slate-950 dark:border-white rounded-none overflow-hidden"
+              class="h-2 w-48 sm:w-64 bg-slate-100 dark:bg-slate-800 border-[2px] border-slate-950 dark:border-slate-700 rounded-none overflow-hidden"
             >
               <div
                 class="h-full bg-violet-400 transition-all duration-300"
@@ -1038,7 +1038,7 @@ function stopSession() {
         >
           <!-- Target Character Box -->
           <div
-            class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white px-6 mx-auto w-full h-[340px] shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff]"
+            class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 px-6 mx-auto w-full h-[340px] shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000]"
             :class="[
               (currentQuestion?.item.character.length ?? 1) > 1
                 ? 'max-w-[420px]'
@@ -1075,7 +1075,7 @@ function stopSession() {
                 <span class="text-[10px] font-black uppercase text-amber-500 tracking-wider">
                   {{ showDrawHint ? $t("practice.hintLabel") : (feedbackStatus === 'correct' ? $t("practice.correctFeedback") : $t("practice.incorrectLabel")) }}
                 </span>
-                <div class="relative w-44 h-44 bg-white dark:bg-slate-950 border-2 border-slate-950 dark:border-white p-2 flex items-center justify-center shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]">
+                <div class="relative w-44 h-44 bg-white dark:bg-slate-950 border-2 border-slate-950 dark:border-slate-700 p-2 flex items-center justify-center shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
                   <svg
                     v-if="!svgLoadFailed && activeTemplatePaths.length > 0"
                     viewBox="0 0 109 109"
@@ -1147,7 +1147,7 @@ function stopSession() {
                   v-model="quizInput"
                   @keyup.enter="submitQuizAnswer"
                   :disabled="showFeedback"
-                  class="w-full text-center py-4 px-6 text-3xl font-black uppercase rounded-none border-[3px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-950 text-slate-950 dark:text-white shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] focus:outline-none focus:bg-white dark:focus:bg-slate-900 disabled:opacity-75 disabled:pointer-events-none placeholder:text-slate-350"
+                  class="w-full text-center py-4 px-6 text-3xl font-black uppercase rounded-none border-[3px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-950 text-slate-950 dark:text-white shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] focus:outline-none focus:bg-white dark:focus:bg-slate-900 disabled:opacity-75 disabled:pointer-events-none placeholder:text-slate-350"
                   placeholder="..."
                   autocomplete="off"
                   autocorrect="off"
@@ -1276,7 +1276,7 @@ function stopSession() {
     <!-- Phase 3: Score Results Screen -->
     <div v-else-if="isSessionFinished" class="space-y-8">
       <section
-        class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#fff] space-y-6"
+        class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#000] space-y-6"
       >
         <div class="flex flex-col items-center text-center space-y-3">
           <Award class="w-16 h-16 text-yellow-400 stroke-[2]" />
@@ -1293,7 +1293,7 @@ function stopSession() {
         <!-- Scores breakdown -->
         <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
           <div
-            class="border-[2px] border-slate-950 dark:border-white p-4 text-center bg-[#f4f3ec] dark:bg-slate-950 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+            class="border-[2px] border-slate-950 dark:border-slate-700 p-4 text-center bg-[#f4f3ec] dark:bg-slate-950 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
           >
             <div
               class="text-xs font-black uppercase text-slate-400 tracking-wider"
@@ -1308,7 +1308,7 @@ function stopSession() {
           </div>
 
           <div
-            class="border-[2px] border-slate-950 dark:border-white p-4 text-center bg-[#f4f3ec] dark:bg-slate-950 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+            class="border-[2px] border-slate-950 dark:border-slate-700 p-4 text-center bg-[#f4f3ec] dark:bg-slate-950 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
           >
             <div
               class="text-xs font-black uppercase text-slate-400 tracking-wider"
@@ -1332,12 +1332,12 @@ function stopSession() {
           </h3>
 
           <!-- Filter Tabs -->
-          <div class="flex items-center gap-1 border-[2px] border-slate-950 dark:border-white p-0.5 w-fit shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]">
+          <div class="flex items-center gap-1 border-[2px] border-slate-950 dark:border-slate-700 p-0.5 w-fit shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]">
             <button
               @click="tableFilter = 'all'"
               class="px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-colors"
               :class="tableFilter === 'all'
-                ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950'
+                ? 'bg-slate-950 dark:bg-slate-800 text-white'
                 : 'text-slate-500 hover:text-slate-950 dark:hover:text-white'"
             >
               {{ $t("practice.filterAll") }} ({{ results.length }})
@@ -1369,12 +1369,12 @@ function stopSession() {
           </div>
         </div>
 
-        <div class="border-[3px] border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] overflow-hidden">
+        <div class="border-[3px] border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] overflow-hidden">
           <!-- Sticky Header -->
           <div class="overflow-x-auto">
             <table class="w-full text-left bg-white dark:bg-slate-900 border-collapse">
               <thead class="sticky top-0 z-10">
-                <tr class="bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black uppercase text-xs tracking-wider">
+                <tr class="bg-slate-950 dark:bg-slate-800 text-white font-black uppercase text-xs tracking-wider border-b-2 border-slate-950 dark:border-slate-700">
                   <th class="py-3 px-4 whitespace-nowrap">#</th>
                   <th class="py-3 px-4 whitespace-nowrap">{{ $t("practice.tableChar") }}</th>
                   <th class="py-3 px-4 whitespace-nowrap">{{ $t("practice.tableRomaji") }}</th>
@@ -1424,7 +1424,7 @@ function stopSession() {
                       <div class="flex items-center gap-2">
                         <svg
                           viewBox="0 0 109 109"
-                          class="w-9 h-9 border-2 border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-950 p-0.5 flex-shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+                          class="w-9 h-9 border-2 border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-950 p-0.5 flex-shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
                         >
                           <g class="stroke-slate-950/12 dark:stroke-white/10 stroke-[4] fill-none">
                             <path v-for="(d, pidx) in res.strokePaths" :key="'bg-'+pidx" :d="d" />

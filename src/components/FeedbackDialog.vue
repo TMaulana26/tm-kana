@@ -60,19 +60,19 @@ const categories: {
     id: "bug",
     labelKey: "feedback.categoryBug",
     icon: Bug,
-    activeColor: "bg-rose-300 dark:bg-rose-900/60 text-black dark:text-white",
+    activeColor: "bg-rose-300 dark:bg-rose-950/80 text-black dark:text-rose-200 dark:border-rose-700",
   },
   {
     id: "suggestion",
     labelKey: "feedback.categorySuggestion",
     icon: Lightbulb,
-    activeColor: "bg-amber-300 dark:bg-amber-900/60 text-black dark:text-white",
+    activeColor: "bg-amber-300 dark:bg-amber-950/80 text-black dark:text-amber-200 dark:border-amber-700",
   },
   {
     id: "other",
     labelKey: "feedback.categoryOther",
     icon: HelpCircle,
-    activeColor: "bg-violet-300 dark:bg-violet-900/60 text-black dark:text-white",
+    activeColor: "bg-violet-300 dark:bg-violet-950/80 text-black dark:text-violet-200 dark:border-violet-700",
   },
 ];
 
@@ -147,13 +147,13 @@ function resetAndClose() {
   <Dialog v-model:open="isOpen">
     <DialogContent
       :show-close-button="false"
-      class="max-w-lg w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-white rounded-none p-5 sm:p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#fff]"
+      class="max-w-lg w-[92vw] bg-[#f4f3ec] dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 rounded-none p-5 sm:p-6 shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#000]"
     >
       <!-- Header -->
-      <DialogHeader class="border-b-[3px] border-slate-950 dark:border-white pb-4 mb-4 relative">
+      <DialogHeader class="border-b-[3px] border-slate-950 dark:border-slate-700 pb-4 mb-4 relative">
         <div class="flex items-start gap-3.5 pr-10">
           <div
-            class="w-10 h-10 bg-amber-300 dark:bg-amber-500 border-[2px] border-slate-950 dark:border-white flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] mt-0.5"
+            class="w-10 h-10 bg-amber-300 dark:bg-amber-400 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] mt-0.5"
           >
             <MessageSquarePlus class="w-5 h-5 text-slate-950 stroke-[2.5]" />
           </div>
@@ -171,7 +171,7 @@ function resetAndClose() {
         <button
           type="button"
           @click="resetAndClose"
-          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] transition-transform active:translate-x-0.5 active:translate-y-0.5"
+          class="absolute top-0 right-0 w-8 h-8 flex items-center justify-center bg-rose-400 hover:bg-rose-500 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] transition-transform active:translate-x-0.5 active:translate-y-0.5"
           :aria-label="$t('feedback.closeBtn')"
         >
           <X class="w-4 h-4 stroke-[2.5]" />
@@ -181,7 +181,7 @@ function resetAndClose() {
       <!-- Success Screen -->
       <div v-if="isSuccess" class="py-6 flex flex-col items-center text-center space-y-4">
         <div
-          class="w-16 h-16 bg-emerald-400 border-[3px] border-slate-950 dark:border-white flex items-center justify-center shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]"
+          class="w-16 h-16 bg-emerald-400 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]"
         >
           <CheckCircle2 class="w-10 h-10 text-slate-950 stroke-[2.5]" />
         </div>
@@ -224,11 +224,11 @@ function resetAndClose() {
               :key="cat.id"
               type="button"
               @click="category = cat.id"
-              class="flex flex-col items-center justify-center gap-1.5 p-2 sm:p-2.5 min-h-[68px] sm:min-h-[72px] border-[2px] border-slate-950 dark:border-white transition-all active:translate-x-[1px] active:translate-y-[1px]"
+              class="flex flex-col items-center justify-center gap-1.5 p-2 sm:p-2.5 min-h-[68px] sm:min-h-[72px] border-[2px] border-slate-950 dark:border-slate-700 transition-all active:translate-x-[1px] active:translate-y-[1px]"
               :class="[
                 category === cat.id
-                  ? [cat.activeColor, 'shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]']
-                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]'
+                  ? [cat.activeColor, 'shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]']
+                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]'
               ]"
             >
               <component :is="cat.icon" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 stroke-[2.5]" />
@@ -252,7 +252,7 @@ function resetAndClose() {
             name="email"
             v-model="email"
             type="email"
-            class="w-full px-3 py-2 text-xs sm:text-sm font-medium border-[2px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+            class="w-full px-3 py-2 text-xs sm:text-sm font-medium border-[2px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
             :placeholder="$t('feedback.emailPlaceholder')"
             autocomplete="email"
           />
@@ -275,7 +275,7 @@ function resetAndClose() {
             v-model="message"
             rows="4"
             required
-            class="w-full px-3 py-2 text-xs sm:text-sm font-medium border-[2px] border-slate-950 dark:border-white bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400 resize-y"
+            class="w-full px-3 py-2 text-xs sm:text-sm font-medium border-[2px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400 resize-y"
             :placeholder="$t('feedback.messagePlaceholder')"
           ></textarea>
         </div>
@@ -283,7 +283,7 @@ function resetAndClose() {
         <!-- Error Alert Banner -->
         <div
           v-if="errorMessage"
-          class="p-3 bg-rose-200 dark:bg-rose-950/50 border-[2px] border-rose-500 text-rose-900 dark:text-rose-200 flex items-start gap-2 text-xs font-bold shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+          class="p-3 bg-rose-200 dark:bg-rose-950/50 border-[2px] border-rose-500 text-rose-900 dark:text-rose-200 flex items-start gap-2 text-xs font-bold shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
         >
           <AlertTriangle class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
           <div class="space-y-0.5">
@@ -304,7 +304,7 @@ function resetAndClose() {
           <NeoBrutalistButton
             type="submit"
             :disabled="isSubmitting || !message.trim()"
-            class="w-full sm:w-auto px-5 py-2 bg-amber-300 dark:bg-amber-400 hover:bg-amber-400 dark:hover:bg-amber-500 text-black text-xs font-black flex items-center justify-center gap-2 disabled:opacity-50 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff]"
+            class="w-full sm:w-auto px-5 py-2 bg-amber-300 dark:bg-amber-400 hover:bg-amber-400 dark:hover:bg-amber-500 text-black text-xs font-black flex items-center justify-center gap-2 disabled:opacity-50 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000]"
           >
             <Loader2 v-if="isSubmitting" class="w-4 h-4 animate-spin" />
             <Send v-else class="w-4 h-4 stroke-[2.5]" />

@@ -11,7 +11,7 @@ const emit = defineEmits<Emits>()
 
 <template>
   <footer
-    class="mt-auto border-t-[3px] border-slate-950 dark:border-white bg-white dark:bg-slate-900 py-4 px-4 sm:px-8 text-slate-950 dark:text-white"
+    class="mt-auto border-t-[3px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-900 py-4 px-4 sm:px-8 text-slate-950 dark:text-white"
   >
     <div
       class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
@@ -23,7 +23,7 @@ const emit = defineEmits<Emits>()
             {{ $t('common.appName') }}
           </span>
           <span
-            class="px-2 py-0.5 text-[10px] font-black uppercase bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]"
+            class="px-2 py-0.5 text-[10px] font-black uppercase bg-amber-300 dark:bg-amber-400 text-black border-[2px] border-slate-950 dark:border-slate-700 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000]"
           >
             {{ APP_VERSION }}
           </span>
@@ -40,7 +40,7 @@ const emit = defineEmits<Emits>()
         <button
           type="button"
           @click="emit('openFeedback')"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-300 dark:bg-amber-500 hover:bg-amber-400 dark:hover:bg-amber-600 text-black border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] transition-all transform active:translate-x-0.5 active:translate-y-0.5"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-300 dark:bg-amber-400 hover:bg-amber-400 dark:hover:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] transition-all transform active:translate-x-0.5 active:translate-y-0.5"
           :aria-label="$t('feedback.triggerBtn')"
         >
           <MessageSquarePlus class="w-4 h-4" />
@@ -51,7 +51,7 @@ const emit = defineEmits<Emits>()
           :href="GITHUB_REPO_URL"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f4f3ec] dark:bg-slate-800 hover:bg-violet-200 dark:hover:bg-violet-950 text-black dark:text-white border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] transition-all transform active:translate-x-0.5 active:translate-y-0.5"
+          class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f4f3ec] dark:bg-slate-800 hover:bg-violet-200 dark:hover:bg-violet-950/60 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] transition-all transform active:translate-x-0.5 active:translate-y-0.5"
           :aria-label="$t('footer.github')"
         >
           <Github class="w-4 h-4" />

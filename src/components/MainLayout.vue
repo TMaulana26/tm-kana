@@ -46,15 +46,15 @@ function closeMobileMenu() {
 
 <template>
   <div
-    class="min-h-screen bg-[#f4f3ec] dark:bg-[#121318] flex flex-col md:flex-row text-slate-950 dark:text-slate-50 font-sans"
+    class="min-h-screen bg-[#f4f3ec] dark:bg-[#0c0e14] flex flex-col md:flex-row text-slate-950 dark:text-slate-50 font-sans"
   >
     <!-- Desktop Sidebar -->
     <aside
-      class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-white shrink-0 sticky top-0 h-screen"
+      class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-slate-700 shrink-0 sticky top-0 h-screen"
     >
       <!-- Logo Section -->
       <div
-        class="h-16 flex items-center justify-center px-4 border-b-[4px] border-slate-950 dark:border-white"
+        class="h-16 flex items-center justify-center px-4 border-b-[4px] border-slate-950 dark:border-slate-700"
       >
         <router-link
           to="/"
@@ -65,18 +65,18 @@ function closeMobileMenu() {
       </div>
 
       <!-- User Profile Summary (Neo-brutalist card) -->
-      <div class="p-6 border-b-[4px] border-slate-950 dark:border-white">
+      <div class="p-6 border-b-[4px] border-slate-950 dark:border-slate-700">
         <div
-          class="bg-amber-300 dark:bg-amber-500 text-black border-[3px] border-slate-950 dark:border-white p-4 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] flex items-center gap-3"
+          class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 p-4 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] flex items-center gap-3"
         >
           <div
-            class="w-10 h-10 bg-white border-[2px] border-slate-950 flex items-center justify-center"
+            class="w-10 h-10 bg-white dark:bg-slate-900 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center"
           >
-            <User class="w-5 h-5 text-slate-950" />
+            <User class="w-5 h-5 text-slate-950 dark:text-slate-200" />
           </div>
           <div class="overflow-hidden">
             <p
-              class="text-xs uppercase font-black tracking-wider text-amber-950"
+              class="text-xs uppercase font-black tracking-wider text-amber-950 dark:text-amber-400"
             >
               {{ $t("common.nickname") }}
             </p>
@@ -91,10 +91,10 @@ function closeMobileMenu() {
           v-for="item in navigationItems"
           :key="item.path"
           :to="item.path"
-          class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform hover:-translate-x-1 hover:-translate-y-1 hover:border-slate-950 dark:hover:border-white hover:bg-violet-200 dark:hover:bg-violet-950 hover:shadow-[3px_3px_0px_0px_#000] dark:hover:shadow-[3px_3px_0px_0px_#fff]"
+          class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform hover:-translate-x-1 hover:-translate-y-1 hover:border-slate-950 dark:hover:border-slate-700 hover:bg-violet-200 dark:hover:bg-violet-950/60 hover:shadow-[3px_3px_0px_0px_#000] dark:hover:shadow-[3px_3px_0px_0px_#000]"
           :class="[
             route.path === item.path
-              ? 'bg-violet-300 text-black dark:bg-violet-400 dark:text-black border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] translate-x-[-2px] translate-y-[-2px]'
+              ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000] translate-x-[-2px] translate-y-[-2px]'
               : 'text-slate-700 dark:text-slate-300',
           ]"
         >
@@ -104,17 +104,17 @@ function closeMobileMenu() {
       </nav>
 
       <!-- Desktop Sidebar Bottom Preferences -->
-      <div class="p-4 border-t-[4px] border-slate-950 dark:border-white">
+      <div class="p-4 border-t-[4px] border-slate-950 dark:border-slate-700">
         <button
           type="button"
           @click="isPreferencesOpen = true"
-          class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px]"
+          class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px]"
         >
           <span class="flex items-center gap-2">
             <Settings class="w-4 h-4" />
             {{ $t('preferences.openBtn') }}
           </span>
-          <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white border border-slate-950 text-slate-950">
+          <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white dark:bg-slate-900 border border-slate-950 dark:border-slate-700 text-slate-950 dark:text-slate-200">
             {{ preferencesStore.theme }}
           </span>
         </button>
@@ -123,12 +123,12 @@ function closeMobileMenu() {
 
     <!-- Mobile Top Header -->
     <header
-      class="md:hidden h-16 bg-white dark:bg-slate-900 border-b-[4px] border-slate-950 dark:border-white flex items-center justify-between px-4 sticky top-0 z-40"
+      class="md:hidden h-16 bg-white dark:bg-slate-900 border-b-[4px] border-slate-950 dark:border-slate-700 flex items-center justify-between px-4 sticky top-0 z-40"
     >
       <div class="flex items-center gap-2">
         <button
           @click="toggleMobileMenu"
-          class="p-2 border-[2px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]"
+          class="p-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_0px_#000]"
           aria-label="Toggle menu"
         >
           <Menu
@@ -144,7 +144,7 @@ function closeMobileMenu() {
       <button
         type="button"
         @click="isPreferencesOpen = true"
-        class="w-8 h-8 flex items-center justify-center border-[2px] border-slate-950 dark:border-white bg-white dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px] text-slate-950 dark:text-white"
+        class="w-8 h-8 flex items-center justify-center border-[2px] border-slate-950 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] text-slate-950 dark:text-white"
         :aria-label="$t('preferences.title')"
       >
         <Settings class="w-4 h-4" />
@@ -178,35 +178,35 @@ function closeMobileMenu() {
     >
       <aside
         v-if="isMobileMenuOpen"
-        class="md:hidden fixed top-0 bottom-0 left-0 w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-white z-50 flex flex-col shadow-2xl"
+        class="md:hidden fixed top-0 bottom-0 left-0 w-64 bg-white dark:bg-slate-900 border-r-[4px] border-slate-950 dark:border-slate-700 z-50 flex flex-col shadow-2xl"
       >
         <!-- Header -->
         <div
-          class="h-16 flex items-center justify-between px-6 border-b-[4px] border-slate-950 dark:border-white"
+          class="h-16 flex items-center justify-between px-6 border-b-[4px] border-slate-950 dark:border-slate-700"
         >
           <router-link to="/" @click="closeMobileMenu" class="flex items-center">
             <AppLogo size="sm" />
           </router-link>
           <button
             @click="closeMobileMenu"
-            class="p-2 border-[2px] border-slate-950 dark:border-white bg-[#f4f3ec] dark:bg-slate-800"
+            class="p-2 border-[2px] border-slate-950 dark:border-slate-700 bg-[#f4f3ec] dark:bg-slate-800"
           >
             <X class="w-5 h-5" />
           </button>
         </div>
 
         <!-- Nickname -->
-        <div class="p-6 border-b-[4px] border-slate-950 dark:border-white">
+        <div class="p-6 border-b-[4px] border-slate-950 dark:border-slate-700">
           <div
-            class="bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white p-3 shadow-[3px_3px_0px_0px_#000] flex items-center gap-3"
+            class="bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 p-3 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] flex items-center gap-3"
           >
             <div
-              class="w-8 h-8 bg-white border-[2px] border-slate-950 flex items-center justify-center"
+              class="w-8 h-8 bg-white dark:bg-slate-900 border-[2px] border-slate-950 dark:border-slate-700 flex items-center justify-center"
             >
-              <User class="w-4 h-4 text-slate-950" />
+              <User class="w-4 h-4 text-slate-950 dark:text-slate-200" />
             </div>
             <div>
-              <p class="text-xs uppercase font-black text-amber-950">
+              <p class="text-xs uppercase font-black text-amber-950 dark:text-amber-400">
                 {{ $t('common.nickname') }}
               </p>
               <p class="font-extrabold text-sm">{{ nickname }}</p>
@@ -224,7 +224,7 @@ function closeMobileMenu() {
             class="flex items-center gap-3 px-4 py-3 border-[3px] border-transparent font-bold text-sm tracking-wide transition-all transform active:translate-x-[1px] active:translate-y-[1px]"
             :class="[
               route.path === item.path
-                ? 'bg-violet-300 text-black dark:bg-violet-400 dark:text-black border-slate-950 dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff]'
+                ? 'bg-violet-300 text-black dark:bg-violet-600 dark:text-white border-slate-950 dark:border-slate-700 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#000]'
                 : 'text-slate-700 dark:text-slate-300',
             ]"
           >
@@ -234,17 +234,17 @@ function closeMobileMenu() {
         </nav>
 
         <!-- Mobile Drawer Bottom Preferences -->
-        <div class="p-4 border-t-[4px] border-slate-950 dark:border-white">
+        <div class="p-4 border-t-[4px] border-slate-950 dark:border-slate-700">
           <button
             type="button"
             @click="isPreferencesOpen = true; closeMobileMenu()"
-            class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-amber-500 text-black border-[2px] border-slate-950 dark:border-white font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#fff] active:translate-x-[1px] active:translate-y-[1px]"
+            class="w-full flex items-center justify-between px-3 py-2.5 bg-amber-300 dark:bg-slate-800 text-black dark:text-white border-[2px] border-slate-950 dark:border-slate-700 font-extrabold text-xs uppercase tracking-wider shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px]"
           >
             <span class="flex items-center gap-2">
               <Settings class="w-4 h-4" />
               {{ $t('preferences.openBtn') }}
             </span>
-            <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white border border-slate-950 text-slate-950">
+            <span class="text-xs uppercase font-black px-1.5 py-0.5 bg-white dark:bg-slate-900 border border-slate-950 dark:border-slate-700 text-slate-950 dark:text-slate-200">
               {{ preferencesStore.theme }}
             </span>
           </button>
