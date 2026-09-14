@@ -12,6 +12,7 @@ import {
   BookOpen,
   GraduationCap,
   TrendingUp,
+  Palette,
   Menu,
   X,
   User,
@@ -33,6 +34,7 @@ const navigationItems = computed(() => [
   { name: "nav.chart", path: "/chart", icon: BookOpen },
   { name: "nav.practice", path: "/practice", icon: GraduationCap },
   { name: "nav.progress", path: "/progress", icon: TrendingUp },
+  { name: "nav.themePreview", path: "/theme-preview", icon: Palette },
 ]);
 
 function toggleMobileMenu() {

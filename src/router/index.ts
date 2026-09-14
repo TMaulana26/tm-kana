@@ -38,6 +38,15 @@ const routes = [
       titleKey: 'nav.progress',
       descKey: 'progressPage.desc'
     }
+  },
+  {
+    path: '/theme-preview',
+    name: 'theme-preview',
+    component: () => import('../views/ThemePreviewView.vue'),
+    meta: {
+      titleKey: 'nav.themePreview',
+      descKey: 'themePreview.desc'
+    }
   }
 ]
 
