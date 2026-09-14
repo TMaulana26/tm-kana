@@ -7,6 +7,7 @@ import { kanaData, type KanaItem } from "@/constants/kanaData";
 import NeoBrutalistButton from "@/components/NeoBrutalistButton.vue";
 import KanaCanvas from "@/components/KanaCanvas.vue";
 import { recognizeStroke, recognizeStrokeSequence, recognizeSingleStroke, type Point } from "@/utils/strokeRecognizer";
+import { loadKanaTemplate } from "@/utils/strokeTemplate";
 import {
   Check,
   X,
@@ -73,6 +74,7 @@ const feedbackMessage = ref("");
 const showDrawHint = ref(false);
 const activeTemplateStrokes = ref<Point[][] | null>(null);
 const activeTemplatePaths = ref<string[]>([]);
+const activeTemplateNumbers = ref<{ transform: string; num: number }[]>([]);
 const hasUsedHint = ref(false);
 const svgLoadFailed = ref(false);
 const completedStrokesCount = ref(0);
@@ -183,55 +185,20 @@ const strokeOrderUrl = computed(() => {
 async function fetchTemplateSVG(char: string) {
   activeTemplateStrokes.value = null;
   activeTemplatePaths.value = [];
+  activeTemplateNumbers.value = [];
   svgLoadFailed.value = false;
-  
+
   try {
-    const hex = char.charCodeAt(0).toString(16).toLowerCase().padStart(5, '0');
-    const url = `https://raw.githubusercontent.com/KanjiVG/KanjiVG/master/kanji/${hex}.svg`;
-    
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch SVG");
-    const svgText = await response.text();
-    
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgText, "image/svg+xml");
-    
-    let pathElements = doc.querySelectorAll("g[id^='kvg:StrokePaths'] path");
-    if (pathElements.length === 0) {
-      pathElements = doc.querySelectorAll("path[id*='-s']");
-    }
-    if (pathElements.length === 0) {
-      pathElements = doc.querySelectorAll("path");
-    }
-    
-    const strokesData: Point[][] = [];
-    const pathsData: string[] = [];
-    pathElements.forEach(path => {
-      const d = path.getAttribute("d");
-      if (d) {
-        pathsData.push(d);
-        const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        pathEl.setAttribute('d', d);
-        const length = pathEl.getTotalLength();
-        const pts: Point[] = [];
-        const numSamples = 32;
-        for (let i = 0; i < numSamples; i++) {
-          const dist = (i / (numSamples - 1)) * length;
-          const pt = pathEl.getPointAtLength(dist);
-          pts.push({ x: pt.x, y: pt.y });
-        }
-        strokesData.push(pts);
-      }
-    });
-    
-    if (strokesData.length > 0) {
-      activeTemplateStrokes.value = strokesData;
-      activeTemplatePaths.value = pathsData;
+    const template = await loadKanaTemplate(char);
+    if (template && template.strokes.length > 0) {
+      activeTemplateStrokes.value = template.strokes;
+      activeTemplatePaths.value = template.paths;
+      activeTemplateNumbers.value = template.numbers;
     } else {
       svgLoadFailed.value = true;
     }
   } catch (e) {
-    console.warn("Failed to load or parse template SVG", e);
+    console.warn("Failed to load template SVG", e);
     svgLoadFailed.value = true;
   }
 }
@@ -422,7 +389,9 @@ function handleStrokeCompleted(userStrokes: Point[][]) {
 
     // Clear user hand drawing, redraw only completed template strokes
     const completed = activeTemplateStrokes.value.slice(0, completedStrokesCount.value);
-    canvasRef.value.drawCompleted(completed);
+    if (canvasRef.value?.drawCompleted) {
+      canvasRef.value.drawCompleted(completed);
+    }
 
     // If character is fully completed
     if (completedStrokesCount.value === activeTemplateStrokes.value.length) {
@@ -473,7 +442,9 @@ function handleCanvasClear() {
     const completed = activeTemplateStrokes.value
       ? activeTemplateStrokes.value.slice(0, completedStrokesCount.value)
       : [];
-    canvasRef.value.drawCompleted(completed);
+    if (canvasRef.value?.drawCompleted) {
+      canvasRef.value.drawCompleted(completed);
+    }
   }
 }
 
@@ -1041,17 +1012,42 @@ function stopSession() {
                 <span class="text-[10px] font-black uppercase text-amber-500 tracking-wider">
                   {{ showDrawHint ? $t("practice.hintLabel") : (feedbackStatus === 'correct' ? $t("practice.correctFeedback") : $t("practice.incorrectLabel")) }}
                 </span>
-                <div class="relative w-44 h-44 bg-white border-2 border-slate-950 p-2 flex items-center justify-center">
+                <div class="relative w-44 h-44 bg-white dark:bg-slate-950 border-2 border-slate-950 dark:border-white p-2 flex items-center justify-center shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff]">
+                  <svg
+                    v-if="!svgLoadFailed && activeTemplatePaths.length > 0"
+                    viewBox="0 0 109 109"
+                    class="w-full h-full object-contain select-none text-slate-950 dark:text-white"
+                  >
+                    <line x1="0" y1="54.5" x2="109" y2="54.5" stroke="currentColor" stroke-dasharray="2,2" stroke-opacity="0.25" stroke-width="1" />
+                    <line x1="54.5" y1="0" x2="54.5" y2="109" stroke="currentColor" stroke-dasharray="2,2" stroke-opacity="0.25" stroke-width="1" />
+                    <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path v-for="(d, pidx) in activeTemplatePaths" :key="'guide-p-'+pidx" :d="d" />
+                    </g>
+                    <g>
+                      <text
+                        v-for="(n, nidx) in activeTemplateNumbers"
+                        :key="'guide-n-'+nidx"
+                        :transform="n.transform"
+                        font-size="7.5"
+                        font-family="sans-serif"
+                        font-weight="900"
+                        fill="currentColor"
+                        fill-opacity="0.75"
+                      >
+                        {{ n.num }}
+                      </text>
+                    </g>
+                  </svg>
                   <img
-                    v-if="!svgLoadFailed && strokeOrderUrl"
+                    v-else-if="!svgLoadFailed && strokeOrderUrl"
                     :src="strokeOrderUrl"
                     @error="svgLoadFailed = true"
-                    class="w-full h-full object-contain select-none"
+                    class="w-full h-full object-contain select-none filter dark:invert"
                     :alt="$t('practice.strokeGuideAlt')"
                   />
                   <span
                     v-else
-                    class="font-black text-slate-950 select-none leading-none text-center"
+                    class="font-black text-slate-950 dark:text-white select-none leading-none text-center"
                     :class="[
                       (currentQuestion?.item.character.length ?? 1) > 2
                         ? 'text-4xl sm:text-5xl'
@@ -1133,6 +1129,7 @@ function stopSession() {
               <KanaCanvas
                 ref="canvasRef"
                 :char="currentQuestion?.item.character || ''"
+                :template-paths="activeTemplatePaths"
                 :show-outline="showDrawHint || showFeedback"
                 @stroke-completed="handleStrokeCompleted"
                 @clear="handleCanvasClear"

@@ -40,8 +40,16 @@ describe('PracticeView.vue component tests', () => {
       global: {
         plugins: [pinia],
         stubs: {
-          // Stub canvas component since rendering canvas inside jsdom in vitest can be tricky
-          KanaCanvas: true
+          KanaCanvas: {
+            template: '<div class="kana-canvas-stub"></div>',
+            methods: {
+              getCanvasSize: () => ({ width: 320, height: 320 }),
+              drawCompleted: vi.fn(),
+              clear: vi.fn(),
+              getPoints: () => [],
+              getStrokes: () => []
+            }
+          }
         }
       }
     })
@@ -197,5 +205,71 @@ describe('PracticeView.vue component tests', () => {
     // Feedback should automatically trigger
     expect(wrapper.text()).toContain('Nailed it!')
     expect(store.progress['h-ka'].hasLearned).toBe(true)
+  })
+
+  it('requires all strokes from both characters before completing compound kana in draw mode', async () => {
+    // Mock 6 template strokes (3 for に + 3 for ゃ)
+    const mockTemplateStrokes = [
+      [{ x: 10, y: 10 }, { x: 10, y: 50 }],
+      [{ x: 20, y: 20 }, { x: 40, y: 20 }],
+      [{ x: 20, y: 40 }, { x: 40, y: 40 }],
+      [{ x: 60, y: 40 }, { x: 80, y: 40 }],
+      [{ x: 70, y: 30 }, { x: 70, y: 40 }],
+      [{ x: 65, y: 35 }, { x: 75, y: 70 }],
+    ];
+
+    const strokeTemplateModule = await import('@/utils/strokeTemplate');
+    vi.spyOn(strokeTemplateModule, 'loadKanaTemplate').mockResolvedValue({
+      strokes: mockTemplateStrokes,
+      paths: mockTemplateStrokes.map(() => 'M0,0'),
+      numbers: mockTemplateStrokes.map((_, i) => ({ transform: 'matrix(1 0 0 1 0 0)', num: i + 1 })),
+      svgContent: '<svg></svg>'
+    });
+
+    const wrapper = mountPracticeView()
+
+    // Inject mock compound kana question (にゃ - 6 total strokes)
+    const mockQuestions = [
+      {
+        index: 0,
+        item: { id: 'h-nya', character: 'にゃ', romaji: 'NYA', rowGroup: 'ny' }
+      }
+    ];
+    (wrapper.vm as any).questions = mockQuestions;
+    (wrapper.vm as any).isSessionActive = true;
+    (wrapper.vm as any).isSessionFinished = false;
+    (wrapper.vm as any).currentQuestionIndex = 0;
+    (wrapper.vm as any).practiceMode = 'draw';
+
+    // Wait for watcher to call fetchTemplateSVG and load template
+    await wrapper.vm.$nextTick();
+    await new Promise(r => setTimeout(r, 20));
+    await wrapper.vm.$nextTick();
+
+    // Mock recognizeSingleStroke to return match
+    const strokeRecognizerModule = await import('@/utils/strokeRecognizer');
+    vi.spyOn(strokeRecognizerModule, 'recognizeSingleStroke').mockReturnValue({ isMatch: true });
+
+    // Simulate user drawing the 3 strokes of the first character (に)
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 10, y: 10 }, { x: 10, y: 50 }]]);
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 20, y: 20 }, { x: 40, y: 20 }]]);
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 20, y: 40 }, { x: 40, y: 40 }]]);
+
+    // Expect completedStrokesCount to be 3
+    expect((wrapper.vm as any).completedStrokesCount).toBe(3);
+    // Crucial bug fix assertion: The exercise must NOT be finished yet!
+    expect((wrapper.vm as any).showFeedback).toBe(false);
+    expect(store.progress['h-nya']?.hasLearned).toBeFalsy();
+
+    // Simulate user drawing the remaining 3 strokes of the second character (ゃ)
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 60, y: 40 }, { x: 80, y: 40 }]]);
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 70, y: 30 }, { x: 70, y: 40 }]]);
+    (wrapper.vm as any).handleStrokeCompleted([[{ x: 65, y: 35 }, { x: 75, y: 70 }]]);
+
+    // Now all 6 strokes are completed!
+    expect((wrapper.vm as any).completedStrokesCount).toBe(6);
+    expect((wrapper.vm as any).showFeedback).toBe(true);
+    expect(store.progress['h-nya'].hasLearned).toBe(true);
+    expect(store.progress['h-nya'].drawSuccessCount).toBe(1);
   })
 })

@@ -6,10 +6,12 @@ import NeoBrutalistButton from './NeoBrutalistButton.vue'
 interface Props {
   char: string
   showOutline?: boolean
+  templatePaths?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showOutline: true
+  showOutline: true,
+  templatePaths: () => []
 })
 
 const {
@@ -116,8 +118,17 @@ defineExpose({
       
       <!-- Faint Outline of the Target Character as Visual Guide -->
       <div v-if="showOutline" class="absolute inset-0 flex items-center justify-center pointer-events-none p-4 select-none">
+        <svg
+          v-if="templatePaths && templatePaths.length > 0"
+          viewBox="0 0 109 109"
+          class="w-full h-full object-contain opacity-25 dark:opacity-20 select-none pointer-events-none"
+        >
+          <g fill="none" class="stroke-slate-950 dark:stroke-white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path v-for="(d, idx) in templatePaths" :key="idx" :d="d" />
+          </g>
+        </svg>
         <img
-          v-if="!svgError && svgUrl"
+          v-else-if="!svgError && svgUrl"
           :src="svgUrl"
           @error="svgError = true"
           class="w-full h-full object-contain opacity-25 dark:opacity-20 select-none pointer-events-none filter dark:invert"
