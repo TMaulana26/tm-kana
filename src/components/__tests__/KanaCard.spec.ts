@@ -81,4 +81,24 @@ describe('KanaCard.vue Component', () => {
     expect(wrapper.emitted('click')).toBeTruthy()
     expect(wrapper.emitted('click')?.[0]?.[0]).toEqual(testChar)
   })
+
+  it('applies proportional font sizing for compound characters (length >= 2)', () => {
+    const compoundChar: KanaItem = {
+      id: 'h-kya',
+      character: 'きゃ',
+      romaji: 'KYA',
+      rowGroup: 'k_yoon'
+    }
+
+    const wrapper = mount(KanaCard, {
+      props: {
+        character: compoundChar
+      }
+    })
+
+    const charSpan = wrapper.find('span.leading-none')
+    expect(charSpan.classes()).toContain('text-2xl')
+    expect(charSpan.classes()).toContain('lg:text-5xl')
+    expect(charSpan.classes()).not.toContain('lg:text-6xl')
+  })
 })

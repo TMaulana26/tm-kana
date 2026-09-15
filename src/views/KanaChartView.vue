@@ -155,7 +155,7 @@ function selectCharacter(char: KanaItem) {
               <!-- Grid Header columns: Vowels (A, I, U, E, O) -->
               <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
                 <div class="w-20 shrink-0"></div>
-                <div class="grid grid-cols-5 gap-4 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
+                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
                   <span>A</span>
                   <span>I</span>
                   <span>U</span>
@@ -193,6 +193,18 @@ function selectCharacter(char: KanaItem) {
               {{ $t('chart.dakuon') }}
             </h2>
             <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#6366f1]">
+              <!-- Grid Header columns: Vowels (A, I, U, E, O) -->
+              <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
+                <div class="w-20 shrink-0"></div>
+                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
+                  <span>A</span>
+                  <span>I</span>
+                  <span>U</span>
+                  <span>E</span>
+                  <span>O</span>
+                </div>
+              </div>
+
               <div class="space-y-4">
                 <div
                   v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.dakuon : katakanaGroups.dakuon)"
@@ -221,6 +233,18 @@ function selectCharacter(char: KanaItem) {
               {{ $t('chart.yoon') }}
             </h2>
             <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b]">
+              <!-- Grid Header columns: Yoon Vowels (YA, YU, YO) -->
+              <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
+                <div class="w-20 shrink-0"></div>
+                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
+                  <span>YA</span>
+                  <span>YU</span>
+                  <span>YO</span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+
               <div class="space-y-4">
                 <div
                   v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.yoon : katakanaGroups.yoon)"
@@ -230,7 +254,7 @@ function selectCharacter(char: KanaItem) {
                   <div class="w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
                     {{ $t('rows.' + row.rowName) }}
                   </div>
-                  <div class="grid grid-cols-3 gap-3 flex-1 w-full">
+                  <div class="grid grid-cols-5 gap-3 flex-1 w-full">
                     <KanaCard
                       v-for="char in row.chars"
                       :key="char.id"
