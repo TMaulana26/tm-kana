@@ -30,7 +30,7 @@ const emit = defineEmits<Emits>()
         </div>
         <span class="hidden sm:inline-block text-slate-400 dark:text-slate-600 font-bold">・</span>
         <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-400">
-          <Heart class="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0" />
+          <Heart class="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0 animate-heart-pulse" />
           <span>{{ $t('footer.tagline') }}</span>
         </span>
       </div>
@@ -62,3 +62,41 @@ const emit = defineEmits<Emits>()
     </div>
   </footer>
 </template>
+
+<style scoped>
+.animate-heart-pulse {
+  animation: heartPulse 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes heartPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  14% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+  28% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  42% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-heart-pulse {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+</style>
