@@ -3,8 +3,6 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { kanaData, type KanaItem } from '@/constants/kanaData'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { RouterLink } from 'vue-router'
-import { Sparkles } from 'lucide-vue-next'
 import KanaCard from '@/components/KanaCard.vue'
 import KanaDetailDialog from '@/components/KanaDetailDialog.vue'
 import { groupKanaData } from '@/utils/kana'
@@ -20,6 +18,30 @@ const isDialogOpen = ref(false)
 
 const hiraganaGroups = computed(() => groupKanaData(kanaData.hiragana))
 const katakanaGroups = computed(() => groupKanaData(kanaData.katakana))
+
+const splitHiraganaYoonLeft = computed(() => {
+  const rows = hiraganaGroups.value.yoon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitHiraganaYoonRight = computed(() => {
+  const rows = hiraganaGroups.value.yoon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
+
+const splitKatakanaYoonLeft = computed(() => {
+  const rows = katakanaGroups.value.yoon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitKatakanaYoonRight = computed(() => {
+  const rows = katakanaGroups.value.yoon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
 
 const watermarkText = computed(() => {
   if (activeTab.value === 'hiragana') {
@@ -227,51 +249,75 @@ function selectCharacter(char: KanaItem) {
             </div>
           </section>
 
-          <!-- Yoon Section -->
+          <!-- Yoon Section: Split 2-Column Grid -->
           <section v-else-if="activeGroup === 'yoon'" class="space-y-6 animate-section-content">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h2
-                class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
-              >
-                {{ $t('chart.yoon') }}
-              </h2>
-              <RouterLink
-                to="/preview-yoon"
-                class="inline-flex items-center gap-2 px-3.5 py-2 font-black text-xs uppercase tracking-wider bg-amber-400 dark:bg-amber-500 text-amber-950 border-[3px] border-slate-950 dark:border-slate-200 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] hover:bg-amber-300 dark:hover:bg-amber-400 transition-all duration-150 transform active:translate-x-0.5 active:translate-y-0.5 w-fit"
-              >
-                <Sparkles class="w-3.5 h-3.5" />
-                <span>{{ $t('yoonPreview.title') }}</span>
-              </RouterLink>
-            </div>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b]">
-              <!-- Grid Header columns: Yoon Vowels (YA, YU, YO) -->
-              <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
-                <div class="w-20 shrink-0"></div>
-                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
-                  <span>YA</span>
-                  <span>YU</span>
-                  <span>YO</span>
-                  <span></span>
-                  <span></span>
+            <h2
+              class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
+            >
+              {{ $t('chart.yoon') }}
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <!-- Left Column of Yoon Groups -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b] space-y-4">
+                <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
+                  <div class="w-16 sm:w-20 shrink-0"></div>
+                  <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>YA</span>
+                    <span>YU</span>
+                    <span>YO</span>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonLeft : splitKatakanaYoonLeft)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
+                  >
+                    <div class="w-16 sm:w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 w-full">
+                      <KanaCard
+                        v-for="char in row.chars"
+                        :key="char.id"
+                        :character="char"
+                        @click="selectCharacter"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="space-y-4">
-                <div
-                  v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.yoon : katakanaGroups.yoon)"
-                  :key="row.rowName"
-                  class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
-                >
-                  <div class="w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
-                    {{ $t('rows.' + row.rowName) }}
+              <!-- Right Column of Yoon Groups -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b] space-y-4">
+                <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
+                  <div class="w-16 sm:w-20 shrink-0"></div>
+                  <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>YA</span>
+                    <span>YU</span>
+                    <span>YO</span>
                   </div>
-                  <div class="grid grid-cols-5 gap-3 flex-1 w-full">
-                    <KanaCard
-                      v-for="char in row.chars"
-                      :key="char.id"
-                      :character="char"
-                      @click="selectCharacter"
-                    />
+                </div>
+
+                <div class="space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonRight : splitKatakanaYoonRight)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
+                  >
+                    <div class="w-16 sm:w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 w-full">
+                      <KanaCard
+                        v-for="char in row.chars"
+                        :key="char.id"
+                        :character="char"
+                        @click="selectCharacter"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
