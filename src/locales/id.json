@@ -80,7 +80,31 @@
     "strokeOrderAlt": "Panduan Urutan Goresan",
     "offlineStrokeOrder": "Gambar urutan goresan tidak termuat. Anda dapat langsung berlatih menggunakan garis pemandu di bawah ini!",
     "dakuonTipTitle": "Tanda Suara Dakuten & Handakuten",
-    "dakuonTipDesc": "Tanda tenten (゛) mengubah K, S, T, H menjadi G, Z, D, B. Tanda maru (゜) mengubah H menjadi P."
+    "dakuonTipDesc": "Tanda tenten (゛) mengubah K, S, T, H menjadi G, Z, D, B. Tanda maru (゜) mengubah H menjadi P.",
+    "previewYoonBtn": "Uji Pratinjau Penyeragaman Kotak Yoon"
+  },
+  "yoonPreview": {
+    "title": "Laboratorium Pratinjau Penyeragaman Kotak Yoon",
+    "desc": "Bandingkan ukuran kotak karakter Yoon langsung dengan kotak Gojuon di atasnya untuk menemukan keseragaman dan kenyamanan visual terbaik.",
+    "backToChart": "Kembali ke Tabel Kana",
+    "switchScript": "Ganti Aksara",
+    "themeToggle": "Ganti Tema",
+    "referenceTitle": "Kotak Referensi Ukuran (Gojuon Baris Vokal)",
+    "referenceSubtitle": "Gunakan baris Vokal Gojuon di bawah ini sebagai tolak ukur ukuran kotak asli:",
+    "opt1Title": "Opsi 1: 3-Kolom Split Grid (3 Kolom Berdampingan)",
+    "opt1Badge": "Direkomendasikan",
+    "opt1Desc": "Membagi 11 baris Yoon menjadi 3 kontainer kolom (4 + 4 + 3 baris). Kotak berukuran ~95px (alami seragam dengan Gojuon ~90px), terisi penuh tanpa ruang kosong dan tanpa kotak strip kosong.",
+    "opt2Title": "Opsi 2: 5-Kolom Aligned Grid (Pola YA, —, YU, —, YO)",
+    "opt2Badge": "Matematis 100% Seragam",
+    "opt2Desc": "Yoon tetap dalam 2 kolom split grid, tetapi setiap baris memiliki 5 slot. Ukuran kotak 100.0% sama persis saklek dengan Gojuon, dengan 2 slot placeholder strip di kolom 2 dan 4.",
+    "opt3Title": "Opsi 3: 2-Kolom Split Grid Saat Ini (Kondisi Sekarang)",
+    "opt3Badge": "Ukuran Sekarang",
+    "opt3Desc": "Kondisi saat ini: 2 kolom dengan 3 kartu membentang penuh per baris, sehingga kartu Yoon berukuran lebih besar (~145px) dibanding Gojuon (~90px).",
+    "yoonTipTitle": "Pelafalan 1 Mora",
+    "yoonTipDesc": "Yoon dilafalkan dalam satu ketukan napas utuh (1 mora), bukan dua suku kata terpisah.",
+    "laboratoryBadge": "LABORATORIUM",
+    "previewSubtitle": "PRATINJAU DESAIN TM-KANA",
+    "vowelHeader": "VOKAL"
   },
   "rows": {
     "vowels": "Vokal Dasar",

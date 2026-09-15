@@ -38,6 +38,15 @@ const routes = [
       titleKey: 'nav.progress',
       descKey: 'progressPage.desc'
     }
+  },
+  {
+    path: '/preview-yoon',
+    name: 'preview-yoon',
+    component: () => import('../views/YoonPreviewView.vue'),
+    meta: {
+      titleKey: 'yoonPreview.title',
+      descKey: 'yoonPreview.desc'
+    }
   }
 ]
 
