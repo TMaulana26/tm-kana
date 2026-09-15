@@ -20,6 +20,7 @@
   },
   "home": {
     "homeDesc": "Learn to read, pronounce, and write Hiragana and Katakana interactively. 100% Client-Side, free, secure, and ad-free.",
+    "heroKanaMeaning": "Let's learn together!",
     "profileTitle": "Learning Profile",
     "profileDesc": "Set your learning nickname",
     "nicknameLabel": "Nickname",

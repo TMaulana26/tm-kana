@@ -26,11 +26,12 @@ const localNickname = ref(store.nickname);
 const isNicknameSaved = ref(false);
 
 const heroKanaChips = [
-  { char: "あ", romaji: "a" },
-  { char: "カ", romaji: "ka" },
-  { char: "さ", romaji: "sa" },
-  { char: "タ", romaji: "ta" },
+  { char: "ま", romaji: "ma" },
   { char: "な", romaji: "na" },
+  { char: "び", romaji: "bi" },
+  { char: "ま", romaji: "ma" },
+  { char: "しょ", romaji: "sho" },
+  { char: "う", romaji: "u" },
 ];
 
 function updateNickname() {
@@ -150,22 +151,32 @@ function processFile(file: File) {
           {{ $t("home.homeDesc") }}
         </p>
 
-        <!-- Interactive Tactile Kana Chips -->
+        <!-- Interactive Tactile Kana Chips: まなびましょう (Ayo belajar bersama!) -->
         <div
-          class="flex flex-wrap items-center gap-2.5 pt-2"
-          aria-label="Kana preview"
+          class="flex flex-wrap items-center gap-3 pt-2"
+          :aria-label="$t('home.heroKanaMeaning')"
         >
-          <div
-            v-for="chip in heroKanaChips"
-            :key="chip.char"
-            class="kana-chip inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 dark:bg-slate-950/80 border-[2px] border-slate-950 dark:border-slate-400 font-mono font-black text-sm text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#f59e0b] cursor-default select-none transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#08060d] active:translate-y-0"
-          >
-            <span class="text-base font-black">{{ chip.char }}</span>
-            <span
-              class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider"
-              >{{ chip.romaji }}</span
+          <div class="flex flex-wrap items-center gap-1.5">
+            <div
+              v-for="(chip, idx) in heroKanaChips"
+              :key="`${idx}-${chip.char}`"
+              class="kana-chip inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 dark:bg-slate-950/80 border-[2px] border-slate-950 dark:border-slate-400 font-mono font-black text-sm text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#f59e0b] cursor-default select-none transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#08060d] active:translate-y-0"
+              :title="`${chip.char} (${chip.romaji.toUpperCase()})`"
             >
+              <span class="text-base font-black">{{ chip.char }}</span>
+              <span
+                class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider"
+                >{{ chip.romaji }}</span
+              >
+            </div>
           </div>
+
+          <!-- Meaning badge -->
+          <span
+            class="inline-flex items-center px-2.5 py-1 text-xs font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-400 text-amber-950 border-[2px] border-slate-950 shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#000] select-none"
+          >
+            {{ $t("home.heroKanaMeaning") }}
+          </span>
         </div>
       </div>
       <!-- Background Decorative Aksara with subtle ambient drift -->
