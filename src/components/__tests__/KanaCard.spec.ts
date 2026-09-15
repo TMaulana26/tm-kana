@@ -98,7 +98,7 @@ describe('KanaCard.vue Component', () => {
 
     const charSpan = wrapper.find('span.leading-none')
     expect(charSpan.classes()).toContain('text-2xl')
-    expect(charSpan.classes()).toContain('lg:text-5xl')
     expect(charSpan.classes()).not.toContain('lg:text-6xl')
+    expect(charSpan.classes()).not.toContain('lg:text-5xl')
   })
 })

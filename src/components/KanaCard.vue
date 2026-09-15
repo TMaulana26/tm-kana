@@ -75,7 +75,7 @@ const masteryTooltip = computed(() => {
   <button
     @click="$emit('click', character)"
     :class="[
-      'group relative w-full aspect-square flex flex-col items-center justify-center rounded-none border-[3px] transition-all duration-200 hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[5px_5px_0px_0px_#000] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#000]',
+      'group relative w-full aspect-square min-h-0 min-w-0 overflow-hidden flex flex-col items-center justify-center p-1 rounded-none border-[3px] transition-all duration-200 hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[5px_5px_0px_0px_#000] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#000]',
       cardClass,
     ]"
   >
@@ -88,14 +88,14 @@ const masteryTooltip = computed(() => {
     ></span>
 
     <span
-      class="font-black uppercase tracking-tight block leading-none"
-      :class="character.character.length >= 2 ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl'"
+      class="font-black uppercase tracking-tight block leading-none whitespace-nowrap select-none"
+      :class="character.character.length >= 2 ? 'text-2xl sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl' : 'text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl'"
     >
       {{ character.character }}
     </span>
     <span
       :class="[
-        'text-[10px] sm:text-xs md:text-sm font-black uppercase tracking-wide mt-0.5 sm:mt-1',
+        'text-[10px] sm:text-xs md:text-sm font-black uppercase tracking-wide mt-0.5 sm:mt-1 whitespace-nowrap',
         hasLearned && isUltimateMastery
           ? 'text-slate-100'
           : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200',
