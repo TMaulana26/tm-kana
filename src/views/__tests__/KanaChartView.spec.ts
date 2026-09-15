@@ -44,6 +44,9 @@ describe('KanaChartView.vue Integration Tests', () => {
     return mount(KanaChartView, {
       global: {
         stubs: {
+          RouterLink: {
+            template: '<a><slot /></a>'
+          },
           // Stub DialogPortal to prevent teleporting content outside the wrapper
           DialogPortal: {
             template: '<div><slot /></div>'
