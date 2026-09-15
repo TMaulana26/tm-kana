@@ -16,7 +16,8 @@
     "langId": "Bahasa Indonesia",
     "langEn": "English",
     "langJa": "日本語",
-    "romaji": "ローマ字"
+    "romaji": "ローマ字",
+    "info": "案内"
   },
   "home": {
     "homeDesc": "ひらがなとカタカナの読み書き、発音をインタラクティブに学びましょう。100%クライアントサイドで動作し、無料、安全、広告なしです。",
@@ -77,7 +78,9 @@
     "detailTitle": "キャラクター詳細",
     "detailDesc": "書き順ガイドと練習パッド",
     "strokeOrderAlt": "書き順ガイド",
-    "offlineStrokeOrder": "書き順の画像が読み込めませんでした。下の練習パッドで直接練習してください！"
+    "offlineStrokeOrder": "書き順の画像が読み込めませんでした。下の練習パッドで直接練習してください！",
+    "dakuonTipTitle": "濁点と半濁点の仕組み",
+    "dakuonTipDesc": "濁点（゛）はカ・サ・タ・ハ行を有声音化し、半濁点（゜）はハ行をパ行（半濁音）に変化させます。"
   },
   "rows": {
     "vowels": "基本母音",

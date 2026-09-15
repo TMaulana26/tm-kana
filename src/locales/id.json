@@ -16,7 +16,8 @@
     "langId": "Bahasa Indonesia",
     "langEn": "English",
     "langJa": "Bahasa Jepang",
-    "romaji": "Romaji"
+    "romaji": "Romaji",
+    "info": "INFO"
   },
   "home": {
     "homeDesc": "Belajar membaca, melafalkan, dan menulis Hiragana serta Katakana secara interaktif. 100% Client-Side, bebas biaya, aman, dan tanpa iklan.",
@@ -77,7 +78,9 @@
     "detailTitle": "Detail Karakter",
     "detailDesc": "Panduan urutan menulis dan papan latihan menulis.",
     "strokeOrderAlt": "Panduan Urutan Goresan",
-    "offlineStrokeOrder": "Gambar urutan goresan tidak termuat. Anda dapat langsung berlatih menggunakan garis pemandu di bawah ini!"
+    "offlineStrokeOrder": "Gambar urutan goresan tidak termuat. Anda dapat langsung berlatih menggunakan garis pemandu di bawah ini!",
+    "dakuonTipTitle": "Tanda Suara Dakuten & Handakuten",
+    "dakuonTipDesc": "Tanda tenten (゛) mengubah K, S, T, H menjadi G, Z, D, B. Tanda maru (゜) mengubah H menjadi P."
   },
   "rows": {
     "vowels": "Vokal Dasar",

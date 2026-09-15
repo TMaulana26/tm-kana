@@ -19,6 +19,54 @@ const isDialogOpen = ref(false)
 const hiraganaGroups = computed(() => groupKanaData(kanaData.hiragana))
 const katakanaGroups = computed(() => groupKanaData(kanaData.katakana))
 
+const splitHiraganaGojuonLeft = computed(() => {
+  const rows = hiraganaGroups.value.gojuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitHiraganaGojuonRight = computed(() => {
+  const rows = hiraganaGroups.value.gojuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
+
+const splitKatakanaGojuonLeft = computed(() => {
+  const rows = katakanaGroups.value.gojuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitKatakanaGojuonRight = computed(() => {
+  const rows = katakanaGroups.value.gojuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
+
+const splitHiraganaDakuonLeft = computed(() => {
+  const rows = hiraganaGroups.value.dakuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitHiraganaDakuonRight = computed(() => {
+  const rows = hiraganaGroups.value.dakuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
+
+const splitKatakanaDakuonLeft = computed(() => {
+  const rows = katakanaGroups.value.dakuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(0, mid)
+})
+
+const splitKatakanaDakuonRight = computed(() => {
+  const rows = katakanaGroups.value.dakuon
+  const mid = Math.ceil(rows.length / 2)
+  return rows.slice(mid)
+})
+
 const splitHiraganaYoonLeft = computed(() => {
   const rows = hiraganaGroups.value.yoon
   const mid = Math.ceil(rows.length / 2)
@@ -168,82 +216,166 @@ function selectCharacter(char: KanaItem) {
       <!-- Tabs Contents -->
       <template v-for="tabKey in ['hiragana', 'katakana']" :key="tabKey">
         <TabsContent :value="tabKey" class="space-y-8 outline-hidden">
-          <!-- Gojuon Section -->
+          <!-- Gojuon Section: Split 2-Column Grid -->
           <section v-if="activeGroup === 'gojuon'" class="space-y-6 animate-section-content">
             <h2
               class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6]"
             >
               {{ $t('chart.gojuon') }}
             </h2>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#8b5cf6]">
-              <!-- Grid Header columns: Vowels (A, I, U, E, O) -->
-              <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
-                <div class="w-20 shrink-0"></div>
-                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
-                  <span>A</span>
-                  <span>I</span>
-                  <span>U</span>
-                  <span>E</span>
-                  <span>O</span>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <!-- Left Column of Gojuon Groups -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-5 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#8b5cf6] space-y-4">
+                <div class="hidden sm:flex gap-2 sm:gap-3 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2.5 mb-2">
+                  <div class="w-14 sm:w-16 shrink-0"></div>
+                  <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>A</span>
+                    <span>I</span>
+                    <span>U</span>
+                    <span>E</span>
+                    <span>O</span>
+                  </div>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaGojuonLeft : splitKatakanaGojuonLeft)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center"
+                  >
+                    <div class="w-14 sm:w-16 shrink-0 font-black uppercase text-[11px] sm:text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 w-full">
+                      <template v-for="(char, idx) in row.chars" :key="idx">
+                        <KanaCard v-if="char" :character="char" @click="selectCharacter" />
+                        <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
+                      </template>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Rows -->
-              <div class="space-y-4">
-                <div
-                  v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.gojuon : katakanaGroups.gojuon)"
-                  :key="row.rowName"
-                  class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
-                >
-                  <div class="w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
-                    {{ $t('rows.' + row.rowName) }}
+              <!-- Right Column of Gojuon Groups -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-5 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#8b5cf6] space-y-4">
+                <div class="hidden sm:flex gap-2 sm:gap-3 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2.5 mb-2">
+                  <div class="w-14 sm:w-16 shrink-0"></div>
+                  <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>A</span>
+                    <span>I</span>
+                    <span>U</span>
+                    <span>E</span>
+                    <span>O</span>
                   </div>
-                  <div class="grid grid-cols-5 gap-3 flex-1 w-full">
-                    <template v-for="(char, idx) in row.chars" :key="idx">
-                      <KanaCard v-if="char" :character="char" @click="selectCharacter" />
-                      <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
-                    </template>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaGojuonRight : splitKatakanaGojuonRight)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center"
+                  >
+                    <div class="w-14 sm:w-16 shrink-0 font-black uppercase text-[11px] sm:text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 w-full">
+                      <template v-for="(char, idx) in row.chars" :key="idx">
+                        <KanaCard v-if="char" :character="char" @click="selectCharacter" />
+                        <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
+                      </template>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Dakuon Section -->
+          <!-- Dakuon Section: Split 2-Column Grid -->
           <section v-else-if="activeGroup === 'dakuon'" class="space-y-6 animate-section-content">
             <h2
               class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#6366f1]"
             >
               {{ $t('chart.dakuon') }}
             </h2>
-            <div class="space-y-4 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#6366f1]">
-              <!-- Grid Header columns: Vowels (A, I, U, E, O) -->
-              <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
-                <div class="w-20 shrink-0"></div>
-                <div class="grid grid-cols-5 gap-3 flex-1 text-center font-black text-sm text-slate-500 uppercase tracking-wider">
-                  <span>A</span>
-                  <span>I</span>
-                  <span>U</span>
-                  <span>E</span>
-                  <span>O</span>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <!-- Left Column of Dakuon Groups (G, Z, D) -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-5 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#6366f1] space-y-4">
+                <div class="hidden sm:flex gap-2 sm:gap-3 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2.5 mb-2">
+                  <div class="w-14 sm:w-16 shrink-0"></div>
+                  <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>A</span>
+                    <span>I</span>
+                    <span>U</span>
+                    <span>E</span>
+                    <span>O</span>
+                  </div>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaDakuonLeft : splitKatakanaDakuonLeft)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center"
+                  >
+                    <div class="w-14 sm:w-16 shrink-0 font-black uppercase text-[11px] sm:text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 w-full">
+                      <template v-for="(char, idx) in row.chars" :key="idx">
+                        <KanaCard v-if="char" :character="char" @click="selectCharacter" />
+                        <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
+                      </template>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="space-y-4">
-                <div
-                  v-for="row in (tabKey === 'hiragana' ? hiraganaGroups.dakuon : katakanaGroups.dakuon)"
-                  :key="row.rowName"
-                  class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
-                >
-                  <div class="w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
-                    {{ $t('rows.' + row.rowName) }}
+              <!-- Right Column of Dakuon Groups (B, P) + Voicing Info Box -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-5 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#6366f1] space-y-4">
+                <div class="hidden sm:flex gap-2 sm:gap-3 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2.5 mb-2">
+                  <div class="w-14 sm:w-16 shrink-0"></div>
+                  <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+                    <span>A</span>
+                    <span>I</span>
+                    <span>U</span>
+                    <span>E</span>
+                    <span>O</span>
                   </div>
-                  <div class="grid grid-cols-5 gap-3 flex-1 w-full">
-                    <template v-for="(char, idx) in row.chars" :key="idx">
-                      <KanaCard v-if="char" :character="char" @click="selectCharacter" />
-                      <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
-                    </template>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaDakuonRight : splitKatakanaDakuonRight)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center"
+                  >
+                    <div class="w-14 sm:w-16 shrink-0 font-black uppercase text-[11px] sm:text-xs tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-2.5 flex-1 w-full">
+                      <template v-for="(char, idx) in row.chars" :key="idx">
+                        <KanaCard v-if="char" :character="char" @click="selectCharacter" />
+                        <div v-else class="aspect-square bg-slate-100 dark:bg-slate-800/40 border-[2px] border-slate-200 dark:border-slate-800 rounded-none opacity-20"></div>
+                      </template>
+                    </div>
                   </div>
+                </div>
+
+                <!-- Voicing Guide Box to balance the 3 vs 2 rows height -->
+                <div class="border-[2px] border-slate-950 dark:border-slate-700 bg-indigo-50 dark:bg-slate-800/80 p-3 sm:p-3.5 rounded-none shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#6366f1] mt-2">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="px-1.5 py-0.5 text-[9px] font-mono font-black bg-indigo-200 dark:bg-indigo-900 border border-slate-950 dark:border-slate-400 uppercase">
+                      {{ $t('common.info') }}
+                    </span>
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                      {{ $t('chart.dakuonTipTitle') }}
+                    </span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs font-bold text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {{ $t('chart.dakuonTipDesc') }}
+                  </p>
                 </div>
               </div>
             </div>

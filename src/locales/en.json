@@ -16,7 +16,8 @@
     "langId": "Bahasa Indonesia",
     "langEn": "English",
     "langJa": "Japanese",
-    "romaji": "Romaji"
+    "romaji": "Romaji",
+    "info": "INFO"
   },
   "home": {
     "homeDesc": "Learn to read, pronounce, and write Hiragana and Katakana interactively. 100% Client-Side, free, secure, and ad-free.",
@@ -77,7 +78,9 @@
     "detailTitle": "Character Detail",
     "detailDesc": "Stroke order guide and writing practice pad.",
     "strokeOrderAlt": "Stroke Order Guide",
-    "offlineStrokeOrder": "Stroke order guide image failed to load. You can practice directly using the guidance lines below!"
+    "offlineStrokeOrder": "Stroke order guide image failed to load. You can practice directly using the guidance lines below!",
+    "dakuonTipTitle": "Dakuten & Handakuten Voicing Marks",
+    "dakuonTipDesc": "The tenten (゛) mark voices K, S, T, H into G, Z, D, B. The maru (゜) mark voices H into P."
   },
   "rows": {
     "vowels": "Basic Vowels",
