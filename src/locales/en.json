@@ -81,30 +81,8 @@
     "offlineStrokeOrder": "Stroke order guide image failed to load. You can practice directly using the guidance lines below!",
     "dakuonTipTitle": "Dakuten & Handakuten Voicing Marks",
     "dakuonTipDesc": "The tenten (゛) mark voices K, S, T, H into G, Z, D, B. The maru (゜) mark voices H into P.",
-    "previewYoonBtn": "Preview Yoon Box Uniformity"
-  },
-  "yoonPreview": {
-    "title": "Yoon Box Uniformity Laboratory",
-    "desc": "Compare Yoon character box sizes directly against the Gojuon reference row above to find the optimal uniformity and visual comfort.",
-    "backToChart": "Back to Kana Chart",
-    "switchScript": "Switch Script",
-    "themeToggle": "Toggle Theme",
-    "referenceTitle": "Reference Box Size (Gojuon Vowel Row)",
-    "referenceSubtitle": "Use the Gojuon vowel row below as the benchmark for original card size:",
-    "opt1Title": "Option 1: 3-Column Split Grid (Side-by-Side)",
-    "opt1Badge": "Recommended",
-    "opt1Desc": "Splits 11 Yoon rows into 3 column containers (4 + 4 + 3 rows). Boxes are ~95px (naturally uniform with Gojuon ~90px), completely filled without gaps or empty dash boxes.",
-    "opt2Title": "Option 2: 5-Column Aligned Grid (YA, —, YU, —, YO)",
-    "opt2Badge": "100% Mathematically Uniform",
-    "opt2Desc": "Yoon stays in 2 split containers, but each row has 5 slots. Box size is exactly identical to Gojuon, with 2 dashed placeholder slots in columns 2 and 4.",
-    "opt3Title": "Option 3: Current 2-Column Split Grid",
-    "opt3Badge": "Current Size",
-    "opt3Desc": "Current state: 2 columns with 3 cards spanning full width per row, making Yoon cards noticeably larger (~145px) than Gojuon (~90px).",
     "yoonTipTitle": "1-Mora Pronunciation",
-    "yoonTipDesc": "Yoon sounds are pronounced in a single syllable beat (1 mora), rather than two distinct sounds.",
-    "laboratoryBadge": "LABORATORY",
-    "previewSubtitle": "TM-KANA DESIGN PREVIEW",
-    "vowelHeader": "VOWEL"
+    "yoonTipDesc": "Yoon sounds are pronounced in a single syllable beat (1 mora), rather than two distinct sounds."
   },
   "rows": {
     "vowels": "Basic Vowels",

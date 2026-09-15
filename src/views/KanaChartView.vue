@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { kanaData, type KanaItem } from '@/constants/kanaData'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import KanaCard from '@/components/KanaCard.vue'
 import KanaDetailDialog from '@/components/KanaDetailDialog.vue'
 import { groupKanaData } from '@/utils/kana'
-import { Sparkles, Info } from 'lucide-vue-next'
+import { Info } from 'lucide-vue-next'
 
 useI18n()
 
@@ -367,23 +366,13 @@ function selectCharacter(char: KanaItem) {
             </div>
           </section>
 
-          <!-- Yoon Section: Split 2-Column Grid -->
+          <!-- Yoon Section: Split 3-Column Grid -->
           <section v-else-if="activeGroup === 'yoon'" class="space-y-6 animate-section-content">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <h2
-                class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
-              >
-                {{ $t('chart.yoon') }}
-              </h2>
-
-              <RouterLink
-                to="/preview-yoon"
-                class="inline-flex items-center gap-2 px-3.5 py-2 font-black text-xs uppercase tracking-wider bg-amber-400 dark:bg-amber-500 text-amber-950 border-[3px] border-slate-950 dark:border-slate-200 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b] hover:bg-amber-300 active:translate-x-0.5 active:translate-y-0.5"
-              >
-                <Sparkles class="w-4 h-4" />
-                <span>{{ $t('chart.previewYoonBtn') }}</span>
-              </RouterLink>
-            </div>
+            <h2
+              class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
+            >
+              {{ $t('chart.yoon') }}
+            </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
               <!-- Kolom 1 (4 baris: K, S, T, N) -->
