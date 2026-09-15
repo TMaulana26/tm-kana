@@ -23,13 +23,13 @@ function selectCharacter(char: KanaItem) {
 </script>
 
 <template>
-  <div class="p-6 max-w-7xl mx-auto space-y-8 animate-fade-in">
+  <div class="p-6 max-w-7xl mx-auto space-y-8">
     <!-- Header -->
     <div
-      class="relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#8b5cf6]"
+      class="animate-hero-stamp relative overflow-hidden rounded-none border-[4px] border-slate-950 dark:border-slate-700 bg-[#00f5d4] dark:bg-slate-900 text-slate-950 dark:text-slate-100 p-8 shadow-[6px_6px_0px_0px_#08060d] dark:shadow-[6px_6px_0px_0px_#8b5cf6]"
     >
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.04),transparent)]"></div>
-      <div class="relative z-10 space-y-2">
+      <div class="relative z-10 space-y-2 max-w-3xl">
         <h1 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
           {{ $t('chart.title') }}
         </h1>
@@ -37,12 +37,20 @@ function selectCharacter(char: KanaItem) {
           {{ $t('chart.desc') }}
         </p>
       </div>
+
+      <!-- Background Decorative Aksara with subtle ambient drift -->
+      <div
+        class="animate-watermark-float absolute right-0 bottom-0 translate-x-1/8 translate-y-1/8 text-8xl md:text-9xl font-black text-slate-950/10 dark:text-white/5 select-none pointer-events-none font-sans"
+        aria-hidden="true"
+      >
+        {{ activeTab === 'hiragana' ? 'あいうえお' : 'アイウエオ' }}
+      </div>
     </div>
 
     <!-- Tabs Section -->
     <Tabs default-value="hiragana" v-model="activeTab" class="w-full">
       <TabsList
-        class="w-full grid grid-cols-2 h-14 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-1 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] mb-8"
+        class="animate-tabs-bar w-full grid grid-cols-2 h-14 bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-1 rounded-none shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#8b5cf6] mb-8"
       >
         <TabsTrigger
           value="hiragana"
@@ -62,9 +70,9 @@ function selectCharacter(char: KanaItem) {
       <template v-for="tabKey in ['hiragana', 'katakana']" :key="tabKey">
         <TabsContent :value="tabKey" class="space-y-12 outline-hidden">
           <!-- Gojuon Section -->
-          <section class="space-y-6">
+          <section class="space-y-6 animate-section-1">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6]"
+              class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-violet-300 dark:bg-violet-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6]"
             >
               {{ $t('chart.gojuon') }}
             </h2>
@@ -103,9 +111,9 @@ function selectCharacter(char: KanaItem) {
           </section>
 
           <!-- Dakuon Section -->
-          <section class="space-y-6">
+          <section class="space-y-6 animate-section-2">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#6366f1]"
+              class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-indigo-300 dark:bg-indigo-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#6366f1]"
             >
               {{ $t('chart.dakuon') }}
             </h2>
@@ -131,9 +139,9 @@ function selectCharacter(char: KanaItem) {
           </section>
 
           <!-- Yoon Section -->
-          <section class="space-y-6">
+          <section class="space-y-6 animate-section-3">
             <h2
-              class="text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
+              class="animate-badge-pop text-xl md:text-2xl font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-900 text-black dark:text-white border-[3px] border-slate-950 dark:border-slate-700 px-4 py-2 w-fit shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#f59e0b]"
             >
               {{ $t('chart.yoon') }}
             </h2>
@@ -169,18 +177,96 @@ function selectCharacter(char: KanaItem) {
 </template>
 
 <style scoped>
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out;
+/* Hero stamp entrance */
+.animate-hero-stamp {
+  animation: heroStamp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes fadeIn {
-  from {
+@keyframes heroStamp {
+  0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-8px) scale(0.99);
   }
-  to {
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Subtle ambient watermark drift */
+.animate-watermark-float {
+  animation: watermarkDrift 8s ease-in-out infinite alternate;
+}
+
+@keyframes watermarkDrift {
+  0% {
+    transform: translate(12.5%, 12.5%) rotate(0deg);
+  }
+  50% {
+    transform: translate(10%, 15%) rotate(-1deg);
+  }
+  100% {
+    transform: translate(15%, 10%) rotate(1deg);
+  }
+}
+
+/* Tabs list arrival */
+.animate-tabs-bar {
+  animation: sectionCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+/* Staggered sections */
+.animate-section-1 {
+  animation: sectionCascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+}
+
+.animate-section-2 {
+  animation: sectionCascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+.animate-section-3 {
+  animation: sectionCascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both;
+}
+
+@keyframes sectionCascade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Section title badge pop */
+.animate-badge-pop {
+  animation: badgePop 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Prefers-reduced-motion: preserve opacity/clarity, remove motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-stamp,
+  .animate-watermark-float,
+  .animate-tabs-bar,
+  .animate-section-1,
+  .animate-section-2,
+  .animate-section-3,
+  .animate-badge-pop {
+    animation: none !important;
+    transform: none !important;
+    transition: opacity 0.15s ease !important;
   }
 }
 </style>
