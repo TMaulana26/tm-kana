@@ -160,7 +160,8 @@ function processFile(file: File) {
             <div
               v-for="(chip, idx) in heroKanaChips"
               :key="`${idx}-${chip.char}`"
-              class="kana-chip inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 dark:bg-slate-950/80 border-[2px] border-slate-950 dark:border-slate-400 font-mono font-black text-sm text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#f59e0b] cursor-default select-none transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#08060d] active:translate-y-0"
+              class="kana-chip animate-chip-pop inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 dark:bg-slate-950/80 border-[2px] border-slate-950 dark:border-slate-400 font-mono font-black text-sm text-slate-950 dark:text-white shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#f59e0b] cursor-default select-none transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#08060d] active:translate-y-0"
+              :style="{ animationDelay: `${0.15 + idx * 0.06}s` }"
               :title="`${chip.char} (${chip.romaji.toUpperCase()})`"
             >
               <span class="text-base font-black">{{ chip.char }}</span>
@@ -173,7 +174,7 @@ function processFile(file: File) {
 
           <!-- Meaning badge -->
           <span
-            class="inline-flex items-center px-2.5 py-1 text-xs font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-400 text-amber-950 border-[2px] border-slate-950 shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#000] select-none"
+            class="animate-badge-pop inline-flex items-center px-2.5 py-1 text-xs font-black uppercase tracking-wider bg-amber-300 dark:bg-amber-400 text-amber-950 border-[2px] border-slate-950 shadow-[2px_2px_0px_0px_#08060d] dark:shadow-[2px_2px_0px_0px_#000] select-none"
           >
             {{ $t("home.heroKanaMeaning") }}
           </span>
@@ -541,6 +542,44 @@ function processFile(file: File) {
   }
 }
 
+/* Staggered chip bounce-in entrance pop */
+.animate-chip-pop {
+  animation: chipPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes chipPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(8px);
+  }
+  70% {
+    transform: scale(1.08) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Meaning badge punchy pop */
+.animate-badge-pop {
+  animation: badgePop 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(6px);
+  }
+  70% {
+    transform: scale(1.06) translateY(-1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 /* Error shake on failure */
 .animate-error-shake {
   animation: errorShake 0.3s ease-in-out both;
@@ -571,6 +610,8 @@ function processFile(file: File) {
   .animate-icon-float,
   .animate-status-pop,
   .animate-check-pop,
+  .animate-chip-pop,
+  .animate-badge-pop,
   .animate-error-shake {
     animation: none !important;
     transform: none !important;
