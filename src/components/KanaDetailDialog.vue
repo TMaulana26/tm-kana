@@ -120,7 +120,7 @@ watch(() => props.character, () => {
             <div class="w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f3ec] dark:bg-slate-800 border-[3px] border-slate-950 dark:border-slate-700 flex items-center justify-center shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#8b5cf6] shrink-0">
               <span
                 class="font-black font-sans select-none whitespace-nowrap"
-                :class="character.character.length > 1 ? 'text-4xl' : 'text-6xl'"
+                :class="character.character.length > 1 ? 'text-5xl tracking-tight' : 'text-6xl'"
               >{{ character.character }}</span>
             </div>
             

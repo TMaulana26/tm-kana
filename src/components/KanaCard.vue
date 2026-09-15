@@ -89,7 +89,7 @@ const masteryTooltip = computed(() => {
 
     <span
       class="font-black uppercase tracking-tight block leading-none whitespace-nowrap select-none"
-      :class="character.character.length >= 2 ? 'text-2xl sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl' : 'text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl'"
+      :class="character.character.length >= 2 ? 'text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl' : 'text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl'"
     >
       {{ character.character }}
     </span>

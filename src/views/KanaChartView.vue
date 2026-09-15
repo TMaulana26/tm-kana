@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import KanaCard from '@/components/KanaCard.vue'
 import KanaDetailDialog from '@/components/KanaDetailDialog.vue'
 import { groupKanaData } from '@/utils/kana'
-import { Sparkles } from 'lucide-vue-next'
+import { Sparkles, Info } from 'lucide-vue-next'
 
 useI18n()
 
@@ -69,29 +69,13 @@ const splitKatakanaDakuonRight = computed(() => {
   return rows.slice(mid)
 })
 
-const splitHiraganaYoonLeft = computed(() => {
-  const rows = hiraganaGroups.value.yoon
-  const mid = Math.ceil(rows.length / 2)
-  return rows.slice(0, mid)
-})
+const splitHiraganaYoonCol1 = computed(() => hiraganaGroups.value.yoon.slice(0, 4))
+const splitHiraganaYoonCol2 = computed(() => hiraganaGroups.value.yoon.slice(4, 8))
+const splitHiraganaYoonCol3 = computed(() => hiraganaGroups.value.yoon.slice(8))
 
-const splitHiraganaYoonRight = computed(() => {
-  const rows = hiraganaGroups.value.yoon
-  const mid = Math.ceil(rows.length / 2)
-  return rows.slice(mid)
-})
-
-const splitKatakanaYoonLeft = computed(() => {
-  const rows = katakanaGroups.value.yoon
-  const mid = Math.ceil(rows.length / 2)
-  return rows.slice(0, mid)
-})
-
-const splitKatakanaYoonRight = computed(() => {
-  const rows = katakanaGroups.value.yoon
-  const mid = Math.ceil(rows.length / 2)
-  return rows.slice(mid)
-})
+const splitKatakanaYoonCol1 = computed(() => katakanaGroups.value.yoon.slice(0, 4))
+const splitKatakanaYoonCol2 = computed(() => katakanaGroups.value.yoon.slice(4, 8))
+const splitKatakanaYoonCol3 = computed(() => katakanaGroups.value.yoon.slice(8))
 
 const watermarkText = computed(() => {
   if (activeTab.value === 'hiragana') {
@@ -401,68 +385,95 @@ function selectCharacter(char: KanaItem) {
               </RouterLink>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-              <!-- Left Column of Yoon Groups -->
-              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b] space-y-4">
-                <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
-                  <div class="w-16 sm:w-20 shrink-0"></div>
-                  <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+              <!-- Kolom 1 (4 baris: K, S, T, N) -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#f59e0b] space-y-4">
+                <div class="hidden sm:flex gap-2 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2 mb-2">
+                  <div class="w-14 shrink-0"></div>
+                  <div class="grid grid-cols-3 gap-2 flex-1 text-center font-black text-xs text-slate-500 uppercase">
                     <span>YA</span>
                     <span>YU</span>
                     <span>YO</span>
                   </div>
                 </div>
-
-                <div class="space-y-4">
+                <div class="space-y-3">
                   <div
-                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonLeft : splitKatakanaYoonLeft)"
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonCol1 : splitKatakanaYoonCol1)"
                     :key="row.rowName"
-                    class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
+                    class="flex flex-col sm:flex-row gap-2 items-start sm:items-center"
                   >
-                    <div class="w-16 sm:w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
+                    <div class="w-14 shrink-0 font-black uppercase text-[11px] tracking-wider text-slate-500 text-left">
                       {{ $t('rows.' + row.rowName) }}
                     </div>
-                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 w-full">
-                      <KanaCard
-                        v-for="char in row.chars"
-                        :key="char.id"
-                        :character="char"
-                        @click="selectCharacter"
-                      />
+                    <div class="grid grid-cols-3 gap-2 flex-1 w-full">
+                      <KanaCard v-for="char in row.chars" :key="char.id" :character="char" @click="selectCharacter" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Right Column of Yoon Groups -->
-              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 sm:p-6 shadow-[5px_5px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#f59e0b] space-y-4">
-                <div class="hidden sm:flex gap-4 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-3 mb-2">
-                  <div class="w-16 sm:w-20 shrink-0"></div>
-                  <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 text-center font-black text-xs sm:text-sm text-slate-500 uppercase tracking-wider">
+              <!-- Kolom 2 (4 baris: H, M, R, G) -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#f59e0b] space-y-4">
+                <div class="hidden sm:flex gap-2 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2 mb-2">
+                  <div class="w-14 shrink-0"></div>
+                  <div class="grid grid-cols-3 gap-2 flex-1 text-center font-black text-xs text-slate-500 uppercase">
                     <span>YA</span>
                     <span>YU</span>
                     <span>YO</span>
                   </div>
                 </div>
-
-                <div class="space-y-4">
+                <div class="space-y-3">
                   <div
-                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonRight : splitKatakanaYoonRight)"
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonCol2 : splitKatakanaYoonCol2)"
                     :key="row.rowName"
-                    class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center"
+                    class="flex flex-col sm:flex-row gap-2 items-start sm:items-center"
                   >
-                    <div class="w-16 sm:w-20 shrink-0 font-black uppercase text-xs tracking-wider text-slate-500 text-left">
+                    <div class="w-14 shrink-0 font-black uppercase text-[11px] tracking-wider text-slate-500 text-left">
                       {{ $t('rows.' + row.rowName) }}
                     </div>
-                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 flex-1 w-full">
-                      <KanaCard
-                        v-for="char in row.chars"
-                        :key="char.id"
-                        :character="char"
-                        @click="selectCharacter"
-                      />
+                    <div class="grid grid-cols-3 gap-2 flex-1 w-full">
+                      <KanaCard v-for="char in row.chars" :key="char.id" :character="char" @click="selectCharacter" />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <!-- Kolom 3 (3 baris: Z, B, P + Tip Box) -->
+              <div class="bg-white dark:bg-slate-900 border-[3px] border-slate-950 dark:border-slate-700 p-4 shadow-[5px_5px_0px_0px_#000] dark:shadow-[5px_5px_0px_0px_#f59e0b] space-y-4">
+                <div class="hidden sm:flex gap-2 items-center border-b-[3px] border-slate-950 dark:border-slate-800 pb-2 mb-2">
+                  <div class="w-14 shrink-0"></div>
+                  <div class="grid grid-cols-3 gap-2 flex-1 text-center font-black text-xs text-slate-500 uppercase">
+                    <span>YA</span>
+                    <span>YU</span>
+                    <span>YO</span>
+                  </div>
+                </div>
+                <div class="space-y-3">
+                  <div
+                    v-for="row in (tabKey === 'hiragana' ? splitHiraganaYoonCol3 : splitKatakanaYoonCol3)"
+                    :key="row.rowName"
+                    class="flex flex-col sm:flex-row gap-2 items-start sm:items-center"
+                  >
+                    <div class="w-14 shrink-0 font-black uppercase text-[11px] tracking-wider text-slate-500 text-left">
+                      {{ $t('rows.' + row.rowName) }}
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 flex-1 w-full">
+                      <KanaCard v-for="char in row.chars" :key="char.id" :character="char" @click="selectCharacter" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Balanced 1 Mora Tip Box -->
+                <div class="border-[2px] border-slate-950 dark:border-slate-700 bg-amber-50 dark:bg-slate-800/80 p-3 rounded-none shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#f59e0b] mt-2">
+                  <div class="flex items-center gap-1.5 mb-1">
+                    <Info class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                      {{ $t('chart.yoonTipTitle') }}
+                    </span>
+                  </div>
+                  <p class="text-[11px] font-bold text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {{ $t('chart.yoonTipDesc') }}
+                  </p>
                 </div>
               </div>
             </div>

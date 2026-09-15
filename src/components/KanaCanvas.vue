@@ -139,9 +139,9 @@ defineExpose({
           class="absolute inset-0 flex items-center justify-center font-black text-slate-300/45 dark:text-slate-800/40 select-none pointer-events-none font-sans whitespace-nowrap px-2"
           :class="[
             char.length > 2
-              ? 'text-4xl sm:text-5xl tracking-tight'
+              ? 'text-5xl sm:text-6xl tracking-tight'
               : char.length > 1
-                ? 'text-5xl sm:text-6xl tracking-tight'
+                ? 'text-7xl sm:text-8xl tracking-tighter'
                 : 'text-[9rem] sm:text-[10rem]'
           ]"
         >
