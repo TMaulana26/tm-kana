@@ -116,4 +116,39 @@ describe('KanaChartView.vue Integration Tests', () => {
     await removeButton?.trigger('click')
     expect(store.progress['h-a'].hasLearned).toBe(false)
   })
+
+  it('switches category sub-tabs (Gojuon, Dakuon, Yoon) and updates displayed characters', async () => {
+    const wrapper = mountView()
+    const vm = wrapper.vm as any
+
+    // Initially activeGroup is 'gojuon'
+    expect(vm.activeGroup).toBe('gojuon')
+    expect(wrapper.text()).toContain('あ')
+
+    // Find category sub-tab buttons
+    const gojuonBtn = wrapper.findAll('button').find(b => b.text().includes('Gojuon (Main)'))
+    const dakuonBtn = wrapper.findAll('button').find(b => b.text().includes('Dakuon (Modified)'))
+    const yoonBtn = wrapper.findAll('button').find(b => b.text().includes('Yoon (Combination)'))
+
+    expect(gojuonBtn?.exists()).toBe(true)
+    expect(dakuonBtn?.exists()).toBe(true)
+    expect(yoonBtn?.exists()).toBe(true)
+
+    // Click Dakuon sub-tab
+    await dakuonBtn?.trigger('click')
+    expect(vm.activeGroup).toBe('dakuon')
+    expect(wrapper.text()).toContain('が')
+    expect(wrapper.text()).not.toContain('あ')
+
+    // Click Yoon sub-tab
+    await yoonBtn?.trigger('click')
+    expect(vm.activeGroup).toBe('yoon')
+    expect(wrapper.text()).toContain('きゃ')
+    expect(wrapper.text()).not.toContain('が')
+
+    // Click Gojuon sub-tab to return
+    await gojuonBtn?.trigger('click')
+    expect(vm.activeGroup).toBe('gojuon')
+    expect(wrapper.text()).toContain('あ')
+  })
 })
